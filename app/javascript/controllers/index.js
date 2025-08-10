@@ -7,5 +7,8 @@ import { application } from "./application"
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
+import PieChartController from "./pie_chart_controller"
+application.register("pie-chart", PieChartController)
+
 import SearchFormController from "./search_form_controller"
 application.register("search-form", SearchFormController)
