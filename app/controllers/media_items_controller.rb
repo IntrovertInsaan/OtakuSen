@@ -11,6 +11,11 @@ class MediaItemsController < ApplicationController
       @media_items = @media_items.where(category_id: params[:category_id])
     end
 
+    # For Filtering in SEARCH
+    if params[:search].present?
+      @media_items = @media_items.where("title ILIKE ?", "%#{params[:search]}%")
+    end
+
     @media_items = @media_items.order(created_at: :desc)
   end
 
