@@ -1,12 +1,8 @@
-<% content_for :title, "Editing media item" %>
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="bg-white rounded-lg shadow-xl p-6 md:p-8">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900 mb-1">Editing</h1>
+    <p class="text-lg text-gray-500 mb-6 truncate"><%= @media_item.title %></p>
 
-<h1>Editing media item</h1>
-
-<%= render "form", media_item: @media_item %>
-
-<br>
-
-<div>
-  <%= link_to "Show this media item", @media_item %> |
-  <%= link_to "Back to media items", media_items_path %>
+    <%= render "form", media_item: @media_item %>
+  </div>
 </div>
