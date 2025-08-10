@@ -48,6 +48,21 @@
     </div>
   </div>
 
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+    <div>
+      <%= form.label :chapters_read, class: "block text-sm font-medium leading-6 text-gray-900" %>
+      <div class="mt-2">
+        <%= form.number_field :chapters_read, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+      </div>
+    </div>
+    <div>
+      <%= form.label :total_chapters, class: "block text-sm font-medium leading-6 text-gray-900" %>
+      <div class="mt-2">
+        <%= form.number_field :total_chapters, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+      </div>
+    </div>
+  </div>
+
   <div>
     <%= form.label :category_id, class: "block text-sm font-medium leading-6 text-gray-900" %>
     <div class="mt-2">
