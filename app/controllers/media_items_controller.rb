@@ -4,7 +4,14 @@ class MediaItemsController < ApplicationController
 
   # GET /media_items or /media_items.json
   def index
-    @media_items = MediaItem.all.order(created_at: :desc)
+    @categories = Category.all.order(:name)
+    @media_items = MediaItem.all
+
+    if params[:category_id].present?
+      @media_items = @media_items.where(category_id: params[:category_id])
+    end
+
+    @media_items = @media_items.order(created_at: :desc)
   end
 
   # GET /media_items/1 or /media_items/1.json

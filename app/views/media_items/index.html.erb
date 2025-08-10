@@ -5,6 +5,18 @@
     <%= link_to "Add New Item", new_media_item_path, class: "rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
   </div>
 
+  <%# FILTER CODE %>
+  <div class="mb-8 flex items-center flex-wrap gap-2">
+    <span class="text-sm font-medium text-gray-700 mr-2">Filter by:</span>
+
+    <%= link_to "All", media_items_path, class: "px-3 py-1 text-sm font-semibold rounded-full #{params[:category_id].blank? ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}" %>
+
+    <% @categories.each do |category| %>
+      <% is_active = params[:category_id].to_s == category.id.to_s %>
+      <%= link_to category.name, media_items_path(category_id: category.id), class: "px-3 py-1 text-sm font-semibold rounded-full #{is_active ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}" %>
+    <% end %>
+  </div>
+
   <% if notice.present? %>
     <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded-md" role="alert">
       <p class="font-bold">Success</p>
