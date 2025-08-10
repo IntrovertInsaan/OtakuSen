@@ -11,18 +11,28 @@
         </div>
       </div>
 
-      <%# Search Bar Section %>
+      <%# Search Bar Feature %>
       <div class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
-        <%= form_with(url: media_items_path, method: :get, class: "max-w-lg w-full lg:max-w-xs") do |form| %>
+        <%# We attach our new Stimulus controller to the form itself %>
+        <%= form_with(url: media_items_path, method: :get, 
+                      class: "max-w-lg w-full lg:max-w-xs",
+                      data: { 
+                        controller: "search-form", 
+                        turbo_frame: "results" 
+                      }) do |form| %>
+
           <label for="search" class="sr-only">Search</label>
           <div class="relative text-gray-400 focus-within:text-gray-600">
             <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
 
             </div>
+
+            <%# We add a data-action to trigger the controller's search method on input %>
             <%= form.text_field :search, 
                   value: params[:search],
-                  class: "block w-full bg-gray-700 border border-transparent rounded-md py-2 pl-10 pr-3 text-white leading-5 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 sm:text-sm", 
-                  placeholder: "Search by title..." %>
+                  class: "block w-full bg-gray-700 ...", 
+                  placeholder: "Search live...",
+                  data: { action: "input->search-form#search" } %>
           </div>
         <% end %>
       </div>
