@@ -39,8 +39,14 @@
       </div>
       
       <div class="hidden md:block">
-        <div class="ml-4 flex items-center md:ml-6">
-          <%= link_to "Sign Out", new_media_item_path, class: "bg-red-700 text-white px-3 py-2 rounded-md text-sm font-semibold hover:bg-indigo-500" %>
+        <div class="ml-4 flex items-center md:ml-6 space-x-4">
+          <% if user_signed_in? %>
+            <%= link_to "Edit Profile", edit_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+            <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+          <% else %>
+            <%= link_to "Sign up", new_user_registration_path, class: "bg-indigo-600 text-white px-3 py-2 rounded-md text-sm font-semibold hover:bg-indigo-500" %>
+            <%= link_to "Log in", new_user_session_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+          <% end %>
         </div>
       </div>
 

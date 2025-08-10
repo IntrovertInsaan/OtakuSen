@@ -1,6 +1,7 @@
 class MediaItem < ApplicationRecord
   include PgSearch::Model
 
+  belongs_to :user
   belongs_to :category
   has_one_attached :cover_image
 

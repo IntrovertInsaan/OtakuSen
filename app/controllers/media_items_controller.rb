@@ -1,10 +1,12 @@
 class MediaItemsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_media_item, only: %i[ show edit update destroy increment_chapter decrement_chapter ]
   before_action :load_categories, only: %i[ new create edit update ]
 
   # GET /media_items or /media_items.json
   def index
     @categories = Category.all.order(:name)
+    @media_items = current_user.media_items
     @media_items = MediaItem.all
 
     if params[:category_id].present?
@@ -34,7 +36,8 @@ class MediaItemsController < ApplicationController
 
   # POST /media_items or /media_items.json
   def create
-    @media_item = MediaItem.new(media_item_params)
+    @media_item = current_user.media_items.build(media_item_params)
+    # @media_item = MediaItem.new(media_item_params)
 
     respond_to do |format|
       if @media_item.save
