@@ -25,6 +25,25 @@
         <% end %>
 
         <div>
+          <%= f.label :avatar, "Profile Picture", class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2 flex items-center gap-x-3">
+             <% if resource.persisted? && resource.avatar.attached? %>
+              <%= image_tag resource.avatar.variant(resize_to_fill: [48, 48]), class: "h-12 w-12 rounded-full" %>
+            <% else %>
+              <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-400"></div>
+            <% end %>
+            <%= f.file_field :avatar, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100" %>
+          </div>
+        </div>
+      
+        <div>
+          <%= f.label :bio, class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2">
+            <%= f.text_area :bio, rows: 3, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6", placeholder: "Tell us a little about yourself..." %>
+          </div>
+        </div>
+      
+        <div>
           <%= f.label :password, "New Password", class: "block text-sm font-medium leading-6 text-gray-900" %>
           <i class="text-xs text-gray-500">(leave blank if you don't want to change it)</i>
           <div class="mt-2">
