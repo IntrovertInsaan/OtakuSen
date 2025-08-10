@@ -3,27 +3,41 @@ import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables);
 
 export default class extends Controller {
+  // UPDATED: Added "canvas" to the targets array
+  static targets = ["switchButton", "canvas"]
+
   connect() {
-    // Get the data passed from the Rails view
-    const data = JSON.parse(this.element.dataset.statusData)
+    // UPDATED: Now reading data from the canvasTarget's dataset
+    this.statusData = JSON.parse(this.canvasTarget.dataset.statusData)
+    this.categoryData = JSON.parse(this.canvasTarget.dataset.categoryData)
+
+    this.renderChart(this.statusData, 'Items by Status')
+  }
+
+  showStatus(event) {
+    this.updateChart(this.statusData, 'Items by Status')
+    this.setActiveButton(event.currentTarget)
+  }
+
+  showCategory(event) {
+    this.updateChart(this.categoryData, 'Items by Category')
+    this.setActiveButton(event.currentTarget)
+  }
+
+  renderChart(data, label) {
     const labels = Object.keys(data)
     const values = Object.values(data)
+    const backgroundColors = this.generateColors(labels.length)
 
-    // Initialize a new chart
-    new Chart(this.element, {
+    // UPDATED: Now creating the chart on the canvasTarget
+    this.chart = new Chart(this.canvasTarget, {
       type: 'pie',
       data: {
         labels: labels,
         datasets: [{
-          label: 'Items by Status',
+          label: label,
           data: values,
-          backgroundColor: [
-            'rgb(54, 162, 235)',  // Blue
-            'rgb(75, 192, 192)',  // Green
-            'rgb(255, 205, 86)',  // Yellow
-            'rgb(255, 99, 132)',   // Red
-            'rgb(153, 102, 255)'  // Purple
-          ],
+          backgroundColor: backgroundColors,
           hoverOffset: 4
         }]
       },
@@ -32,5 +46,36 @@ export default class extends Controller {
         maintainAspectRatio: false,
       }
     });
+  }
+
+  updateChart(data, label) {
+    // ... this method remains the same ...
+    const labels = Object.keys(data)
+    const values = Object.values(data)
+    const backgroundColors = this.generateColors(labels.length)
+    this.chart.data.labels = labels;
+    this.chart.data.datasets[0].data = values;
+    this.chart.data.datasets[0].label = label;
+    this.chart.data.datasets[0].backgroundColor = backgroundColors;
+    this.chart.update();
+  }
+
+  setActiveButton(activeButton) {
+    // ... this method remains the same ...
+    this.switchButtonTargets.forEach(button => {
+      button.classList.remove('bg-white', 'text-indigo-600', 'shadow')
+      button.classList.add('text-gray-600')
+    })
+    activeButton.classList.add('bg-white', 'text-indigo-600', 'shadow')
+    activeButton.classList.remove('text-gray-600')
+  }
+
+  generateColors(count) {
+    // ... this method remains the same ...
+    const colors = [
+      '#4f46e5', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#3b82f6',
+      '#06b6d4', '#d946ef', '#ec4899', '#f97316', '#a3e635', '#64748b'
+    ]
+    return Array.from({ length: count }, (_, i) => colors[i % colors.length]);
   }
 }
