@@ -5,8 +5,8 @@ Category.destroy_all
 puts "Creating Categories..."
 
 categories = [
-  "Manga", "Manhwa", "Manhua", "Light Novel", "Web Novel", "Anime",
-  "Movies", "TV Series", "Web Series", "Documentary", "Song"
+  "Manga", "Manhwa", "Manhua", "Light Novel", "Anime",
+  "Movies", "TV Series", "Web Series", "Documentary", "Song", "Book"
 ]
 
 categories.each do |cat_name|
