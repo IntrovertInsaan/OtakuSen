@@ -43,14 +43,13 @@
       <div class="hidden md:block">
         <div class="ml-4 flex items-center md:ml-6 space-x-4">
           <% if user_signed_in? %>
-            <%= link_to "Edit Profile", edit_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
-            
             <% if current_user.avatar.attached? %>
               <%= image_tag current_user.avatar.variant(resize_to_fill: [32, 32]), class: "h-8 w-8 rounded-full" %>
             <% else %>
               <div class="h-8 w-8 rounded-full bg-gray-700 flex items-center justify-center text-gray-400"></div>
             <% end %>
 
+            <%= link_to "Edit Profile", edit_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
             <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
           <% else %>
             <%= link_to "Sign up", new_user_registration_path, class: "bg-indigo-600 text-white px-3 py-2 rounded-md text-sm font-semibold hover:bg-indigo-500" %>
