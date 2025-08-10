@@ -18,6 +18,14 @@
       <% @media_items.each do |media_item| %>
         <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
           
+          <% if media_item.cover_image.attached? %>
+            <%= image_tag media_item.cover_image.variant(resize_to_fill: [400, 300]), class: "w-full h-48 object-cover" %>
+          <% else %>
+            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+              <span class="text-gray-400 text-sm">No Image</span>
+            </div>
+          <% end %>
+
           <div class="p-6">
             <p class="text-sm font-semibold text-indigo-600 uppercase tracking-wider"><%= media_item.category.name %></p>
             <h2 class="text-2xl font-bold text-gray-800 mt-1 truncate" title="<%= media_item.title %>">
