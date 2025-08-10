@@ -4,8 +4,15 @@
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
     <div class="bg-white rounded-lg shadow p-6">
-      <p class="text-sm font-medium text-gray-500">Total Items</p>
-      <p class="mt-1 text-4xl font-semibold text-gray-900"><%= @total_items %></p>
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-sm font-medium text-gray-500">Total Items</p>
+          <p class="mt-1 text-4xl font-semibold text-gray-900"><%= @total_items %></p>
+        </div>
+        <%= link_to "View Public Profile →", profile_path(current_user), 
+              class: "text-sm font-medium text-indigo-600 hover:text-indigo-800",
+              target: "_blank" %>
+      </div>
     </div>
 
     <div class="bg-white rounded-lg shadow p-6">

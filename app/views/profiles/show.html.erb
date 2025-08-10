@@ -1,0 +1,30 @@
+<div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900"><%= @user.email %>'s Collection</h1>
+  </div>
+
+  <div class="mb-8 flex items-center flex-wrap gap-2">
+    <span class="text-sm font-medium text-gray-700 mr-2">Filter by:</span>
+
+    <%# This link points back to the base profile page to clear the filter %>
+    <%= link_to "All", profile_path(@user), class: "px-3 py-1 text-sm font-semibold rounded-full #{params[:category_id].blank? ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}" %>
+
+    <% @categories.each do |category| %>
+      <% is_active = params[:category_id].to_s == category.id.to_s %>
+      <%# The link now correctly points to the profile path with the category filter %>
+      <%= link_to category.name, profile_path(@user, category_id: category.id), class: "px-3 py-1 text-sm font-semibold rounded-full #{is_active ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}" %>
+    <% end %>
+  </div>
+
+  <% if @media_items.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <%= render @media_items %>
+    </div>
+  <% else %>
+    <div class="text-center py-16 px-6 bg-white rounded-lg shadow-md">
+      <h3 class="text-xl font-semibold text-gray-800">No results found for this filter.</h3>
+    </div>
+  <% end %>
+
+</div>
