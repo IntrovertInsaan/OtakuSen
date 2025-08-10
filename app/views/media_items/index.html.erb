@@ -33,6 +33,11 @@
         <%= render @media_items %>
         
       </div>
+
+      <div class="mt-12">
+        <%== pagy_nav(@pagy) %>
+      </div>
+
     <% else %>
       <div class="text-center py-16 px-6 bg-white rounded-lg shadow-md">
         <h3 class="text-xl font-semibold text-gray-800">No results found.</h3>
