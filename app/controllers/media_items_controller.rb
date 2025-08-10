@@ -1,9 +1,10 @@
 class MediaItemsController < ApplicationController
   before_action :set_media_item, only: %i[ show edit update destroy ]
+  before_action :load_categories, only: %i[ new create edit update ]
 
   # GET /media_items or /media_items.json
   def index
-    @media_items = MediaItem.all
+    @media_items = MediaItem.all.order(created_at: :desc)
   end
 
   # GET /media_items/1 or /media_items/1.json
@@ -61,6 +62,10 @@ class MediaItemsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_media_item
       @media_item = MediaItem.find(params.expect(:id))
+    end
+
+    def load_categories
+      @categories = Category.all.order(:name)
     end
 
     # Only allow a list of trusted parameters through.
