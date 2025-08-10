@@ -6,5 +6,7 @@ class User < ApplicationRecord
 
   has_many :media_items, dependent: :destroy
 
+  has_one_attached :avatar
+
   validates :username, presence: true, uniqueness: { case_sensitive: false }
 end
