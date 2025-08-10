@@ -39,12 +39,25 @@
       </ul>
     </div>
 
-    <div class="bg-white rounded-lg shadow p-6 md:col-span-3">
-      <h3 class="text-lg font-medium text-gray-700 mb-4">Collection Status</h3>
-      
+    <%# New Switch Pie Chart %>
+    <div class="bg-white rounded-lg shadow p-6 md:col-span-3" data-controller="pie-chart">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-medium text-gray-700">Collection Stats</h3>
+    
+        <div class="flex items-center space-x-1 bg-gray-100 p-1 rounded-lg">
+          <button data-action="click->pie-chart#showStatus" data-pie-chart-target="switchButton" class="px-3 py-1 text-sm font-semibold rounded-md bg-white text-indigo-600 shadow">
+            By Status
+          </button>
+          <button data-action="click->pie-chart#showCategory" data-pie-chart-target="switchButton" class="px-3 py-1 text-sm font-semibold rounded-md text-gray-600">
+            By Category
+          </button>
+        </div>
+      </div>
+    
       <div class="h-96">
-        <canvas data-controller="pie-chart"
-                data-status-data="<%= @items_by_status.to_json %>">
+        <canvas data-pie-chart-target="canvas"
+                data-status-data="<%= @items_by_status.to_json %>"
+                data-category-data="<%= @items_by_category.to_json %>">
         </canvas>
       </div>
     </div>
