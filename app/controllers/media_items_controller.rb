@@ -7,7 +7,6 @@ class MediaItemsController < ApplicationController
   def index
     @categories = Category.all.order(:name)
     @media_items = current_user.media_items
-    @media_items = MediaItem.all
 
     if params[:category_id].present?
       @media_items = @media_items.where(category_id: params[:category_id])
@@ -15,10 +14,10 @@ class MediaItemsController < ApplicationController
 
     # For Filtering in SEARCH
     if params[:search].present?
-       @media_items = @media_items.search_by_title_and_description(params[:search])
+      @media_items = @media_items.search_by_title_and_description(params[:search])
     end
 
-    @media_items = @media_items.order(created_at: :desc)
+    @pagy, @media_items = pagy(@media_items.order(created_at: :desc))
   end
 
   # GET /media_items/1 or /media_items/1.json
