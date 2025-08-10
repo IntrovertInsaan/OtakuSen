@@ -1,5 +1,5 @@
 class MediaItemsController < ApplicationController
-  before_action :set_media_item, only: %i[ show edit update destroy ]
+  before_action :set_media_item, only: %i[ show edit update destroy increment_chapter decrement_chapter ]
   before_action :load_categories, only: %i[ new create edit update ]
 
   # GET /media_items or /media_items.json
@@ -68,6 +68,16 @@ class MediaItemsController < ApplicationController
       format.html { redirect_to media_items_path, notice: "Media item was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
+  end
+
+  def increment_chapter
+    @media_item.increment!(:chapters_read)
+    render turbo_stream: turbo_stream.replace(@media_item)
+  end
+
+  def decrement_chapter
+    @media_item.decrement!(:chapters_read)
+    render turbo_stream: turbo_stream.replace(@media_item)
   end
 
   private
