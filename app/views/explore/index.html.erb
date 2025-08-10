@@ -20,6 +20,11 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <%= render @media_items %>
     </div>
+
+    <div class="mt-12">
+      <%== pagy_nav(@pagy) %>
+    </div>
+    
   <% else %>
     <div class="text-center py-16 px-6 bg-white rounded-lg shadow-md">
       <h3 class="text-xl font-semibold text-gray-800">No results found.</h3>

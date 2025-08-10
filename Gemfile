@@ -69,3 +69,5 @@ gem "image_processing", "~> 1.14"
 gem "pg_search", "~> 2.3"
 
 gem "devise", "~> 4.9"
+
+gem "pagy", "~> 9.3"
