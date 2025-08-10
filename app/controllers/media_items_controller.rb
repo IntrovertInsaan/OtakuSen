@@ -70,6 +70,6 @@ class MediaItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def media_item_params
-      params.expect(media_item: [ :title, :description, :status, :rating, :category_id ])
+      params.expect(media_item: [ :title, :description, :status, :rating, :category_id, :cover_image ])
     end
 end
