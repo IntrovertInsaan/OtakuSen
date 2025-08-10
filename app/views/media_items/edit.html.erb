@@ -1,0 +1,12 @@
+<% content_for :title, "Editing media item" %>
+
+<h1>Editing media item</h1>
+
+<%= render "form", media_item: @media_item %>
+
+<br>
+
+<div>
+  <%= link_to "Show this media item", @media_item %> |
+  <%= link_to "Back to media items", media_items_path %>
+</div>
