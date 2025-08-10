@@ -1,10 +1,59 @@
-<p style="color: green"><%= notice %></p>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+    <div class="grid grid-cols-1 md:grid-cols-3">
 
-<%= render @media_item %>
+      <div class="md:col-span-1">
+        <% if @media_item.cover_image.attached? %>
+          <%= image_tag @media_item.cover_image, class: "w-full h-full object-cover" %>
+        <% else %>
+          <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+            <span class="text-gray-500">No Image</span>
+          </div>
+        <% end %>
+      </div>
 
-<div>
-  <%= link_to "Edit this media item", edit_media_item_path(@media_item) %> |
-  <%= link_to "Back to media items", media_items_path %>
+      <div class="md:col-span-2 p-6 md:p-8 flex flex-col">
+        <div>
+          <p class="text-base font-semibold text-indigo-600 uppercase tracking-wider"><%= @media_item.category.name %></p>
+          <h1 class="text-4xl font-bold text-gray-900 mt-1"><%= @media_item.title %></h1>
 
-  <%= button_to "Destroy this media item", @media_item, method: :delete %>
+          <div class="flex items-center flex-wrap gap-2 mt-4">
+            <span class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
+              <%= @media_item.status %>
+            </span>
+            <% if @media_item.rating.present? %>
+              <span class="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-sm font-medium text-yellow-800">
+                ⭐ <%= @media_item.rating %> / 10
+              </span>
+            <% end %>
+          </div>
+
+          <% if @media_item.chapters_read.present? %>
+            <div class="mt-6">
+              <div class="flex justify-between text-sm font-medium text-gray-600">
+                <span>Chapters</span>
+                <span>
+                  <%= @media_item.chapters_read %> / <%= @media_item.total_chapters.presence || '?' %>
+                </span>
+              </div>
+              <% progress = @media_item.total_chapters.to_i > 0 ? (@media_item.chapters_read.to_f / @media_item.total_chapters.to_f) * 100 : 0 %>
+              <div class="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+                <div class="bg-blue-600 h-2.5 rounded-full" style="width: <%= progress %>%"></div>
+              </div>
+            </div>
+          <% end %>
+
+          <p class="text-gray-700 text-base leading-relaxed mt-6">
+            <%= @media_item.description %>
+          </p>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-gray-200 flex items-center gap-4 flex-wrap">
+          <%= link_to "Edit Item", edit_media_item_path(@media_item), class: "inline-block bg-indigo-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-indigo-700" %>
+          <%= button_to "Destroy", @media_item, method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "inline-block bg-red-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-red-700" %>
+          <%= link_to "← Back to Collection", media_items_path, class: "text-indigo-600 font-medium hover:text-indigo-800 ml-auto" %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

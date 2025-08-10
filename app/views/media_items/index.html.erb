@@ -42,13 +42,14 @@
                 </div>
               <% end %>
             </div>
-  
+ 
             <div class="w-2/3 p-4 flex flex-col justify-between">
-  
+ 
               <div>
                 <p class="text-sm font-semibold text-indigo-600 uppercase tracking-wider"><%= media_item.category.name %></p>
                 <h2 class="text-xl font-bold text-gray-800 mt-1 truncate" title="<%= media_item.title %>">
-                  <%= link_to media_item.title, media_item, class: "hover:text-indigo-700" %>
+                  <%# NEW: Added data-turbo-frame attribute to escape the frame %>
+                  <%= link_to media_item.title, media_item, data: { turbo_frame: "_top" }, class: "hover:text-indigo-700" %>
                 </h2>
                 
                 <div class="flex items-center flex-wrap gap-2 mt-2">
@@ -65,7 +66,7 @@
                 <p class="text-gray-600 text-sm leading-relaxed mt-3">
                   <%= truncate(media_item.description, length: 80) %>
                 </p>
-  
+ 
                 <% if media_item.chapters_read.present? %>
                   <div class="mt-4">
                     <div class="flex justify-between text-xs font-medium text-gray-500">
@@ -81,12 +82,6 @@
                   </div>
                 <% end %>
               </div>
-  
-              <div class="flex justify-end space-x-3 mt-4">
-                <%= link_to "Edit", edit_media_item_path(media_item), class: "text-sm font-medium text-indigo-600 hover:text-indigo-900" %>
-                <%= button_to "Destroy", media_item, method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "text-sm font-medium text-red-600 hover:text-red-900" %>
-              </div>
-  
             </div>
           </div>
         <% end %>
@@ -94,9 +89,8 @@
       </div>
     <% else %>
       <div class="text-center py-16 px-6 bg-white rounded-lg shadow-md">
-        
-        <h3 class="text-xl font-semibold text-gray-800">Your collection is empty!</h3>
-        <p class="text-gray-500 mt-2">Click the "Add New Item" button to start organizing your media.</p>
+        <h3 class="text-xl font-semibold text-gray-800">No results found.</h3>
+        <p class="text-gray-500 mt-2">Try adjusting your search or filter.</p>
       </div>
     <% end %>
   <% end %>
