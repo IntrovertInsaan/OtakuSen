@@ -5,4 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :media_items, dependent: :destroy
+
+  validates :username, presence: true, uniqueness: { case_sensitive: false }
 end
