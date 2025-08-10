@@ -38,13 +38,17 @@
           <div class="flex justify-between items-center text-xs font-medium text-gray-500">
             <span>Chapters</span>
             <div class="flex items-center gap-2">
-              <%= button_to "-", decrement_chapter_media_item_path(media_item), method: :patch, class: "flex items-center justify-center h-5 w-5 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300 transition" %>
+              <% if user_signed_in? && current_user == media_item.user %>
+                <%= button_to "-", decrement_chapter_media_item_path(media_item), method: :patch, class: "flex items-center justify-center h-5 w-5 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300 transition" %>
+              <% end %>
 
               <span>
                 <%= media_item.chapters_read %> / <%= media_item.total_chapters.presence || '?' %>
               </span>
 
-              <%= button_to "+", increment_chapter_media_item_path(media_item), method: :patch, class: "flex items-center justify-center h-5 w-5 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300 transition" %>
+              <% if user_signed_in? && current_user == media_item.user %>
+                <%= button_to "+", increment_chapter_media_item_path(media_item), method: :patch, class: "flex items-center justify-center h-5 w-5 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300 transition" %>
+              <% end %>
             </div>
           </div>
           <% progress = media_item.total_chapters.to_i > 0 ? (media_item.chapters_read.to_f / media_item.total_chapters.to_f) * 100 : 0 %>
