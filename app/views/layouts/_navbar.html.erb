@@ -1,63 +1,126 @@
-<nav class="bg-gray-900 shadow-lg">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16">
-      
-      <div class="flex items-center">
-        <%= link_to "OtakuSen", profile_path(1), class: "text-white text-2xl font-bold tracking-tight" %>
-        
-        <div class="hidden md:block">
-          <div class="ml-10 flex items-baseline space-x-4">
-            <% if user_signed_in? %>
-              <%= link_to "My Collection", media_items_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
-              <%= link_to "Dashboard", dashboard_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
-            <% end %>
-          </div>
-        </div>
+<nav class="navbar bg-base-300 shadow-lg px-4">
+  <!-- Left: Hamburger for mobile -->
+  <div class="flex-none lg:hidden">
+    <label for="menu-drawer" class="btn btn-square btn-ghost">
+      <%= icon "bars-3", class: "h-10 w-10" %>
+    </label>
+  </div>
+
+  <!-- Drawer toggle -->
+  <input id="menu-drawer" type="checkbox" class="drawer-toggle hidden" />
+
+  <!-- Logo -->
+  <div class="flex-none">
+    <%= link_to "OtakuSen", profile_path(1), class: "btn btn-ghost normal-case text-2xl font-bold" %>
+  </div>
+
+  <!-- Desktop menu -->
+  <div class="flex-none hidden lg:flex ml-4">
+    <% if user_signed_in? %>
+      <%= link_to "My Collection", media_items_path, class: "btn btn-ghost" %>
+      <%= link_to "Dashboard", dashboard_path, class: "btn btn-ghost" %>
+    <% end %>
+  </div>
+
+  <!-- Spacer -->
+  <div class="flex-1"></div>
+
+  <!-- Right side: Search + Auth buttons -->
+  <div class="flex items-center gap-3">
+    <%# Search %>
+    <%= form_with(url: media_items_path, method: :get, class: "form-control", 
+                  data: { controller: "search-form", turbo_frame: "results" }) do |form| %>
+      <label class="input input-bordered flex items-center gap-2 bg-base-200">
+        <%= icon "magnifying-glass", class: "h-5 w-5 opacity-70" %>
+        <%= form.text_field :search, value: params[:search],
+              placeholder: "Search bar...",
+              class: "grow bg-transparent border-none focus:outline-none",
+              data: { action: "input->search-form#search" } %>
+      </label>
+    <% end %>
+
+    <%# Avatar %>
+    <% if user_signed_in? %>
+      <% if current_user.avatar.attached? %>
+        <%= image_tag current_user.avatar.variant(resize_to_fill: [32, 32]), class: "h-8 w-8 rounded-full" %>
+      <% else %>
+        <div class="h-8 w-8 rounded-full bg-gray-700 flex items-center justify-center text-gray-400"></div>
+      <% end %>
+      <div class="flex gap-2">
+        <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-ghost px-3" %>
+        <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-ghost px-3" %>
+      </div>
+    <% else %>
+      <div class="flex gap-2">
+        <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary" %>
+        <%= link_to "Log in", new_user_session_path, class: "btn btn-ghost" %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Drawer (mobile menu) -->
+  <div class="drawer-side z-50">
+    <label for="menu-drawer" class="drawer-overlay"></label>
+    <div class="w-72 bg-base-200 h-full flex flex-col">
+
+      <!-- Header -->
+      <div class="p-4 bg-base-300 border-b border-base-300">
+        <%= link_to "OtakuSen", profile_path(1), class: "text-lg font-bold" %>
       </div>
 
-      <div class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
-        <%= form_with(url: media_items_path, method: :get, 
-                      class: "max-w-lg w-full lg:max-w-xs",
-                      data: { 
-                        controller: "search-form", 
-                        turbo_frame: "results" 
-                      }) do |form| %>
-
-          <label for="search" class="sr-only">Search</label>
-          <div class="relative text-gray-400 focus-within:text-gray-200">
-            <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-              <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 monolithic="true" 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-              </svg>
-            </div>
-
-            <%= form.text_field :search, 
-                  value: params[:search],
-                  class: "block w-full bg-gray-700 border border-transparent rounded-md py-2 pl-10 pr-3 text-white leading-5 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 sm:text-sm", 
-                  placeholder: "Search live...",
-                  data: { action: "input->search-form#search" } %>
-          </div>
-        <% end %>
-      </div>
-      
-      <div class="hidden md:block">
-        <div class="ml-4 flex items-center md:ml-6 space-x-4">
-          <% if user_signed_in? %>
-            <% if current_user.avatar.attached? %>
-              <%= image_tag current_user.avatar.variant(resize_to_fill: [32, 32]), class: "h-8 w-8 rounded-full" %>
-            <% else %>
-              <div class="h-8 w-8 rounded-full bg-gray-700 flex items-center justify-center text-gray-400"></div>
-            <% end %>
-
-            <%= link_to "Edit Profile", edit_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
-            <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+      <!-- User info -->
+      <% if user_signed_in? %>
+        <div class="p-4 flex items-center gap-3 border-b border-base-300 bg-base-100">
+          <% if current_user.avatar.attached? %>
+            <%= image_tag current_user.avatar.variant(resize_to_fill: [48, 48]), class: "h-12 w-12 rounded-full shadow-md" %>
           <% else %>
-            <%= link_to "Sign up", new_user_registration_path, class: "bg-indigo-600 text-white px-3 py-2 rounded-md text-sm font-semibold hover:bg-indigo-500" %>
-            <%= link_to "Log in", new_user_session_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+            <div class="h-12 w-12 rounded-full bg-gray-700 flex items-center justify-center text-gray-400"></div>
           <% end %>
+          <div>
+            <p class="font-semibold text-base"><%= current_user.username || "User" %></p>
+            <%= link_to "View Profile", profile_path(current_user), class: "text-xs text-primary hover:underline" %>
+          </div>
         </div>
-      </div>
+      <% end %>
 
+      <!-- Menu items -->
+      <ul class="menu flex-1 p-4 text-base-content space-y-2">
+        <% if user_signed_in? %>
+          <li>
+            <%= link_to media_items_path, class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-300" do %>
+              <%= icon "rectangle-stack", class: "h-8 w-8" %>
+              <span>My Collection</span>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to dashboard_path, class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-300" do %>
+              <%= icon "chart-bar", class: "h-8 w-8" %>
+              <span>Dashboard</span>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to edit_user_registration_path, class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-300" do %>
+              <%= icon "cog-8-tooth", class: "h-8 w-8" %>
+              <span>Edit Profile</span>
+            <% end %>
+          </li>
+          <li>
+            <%= button_to destroy_user_session_path, method: :delete, 
+                  class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-error hover:text-white w-full text-left font-semibold" do %>
+              <%= icon "arrow-right-on-rectangle", class: "h-8 w-8" %>
+              <span>Log out</span>
+            <% end %>
+          </li>
+        <% else %>
+          <li><%= link_to "Sign up", new_user_registration_path, class: "hover:bg-base-300 rounded-lg px-3 py-2" %></li>
+          <li><%= link_to "Log in", new_user_session_path, class: "hover:bg-base-300 rounded-lg px-3 py-2" %></li>
+        <% end %>
+      </ul>
+
+      <!-- Footer -->
+      <div class="p-4 border-t border-base-300 text-xs text-gray-500 text-center">
+        &copy; <%= Time.current.year %> OtakuSen
+      </div>
     </div>
   </div>
 </nav>
