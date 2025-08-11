@@ -33,22 +33,63 @@
       <label class="input input-bordered flex items-center gap-2 bg-base-200">
         <%= icon "magnifying-glass", class: "h-5 w-5 opacity-70" %>
         <%= form.text_field :search, value: params[:search],
-              placeholder: "Search bar...",
+              placeholder: "Search...",
               class: "grow bg-transparent border-none focus:outline-none",
               data: { action: "input->search-form#search" } %>
       </label>
     <% end %>
 
-    <%# Avatar %>
+    <%# Avatar / Auth %>
     <% if user_signed_in? %>
-      <% if current_user.avatar.attached? %>
-        <%= image_tag current_user.avatar.variant(resize_to_fill: [32, 32]), class: "h-8 w-8 rounded-full" %>
-      <% else %>
-        <div class="h-8 w-8 rounded-full bg-gray-700 flex items-center justify-center text-gray-400"></div>
-      <% end %>
-      <div class="flex gap-2">
-        <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-ghost px-3" %>
-        <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-ghost px-3" %>
+      <!-- Avatar dropdown (desktop & responsive) -->
+      <div class="relative" data-controller="dropdown">
+        <button type="button" 
+                data-action="click->dropdown#toggle" 
+                class="flex items-center rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+          <span class="sr-only">Open user menu</span>
+          <% if current_user.avatar.attached? %>
+            <%= image_tag current_user.avatar.variant(resize_to_fill: [40, 40]), class: "h-10 w-10 rounded-full shadow-md" %>
+          <% else %>
+            <div class="h-10 w-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-400 shadow-md">
+              <%= icon "user", class: "h-6 w-6" %>
+            </div>
+          <% end %>
+        </button>
+
+        <div data-dropdown-target="menu" 
+             class="hidden absolute right-0 z-10 mt-2 w-64 origin-top-right rounded-xl bg-base-100 shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
+          <!-- Profile Header -->
+          <div class="flex items-center gap-3 p-4 bg-base-200 border-b border-base-300">
+            <% if current_user.avatar.attached? %>
+              <%= image_tag current_user.avatar.variant(resize_to_fill: [48, 48]), class: "h-12 w-12 rounded-full shadow-md" %>
+            <% else %>
+              <div class="h-12 w-12 rounded-full bg-gray-700 flex items-center justify-center text-gray-400">
+                <%= icon "user", class: "h-6 w-6" %>
+              </div>
+            <% end %>
+            <div>
+              <p class="font-semibold text-base"><%= current_user.username %></p>
+              <p class="text-xs text-gray-500">Signed in as</p>
+            </div>
+          </div>
+
+          <!-- Menu Links -->
+          <ul class="menu p-2 text-base-content">
+            <li>
+              <%= link_to edit_user_registration_path, class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-300" do %>
+                <%= icon "cog-8-tooth", class: "h-5 w-5" %>
+                <span>Edit Profile</span>
+              <% end %>
+            </li>
+            <li>
+              <%= button_to destroy_user_session_path, method: :delete, 
+                    class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-error hover:text-white w-full text-left font-semibold" do %>
+                <%= icon "arrow-right-on-rectangle", class: "h-5 w-5" %>
+                <span>Log out</span>
+              <% end %>
+            </li>
+          </ul>
+        </div>
       </div>
     <% else %>
       <div class="flex gap-2">
