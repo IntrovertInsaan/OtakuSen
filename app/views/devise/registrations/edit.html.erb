@@ -1,88 +1,99 @@
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <div class="bg-white rounded-lg shadow-xl p-6 md:p-8">
-    <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-6">Edit Profile</h2>
+  <%# The card background now uses bg-base-100, which adapts to the current theme %>
+  <div class="bg-base-100 rounded-lg shadow-xl p-6 md:p-8">
+    <%# The header text now uses text-base-content, the default text color for the theme %>
+    <h2 class="text-3xl font-bold tracking-tight text-base-content mb-6">Edit Profile</h2>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
-      <div>
-        <%= f.label :username, class: "block text-sm font-medium leading-6 text-gray-900" %>
-        <div class="mt-2">
-          <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
-        </div>
-      </div>
-
       <div class="space-y-6">
         <div>
-          <%= f.label :email, class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <%# Form labels use the default text color %>
+          <%= f.label :username, class: "block text-sm font-medium leading-6 text-base-content" %>
           <div class="mt-2">
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300" %>
+            <%# Input fields now use DaisyUI's "input" class for consistent styling %>
+            <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "input input-bordered w-full" %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.label :email, class: "block text-sm font-medium leading-6 text-base-content" %>
+          <div class="mt-2">
+            <%= f.email_field :email, autocomplete: "email", class: "input input-bordered w-full" %>
           </div>
         </div>
 
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-          <div class="text-sm text-gray-600">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+          <div class="text-sm text-base-content/70">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
         <% end %>
 
         <div>
-          <%= f.label :avatar, "Profile Picture", class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <%= f.label :avatar, "Profile Picture", class: "block text-sm font-medium leading-6 text-base-content" %>
           <div class="mt-2 flex items-center gap-x-3">
-             <% if resource.persisted? && resource.avatar.attached? %>
+            <% if resource.persisted? && resource.avatar.attached? %>
               <%= image_tag resource.avatar.variant(resize_to_fill: [48, 48]), class: "h-12 w-12 rounded-full" %>
             <% else %>
-              <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-400"></div>
+              <%# The placeholder background now uses a theme-aware color %>
+              <div class="h-12 w-12 rounded-full bg-base-200 flex items-center justify-center text-base-content/50">
+                <%= icon "user", class: "w-6 h-6" %>
+              </div>
             <% end %>
-            <%= f.file_field :avatar, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100" %>
+            <%# The file input now uses DaisyUI's "file-input" class %>
+            <%= f.file_field :avatar, class: "file-input file-input-bordered w-full" %>
           </div>
         </div>
       
         <div>
-          <%= f.label :bio, class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <%= f.label :bio, class: "block text-sm font-medium leading-6 text-base-content" %>
           <div class="mt-2">
-            <%= f.text_area :bio, rows: 3, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6", placeholder: "Tell us a little about yourself..." %>
+            <%# The textarea now uses DaisyUI's "textarea" class %>
+            <%= f.text_area :bio, rows: 3, class: "textarea textarea-bordered w-full", placeholder: "Tell us a little about yourself..." %>
           </div>
         </div>
       
         <div>
-          <%= f.label :password, "New Password", class: "block text-sm font-medium leading-6 text-gray-900" %>
-          <i class="text-xs text-gray-500">(leave blank if you don't want to change it)</i>
+          <%= f.label :password, "New Password", class: "block text-sm font-medium leading-6 text-base-content" %>
+          <i class="text-xs text-base-content/60">(leave blank if you don't want to change it)</i>
           <div class="mt-2">
-            <%= f.password_field :password, autocomplete: "new-password", class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300" %>
+            <%= f.password_field :password, autocomplete: "new-password", class: "input input-bordered w-full" %>
           </div>
         </div>
 
         <div>
-          <%= f.label :password_confirmation, class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <%= f.label :password_confirmation, class: "block text-sm font-medium leading-6 text-base-content" %>
           <div class="mt-2">
-            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300" %>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-bordered w-full" %>
           </div>
         </div>
 
-        <div class="border-t border-gray-200 pt-6">
-          <%= f.label :current_password, class: "block text-sm font-medium leading-6 text-gray-900" %>
-          <i class="text-xs text-gray-500">(we need your current password to confirm your changes)</i>
+        <div class="border-t border-base-300 pt-6">
+          <%= f.label :current_password, class: "block text-sm font-medium leading-6 text-base-content" %>
+          <i class="text-xs text-base-content/60">(we need your current password to confirm your changes)</i>
           <div class="mt-2">
-            <%= f.password_field :current_password, autocomplete: "current-password", class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300" %>
+            <%= f.password_field :current_password, autocomplete: "current-password", class: "input input-bordered w-full" %>
           </div>
         </div>
 
         <div>
-          <%= f.submit "Update Profile", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 cursor-pointer" %>
+          <%# The submit button now uses "btn" and "btn-primary" for theme consistency %>
+          <%= f.submit "Update Profile", class: "btn btn-primary w-full" %>
         </div>
       </div>
     <% end %>
     
-    <div class="border-t border-gray-200 mt-8 pt-6">
+    <div class="border-t border-base-300 mt-8 pt-6">
       <div class="flex justify-between items-center">
         <div>
-          <h3 class="text-lg font-medium text-gray-900">Cancel Account</h3>
-          <p class="mt-1 text-sm text-gray-600">Once you cancel your account, there is no going back. Please be certain.</p>
+          <h3 class="text-lg font-medium text-base-content">Cancel Account</h3>
+          <p class="mt-1 text-sm text-base-content/70">Once you cancel your account, there is no going back. Please be certain.</p>
         </div>
         <div class="ml-4">
+          <%# The cancel button now uses "btn-error" to adopt the theme's danger color %>
           <%= button_to "Cancel Account", registration_path(resource_name), 
                 data: { turbo_confirm: "Are you sure you want to permanently delete your account?" }, 
                 method: :delete, 
-                class: "bg-red-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-red-700" %>
+                class: "btn btn-error" %>
         </div>
       </div>
     </div>

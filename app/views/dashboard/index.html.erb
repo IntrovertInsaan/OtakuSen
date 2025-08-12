@@ -1,64 +1,77 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <h1 class="text-3xl font-bold tracking-tight text-gray-900 mb-8">My Dashboard</h1>
+  <%# The header text now uses the theme's default text color %>
+  <h1 class="text-3xl font-bold tracking-tight text-base-content mb-8">My Dashboard</h1>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-    <div class="bg-white rounded-lg shadow p-6">
-      <div class="flex justify-between items-start">
-        <div>
-          <p class="text-sm font-medium text-gray-500">Total Items</p>
-          <p class="mt-1 text-4xl font-semibold text-gray-900"><%= @total_items %></p>
+    <%# The stat cards now use DaisyUI's "card" and "stat" components for a consistent, themed look %>
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <div class="stat">
+          <div class="stat-title">Total Items</div>
+          <div class="stat-value"><%= @total_items %></div>
+          <div class="stat-actions">
+            <%= link_to "View Public Profile →", profile_path(current_user), 
+                  class: "link link-primary link-hover text-sm",
+                  target: "_blank" %>
+          </div>
         </div>
-        <%= link_to "View Public Profile →", profile_path(current_user), 
-              class: "text-sm font-medium text-indigo-600 hover:text-indigo-800",
-              target: "_blank" %>
+      </div>
+    </div>
+
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">By Category</h2>
+        <ul class="space-y-2 mt-4">
+          <% @items_by_category.each do |name, count| %>
+            <li class="flex justify-between items-center">
+              <span class="text-base-content"><%= name %></span>
+              <%# The count badges now use the "badge" and "badge-primary" classes %>
+              <div class="badge badge-primary"><%= count %></div>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow p-6">
-      <p class="text-sm font-medium text-gray-500 mb-4">By Category</p>
-      <ul class="space-y-2">
-        <% @items_by_category.each do |name, count| %>
-          <li class="flex justify-between items-center">
-            <span class="text-gray-800"><%= name %></span>
-            <span class="font-semibold text-indigo-600 bg-indigo-100 px-2 py-0.5 rounded-full text-sm"><%= count %></span>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-
-    <div class="bg-white rounded-lg shadow p-6">
-      <p class="text-sm font-medium text-gray-500 mb-4">By Status</p>
-      <ul class="space-y-2">
-        <% @items_by_status.each do |name, count| %>
-          <li class="flex justify-between items-center">
-            <span class="text-gray-800"><%= name %></span>
-            <span class="font-semibold text-green-600 bg-green-100 px-2 py-0.5 rounded-full text-sm"><%= count %></span>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-
-    <%# New Switch Pie Chart %>
-    <div class="bg-white rounded-lg shadow p-6 md:col-span-3" data-controller="pie-chart">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-medium text-gray-700">Collection Stats</h3>
-    
-        <div class="flex items-center space-x-1 bg-gray-100 p-1 rounded-lg">
-          <button data-action="click->pie-chart#showStatus" data-pie-chart-target="switchButton" class="px-3 py-1 text-sm font-semibold rounded-md bg-white text-indigo-600 shadow">
-            By Status
-          </button>
-          <button data-action="click->pie-chart#showCategory" data-pie-chart-target="switchButton" class="px-3 py-1 text-sm font-semibold rounded-md text-gray-600">
-            By Category
-          </button>
-        </div>
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">By Status</h2>
+        <ul class="space-y-2 mt-4">
+          <% @items_by_status.each do |name, count| %>
+            <li class="flex justify-between items-center">
+              <span class="text-base-content"><%= name %></span>
+              <%# The count badges now use the "badge" and "badge-secondary" classes %>
+              <div class="badge badge-secondary"><%= count %></div>
+            </li>
+          <% end %>
+        </ul>
       </div>
+    </div>
     
-      <div class="h-96">
-        <canvas data-pie-chart-target="canvas"
-                data-status-data="<%= @items_by_status.to_json %>"
-                data-category-data="<%= @items_by_category.to_json %>">
-        </canvas>
+    <%# The chart card now also uses the "card" component style %>
+    <div class="card bg-base-100 shadow-xl md:col-span-3" data-controller="pie-chart">
+      <div class="card-body">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="card-title">Collection Stats</h2>
+          
+          <%# The switch buttons now use DaisyUI's "btn-group" for a cleaner look %>
+          <div class="btn-group">
+            <button data-action="click->pie-chart#showStatus" data-pie-chart-target="switchButton" class="btn btn-sm btn-active">
+              By Status
+            </button>
+            <button data-action="click->pie-chart#showCategory" data-pie-chart-target="switchButton" class="btn btn-sm">
+              By Category
+            </button>
+          </div>
+        </div>
+        
+        <div class="h-96">
+          <canvas data-pie-chart-target="canvas"
+                  data-status-data="<%= @items_by_status.to_json %>"
+                  data-category-data="<%= @items_by_category.to_json %>">
+          </canvas>
+        </div>
       </div>
     </div>
 

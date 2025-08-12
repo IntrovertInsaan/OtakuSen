@@ -1,4 +1,4 @@
-<nav class="navbar bg-base-300 shadow-lg px-4">
+<nav class="navbar bg-base-300 text-base-content shadow-lg px-4">
   <!-- Left: Hamburger for mobile -->
   <div class="flex-none lg:hidden">
     <label for="menu-drawer" class="btn btn-square btn-ghost">
@@ -41,7 +41,7 @@
         <li><a href="#" data-action="click->theme#switch" data-theme="synthwave" class="flex items-center gap-2"><%= icon "signal", class: "w-4 h-4" %> Synthwave</a></li>
         <li><a href="#" data-action="click->theme#switch" data-theme="cupcake" class="flex items-center gap-2"><%= icon "cake", class: "w-4 h-4" %> Cupcake</a></li>
         <li><a href="#" data-action="click->theme#switch" data-theme="retro" class="flex items-center gap-2"><%= icon "tv", class: "w-4 h-4" %> Retro</a></li>
-        <li><a href="#" data-action="click->theme#switch" data-theme="otakusen">Otakusen</a></li>
+        <li><a href="#" data-action="click->theme#switch" data-theme="otakusen" class="flex items-center gap-2"><%= icon "otakusen", class: "w-4 h-4" %> Otakusen</a></li>
       </ul>
     </div>
 
@@ -50,11 +50,11 @@
              data-action="change->theme#toggle"
              data-theme-toggle />
       
-      <div class="swap-off fill-current w-6 h-6">
+      <div class="swap-off fill-current w-6 h-6 text-warning">
         <%= icon "sun" %>
       </div>
     
-      <div class="swap-on fill-current w-6 h-6">
+      <div class="swap-on fill-current w-6 h-6 text-white">
         <%= icon "moon" %>
       </div>
     </label>
@@ -62,7 +62,7 @@
     <%# Search %>
     <%= form_with(url: media_items_path, method: :get, class: "form-control", 
                   data: { controller: "search-form", turbo_frame: "results" }) do |form| %>
-      <label class="input input-bordered flex items-center gap-2 bg-base-200">
+      <label class="input input-bordered flex items-center gap-2 bg-base-200 text-base-content">
         <%= icon "magnifying-glass", class: "h-5 w-5 opacity-70" %>
         <%= form.text_field :search, value: params[:search],
               placeholder: "Search...",
@@ -82,26 +82,26 @@
           <% if current_user.avatar.attached? %>
             <%= image_tag current_user.avatar.variant(resize_to_fill: [40, 40]), class: "h-10 w-10 rounded-full shadow-md" %>
           <% else %>
-            <div class="h-10 w-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-400 shadow-md">
+            <div class="h-10 w-10 rounded-full bg-neutral text-neutral-content flex items-center justify-center shadow-md">
               <%= icon "user", class: "h-6 w-6" %>
             </div>
           <% end %>
         </button>
 
         <div data-dropdown-target="menu" 
-             class="hidden absolute right-0 z-10 mt-2 w-64 origin-top-right rounded-xl bg-base-100 shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
+             class="hidden absolute right-0 z-10 mt-2 w-64 origin-top-right rounded-xl bg-base-100 text-base-content shadow-lg ring-1 ring-base-300 overflow-hidden">
           <!-- Profile Header -->
           <div class="flex items-center gap-3 p-4 bg-base-200 border-b border-base-300">
             <% if current_user.avatar.attached? %>
               <%= image_tag current_user.avatar.variant(resize_to_fill: [48, 48]), class: "h-12 w-12 rounded-full shadow-md" %>
             <% else %>
-              <div class="h-12 w-12 rounded-full bg-gray-700 flex items-center justify-center text-gray-400">
+              <div class="h-12 w-12 rounded-full bg-neutral text-neutral-content flex items-center justify-center">
                 <%= icon "user", class: "h-6 w-6" %>
               </div>
             <% end %>
             <div>
               <p class="font-semibold text-base"><%= current_user.username %></p>
-              <p class="text-xs text-gray-500">Signed in as</p>
+              <p class="text-xs text-base-content">Signed in as</p>
             </div>
           </div>
 
@@ -115,7 +115,7 @@
             </li>
             <li>
               <%= button_to destroy_user_session_path, method: :delete, 
-                    class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-error hover:text-white w-full text-left font-semibold" do %>
+                    class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-error hover:text-error-content w-full text-left font-semibold" do %>
                 <%= icon "arrow-right-on-rectangle", class: "h-5 w-5" %>
                 <span>Log out</span>
               <% end %>
@@ -134,7 +134,7 @@
   <!-- Drawer (mobile menu) -->
   <div class="drawer-side z-50">
     <label for="menu-drawer" class="drawer-overlay"></label>
-    <div class="w-72 bg-base-200 h-full flex flex-col">
+    <div class="w-72 bg-base-200 text-base-content h-full flex flex-col">
 
       <!-- Header -->
       <div class="p-4 bg-base-300 border-b border-base-300">
@@ -147,7 +147,7 @@
           <% if current_user.avatar.attached? %>
             <%= image_tag current_user.avatar.variant(resize_to_fill: [48, 48]), class: "h-12 w-12 rounded-full shadow-md" %>
           <% else %>
-            <div class="h-12 w-12 rounded-full bg-gray-700 flex items-center justify-center text-gray-400"></div>
+            <div class="h-12 w-12 rounded-full bg-neutral text-neutral-content flex items-center justify-center"></div>
           <% end %>
           <div>
             <p class="font-semibold text-base"><%= current_user.username || "User" %></p>
@@ -179,7 +179,7 @@
           </li>
           <li>
             <%= button_to destroy_user_session_path, method: :delete, 
-                  class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-error hover:text-white w-full text-left font-semibold" do %>
+                  class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-error hover:text-error-content w-full text-left font-semibold" do %>
               <%= icon "arrow-right-on-rectangle", class: "h-8 w-8" %>
               <span>Log out</span>
             <% end %>
@@ -191,7 +191,7 @@
       </ul>
 
       <!-- Footer -->
-      <div class="p-4 border-t border-base-300 text-xs text-gray-500 text-center">
+      <div class="p-4 border-t border-base-300 text-xs text-base-content/70 text-center">
         &copy; <%= Time.current.year %> OtakuSen
       </div>
     </div>
