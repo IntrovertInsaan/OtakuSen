@@ -15,3 +15,6 @@ application.register("pie-chart", PieChartController)
 
 import SearchFormController from "./search_form_controller"
 application.register("search-form", SearchFormController)
+
+import ThemeController from "./themes_controller"
+application.register("theme", ThemeController)

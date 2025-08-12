@@ -27,6 +27,38 @@
 
   <!-- Right side: Search + Auth buttons -->
   <div class="flex items-center gap-3">
+
+    <%# Theme Switcher %>
+    <div class="dropdown dropdown-end">
+      <div tabindex="0" role="button" class="btn btn-ghost gap-2">
+        <span class="hidden sm:inline">Theme</span>
+        <%= icon "chevron-down", class: "w-5 h-5" %>
+      </div>
+      <ul class="dropdown-content z-[1] p-2 shadow-lg bg-base-300 rounded-box w-32 menu menu-sm" data-controller="theme">
+        <li><a href="#" data-action="click->theme#switch" data-theme="light" class="flex items-center gap-2"><%= icon "sun", class: "w-4 h-4" %> Light</a></li>
+        <li><a href="#" data-action="click->theme#switch" data-theme="dark" class="flex items-center gap-2"><%= icon "moon", class: "w-4 h-4" %> Dark</a></li>
+        <li><a href="#" data-action="click->theme#switch" data-theme="valentine" class="flex items-center gap-2"><%= icon "valentine", class: "w-4 h-4" %> Valentine</a></li>
+        <li><a href="#" data-action="click->theme#switch" data-theme="synthwave" class="flex items-center gap-2"><%= icon "signal", class: "w-4 h-4" %> Synthwave</a></li>
+        <li><a href="#" data-action="click->theme#switch" data-theme="cupcake" class="flex items-center gap-2"><%= icon "cake", class: "w-4 h-4" %> Cupcake</a></li>
+        <li><a href="#" data-action="click->theme#switch" data-theme="retro" class="flex items-center gap-2"><%= icon "tv", class: "w-4 h-4" %> Retro</a></li>
+        <li><a href="#" data-action="click->theme#switch" data-theme="otakusen">Otakusen</a></li>
+      </ul>
+    </div>
+
+    <label class="swap swap-rotate" data-controller="theme">
+      <input type="checkbox" class="theme-controller" value="dark"
+             data-action="change->theme#toggle"
+             data-theme-toggle />
+      
+      <div class="swap-off fill-current w-6 h-6">
+        <%= icon "sun" %>
+      </div>
+    
+      <div class="swap-on fill-current w-6 h-6">
+        <%= icon "moon" %>
+      </div>
+    </label>
+
     <%# Search %>
     <%= form_with(url: media_items_path, method: :get, class: "form-control", 
                   data: { controller: "search-form", turbo_frame: "results" }) do |form| %>
