@@ -1,25 +1,44 @@
-<h2>Change your password</h2>
+<div class="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <%# The card background now uses bg-base-100, which adapts to the current theme %>
+  <div class="bg-base-100 rounded-lg shadow-xl p-6 md:p-8">
+    <%# The header text now uses text-base-content, the default text color for the theme %>
+    <h2 class="text-3xl font-bold tracking-tight text-base-content text-center mb-6">Change your password</h2>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-  <%= f.hidden_field :reset_password_token %>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <%= f.hidden_field :reset_password_token %>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+      <div class="space-y-6">
+        <div>
+          <div class="flex items-center justify-between">
+            <%# The form label uses text-base-content %>
+            <%= f.label :password, "New password", class: "block text-sm font-medium leading-6 text-base-content" %>
+            <% if @minimum_password_length %>
+              <em class="text-xs text-base-content/60">(<%= @minimum_password_length %> characters minimum)</em>
+            <% end %>
+          </div>
+          <div class="mt-2">
+            <%# The input field now uses DaisyUI's "input" and "input-bordered" classes for consistent styling %>
+            <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "input input-bordered w-full" %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.label :password_confirmation, "Confirm new password", class: "block text-sm font-medium leading-6 text-base-content" %>
+          <div class="mt-2">
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-bordered w-full" %>
+          </div>
+        </div>
+
+        <div>
+          <%# The submit button now uses "btn" and "btn-primary" to adopt the theme's primary button style %>
+          <%= f.submit "Change my password", class: "btn btn-primary w-full" %>
+        </div>
+      </div>
     <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <div class="mt-6 text-center">
+      <%= render "devise/shared/links" %>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

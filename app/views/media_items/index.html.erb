@@ -1,25 +1,37 @@
 <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
   <div class="flex justify-between items-center mb-8">
-    <h1 class="text-3xl font-bold tracking-tight text-gray-900">My Collection</h1>
+    <h1 class="text-3xl font-bold tracking-tight text-base-content">
+      <%# text-gray-900 → text-base-content for theme-based heading %>
+      My Collection
+    </h1>
     <% if user_signed_in? %>
-      <%= link_to "Add New Item", new_media_item_path, class: "rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+      <%= link_to "Add New Item", new_media_item_path,
+          class: "rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-content shadow-sm hover:bg-primary-focus focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" %>
+      <%# indigo → primary color scale for full theme support %>
     <% end %>
   </div>
 
   <div class="mb-8 flex items-center flex-wrap gap-2">
-    <span class="text-sm font-medium text-gray-700 mr-2">Filter by:</span>
+    <span class="text-sm font-medium text-base-content/70 mr-2">
+      <%# text-gray-700 → text-base-content/70 for subtle filter label %>
+      Filter by:
+    </span>
 
-    <%= link_to "All", media_items_path, class: "px-3 py-1 text-sm font-semibold rounded-full #{params[:category_id].blank? ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}" %>
+    <%= link_to "All", media_items_path,
+        class: "px-3 py-1 text-sm font-semibold rounded-full #{params[:category_id].blank? ? 'bg-primary text-primary-content' : 'bg-base-300 text-base-content hover:bg-base-200'}" %>
+    <%# Active = primary button; inactive = neutral background %>
 
     <% @categories.each do |category| %>
       <% is_active = params[:category_id].to_s == category.id.to_s %>
-      <%= link_to category.name, media_items_path(category_id: category.id), class: "px-3 py-1 text-sm font-semibold rounded-full #{is_active ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}" %>
+      <%= link_to category.name, media_items_path(category_id: category.id),
+          class: "px-3 py-1 text-sm font-semibold rounded-full #{is_active ? 'bg-primary text-primary-content' : 'bg-base-300 text-base-content hover:bg-base-200'}" %>
     <% end %>
   </div>
 
   <% if notice.present? %>
-    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded-md" role="alert">
+    <div class="bg-success/20 border-l-4 border-success text-success p-4 mb-6 rounded-md" role="alert">
+      <%# green → success color for DaisyUI theme %>
       <p class="font-bold">Success</p>
       <p><%= notice %></p>
     </div>
@@ -28,10 +40,7 @@
   <%= turbo_frame_tag "results" do %>
     <% if @media_items.any? %>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        
-        <%# This single line renders all your cards from the _media_item.html.erb partial %>
         <%= render @media_items %>
-        
       </div>
 
       <div class="mt-12">
@@ -39,9 +48,16 @@
       </div>
 
     <% else %>
-      <div class="text-center py-16 px-6 bg-white rounded-lg shadow-md">
-        <h3 class="text-xl font-semibold text-gray-800">No results found.</h3>
-        <p class="text-gray-500 mt-2">Try adjusting your search or filter.</p>
+      <div class="text-center py-16 px-6 bg-base-100 rounded-lg shadow-md">
+        <%# bg-white → bg-base-100 for theme-aware empty state %>
+        <h3 class="text-xl font-semibold text-base-content">
+          <%# text-gray-800 → text-base-content %>
+          No results found.
+        </h3>
+        <p class="text-base-content/70 mt-2">
+          <%# text-gray-500 → text-base-content/70 %>
+          Try adjusting your search or filter.
+        </p>
       </div>
     <% end %>
   <% end %>

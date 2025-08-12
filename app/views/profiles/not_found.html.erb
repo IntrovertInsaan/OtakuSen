@@ -1,17 +1,22 @@
-<main class="grid min-h-screen w-full place-items-center bg-gray-50 px-6 lg:px-8">
+<%# The main background now uses bg-base-200, which is a slightly off-white/off-black color depending on the theme. %>
+<main class="grid min-h-screen w-full place-items-center bg-base-200 px-6 lg:px-8">
   <div class="flex items-start">
     
-    <p class="text-5xl font-bold text-red-600 sm:text-7xl">404</p>
+    <%# The 404 text now uses text-error, which is the theme's primary error color (usually red). %>
+    <p class="text-5xl font-bold text-error sm:text-7xl">404</p>
     
-    <div class="ml-6 pl-6 border-l border-gray-300">
+    <%# The border now uses a base color that adapts to the theme. %>
+    <div class="ml-6 pl-6 border-l border-base-300">
       
       <div class="flex flex-col">
-        <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Profile Not Found</h1>
-        <p class="mt-2 text-base text-gray-600">Sorry, we couldn't find the profile you're looking for.</p>
+        <%# The text colors use text-base-content, the default text color for the current theme. %>
+        <h1 class="text-3xl font-bold tracking-tight text-base-content sm:text-4xl">Profile Not Found</h1>
+        <p class="mt-2 text-base text-base-content/70">Sorry, we couldn't find the profile you're looking for.</p>
       </div>
 
       <div class="mt-10 flex items-center gap-x-4">
-        <%= link_to "Go back home", root_path, class: "rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+        <%# The button now uses btn and btn-error classes to adopt the theme's error button style. %>
+        <%= link_to "Go back home", root_path, class: "btn btn-error" %>
       </div>
     </div>
 

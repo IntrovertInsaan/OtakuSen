@@ -9,6 +9,8 @@
     <%= csp_meta_tag %>
 
     <script>
+      // This ensures the stored theme is applied *before* page renders
+      // so I avoided the "flash" of light theme when using dark.
       const theme = localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', theme);
     </script>
