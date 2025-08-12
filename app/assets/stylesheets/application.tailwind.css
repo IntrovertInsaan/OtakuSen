@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: all;
+  themes: lofi, black, valentine, luxury, retro, halloween, light, dark;
 }
 @plugin "daisyui/theme" {
     name: "otakusen";
