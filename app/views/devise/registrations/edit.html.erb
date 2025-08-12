@@ -1,45 +1,39 @@
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <%# The card background now uses bg-base-100, which adapts to the current theme %>
-  <div class="bg-base-100 rounded-lg shadow-xl p-6 md:p-8">
-    <%# The header text now uses text-base-content, the default text color for the theme %>
-    <h2 class="text-3xl font-bold tracking-tight text-base-content mb-6">Edit Profile</h2>
+  <div class="rounded-lg bg-base-100 shadow-xl p-6 md:p-8">
+    <h2 class="text-base-content text-3xl font-bold tracking-tight mb-6">Edit Profile</h2>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="space-y-6">
         <div>
-          <%# Form labels use the default text color %>
-          <%= f.label :username, class: "block text-sm font-medium leading-6 text-base-content" %>
+          <%= f.label :username, class: "block text-base-content text-sm font-medium leading-6" %>
           <div class="mt-2">
-            <%# Input fields now use DaisyUI's "input" class for consistent styling %>
             <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "input input-bordered w-full" %>
           </div>
         </div>
 
         <div>
-          <%= f.label :email, class: "block text-sm font-medium leading-6 text-base-content" %>
+          <%= f.label :email, class: "block text-base-content text-sm font-medium leading-6" %>
           <div class="mt-2">
             <%= f.email_field :email, autocomplete: "email", class: "input input-bordered w-full" %>
           </div>
         </div>
 
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-          <div class="text-sm text-base-content/70">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+          <div class="text-base-content/70 text-sm">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
         <% end %>
 
         <div>
-          <%= f.label :avatar, "Profile Picture", class: "block text-sm font-medium leading-6 text-base-content" %>
+          <%= f.label :avatar, "Profile Picture", class: "block text-base-content text-sm font-medium leading-6" %>
           <div class="mt-2 flex items-center gap-x-3">
             <% if resource.persisted? && resource.avatar.attached? %>
               <%= image_tag resource.avatar.variant(resize_to_fill: [48, 48]), class: "h-12 w-12 rounded-full" %>
             <% else %>
-              <%# The placeholder background now uses a theme-aware color %>
-              <div class="h-12 w-12 rounded-full bg-base-200 flex items-center justify-center text-base-content/50">
+              <div class="h-12 w-12 flex items-center justify-center rounded-full bg-base-200 text-base-content/50">
                 <%= icon "user", class: "w-6 h-6" %>
               </div>
             <% end %>
-            <%# The file input now uses DaisyUI's "file-input" class %>
             <%= f.file_field :avatar, class: "file-input file-input-bordered w-full" %>
           </div>
         </div>
@@ -47,49 +41,46 @@
         <div>
           <%= f.label :bio, class: "block text-sm font-medium leading-6 text-base-content" %>
           <div class="mt-2">
-            <%# The textarea now uses DaisyUI's "textarea" class %>
             <%= f.text_area :bio, rows: 3, class: "textarea textarea-bordered w-full", placeholder: "Tell us a little about yourself..." %>
           </div>
         </div>
       
         <div>
-          <%= f.label :password, "New Password", class: "block text-sm font-medium leading-6 text-base-content" %>
-          <i class="text-xs text-base-content/60">(leave blank if you don't want to change it)</i>
+          <%= f.label :password, "New Password", class: "block text-base-content text-sm font-medium leading-6" %>
+          <i class="text-base-content/60 text-xs">(leave blank if you don't want to change it)</i>
           <div class="mt-2">
             <%= f.password_field :password, autocomplete: "new-password", class: "input input-bordered w-full" %>
           </div>
         </div>
 
         <div>
-          <%= f.label :password_confirmation, class: "block text-sm font-medium leading-6 text-base-content" %>
+          <%= f.label :password_confirmation, class: "block text-base-content text-sm font-medium leading-6" %>
           <div class="mt-2">
             <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-bordered w-full" %>
           </div>
         </div>
 
         <div class="border-t border-base-300 pt-6">
-          <%= f.label :current_password, class: "block text-sm font-medium leading-6 text-base-content" %>
-          <i class="text-xs text-base-content/60">(we need your current password to confirm your changes)</i>
+          <%= f.label :current_password, class: "block text-base-content text-sm font-medium leading-6" %>
+          <i class="text-base-content/60 text-xs">(we need your current password to confirm your changes)</i>
           <div class="mt-2">
             <%= f.password_field :current_password, autocomplete: "current-password", class: "input input-bordered w-full" %>
           </div>
         </div>
 
         <div>
-          <%# The submit button now uses "btn" and "btn-primary" for theme consistency %>
           <%= f.submit "Update Profile", class: "btn btn-primary w-full" %>
         </div>
       </div>
     <% end %>
     
-    <div class="border-t border-base-300 mt-8 pt-6">
+    <div class="border-base-300 border-t mt-8 pt-6">
       <div class="flex justify-between items-center">
         <div>
           <h3 class="text-lg font-medium text-base-content">Cancel Account</h3>
-          <p class="mt-1 text-sm text-base-content/70">Once you cancel your account, there is no going back. Please be certain.</p>
+          <p class="text-base-content/70 text-sm mt-1">Once you cancel your account, there is no going back. Please be certain.</p>
         </div>
         <div class="ml-4">
-          <%# The cancel button now uses "btn-error" to adopt the theme's danger color %>
           <%= button_to "Cancel Account", registration_path(resource_name), 
                 data: { turbo_confirm: "Are you sure you want to permanently delete your account?" }, 
                 method: :delete, 

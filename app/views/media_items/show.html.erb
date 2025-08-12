@@ -1,6 +1,5 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <div class="bg-base-100 rounded-lg shadow-xl overflow-hidden"> 
-    <%# bg-white → bg-base-100 so it adapts to current DaisyUI theme %>
+  <div class="rounded-lg bg-base-100 shadow-xl overflow-hidden"> 
 
     <div class="grid grid-cols-1 md:grid-cols-3">
 
@@ -8,33 +7,28 @@
         <% if @media_item.cover_image.attached? %>
           <%= image_tag @media_item.cover_image, class: "w-full h-full object-cover" %>
         <% else %>
-          <div class="w-full h-full bg-base-200 flex items-center justify-center">
-            <%# bg-gray-200 → bg-base-200 for theme-aware placeholder background %>
+          <div class="flex justify-center items-center w-full h-full bg-base-200">
             <span class="text-base-content/50">No Image</span>
-            <%# text-gray-500 → text-base-content/50 for lighter, theme-aware text %>
           </div>
         <% end %>
       </div>
 
       <div class="md:col-span-2 p-6 md:p-8 flex flex-col">
         <div>
-          <p class="text-base font-semibold text-primary uppercase tracking-wider">
-            <%# text-indigo-600 → text-primary for theme-based primary accent %>
+          <p class="uppercase font-semibold text-base text-primary tracking-wider">
             <%= @media_item.category.name %>
           </p>
+
           <h1 class="text-4xl font-bold text-base-content mt-1">
-            <%# text-gray-900 → text-base-content for readable themed text %>
             <%= @media_item.title %>
           </h1>
 
           <div class="flex items-center flex-wrap gap-2 mt-4">
-            <span class="inline-flex items-center rounded-full bg-primary/20 px-3 py-1 text-sm font-medium text-primary">
-              <%# bg-blue-100 → bg-primary/20 & text-blue-800 → text-primary for theme match %>
+            <span class="inline-flex items-center rounded-full px-3 py-1 bg-primary/20 text-primary text-sm font-medium">
               <%= @media_item.status %>
             </span>
             <% if @media_item.rating.present? %>
               <span class="inline-flex items-center rounded-full bg-warning/20 px-3 py-1 text-sm font-medium text-warning">
-                <%# bg-yellow-100 → bg-warning/20 & text-yellow-800 → text-warning %>
                 ⭐ <%= @media_item.rating %> / 10
               </span>
             <% end %>
@@ -42,42 +36,31 @@
 
           <% if @media_item.chapters_read.present? %>
             <div class="mt-6">
-              <div class="flex justify-between text-sm font-medium text-base-content/70">
-                <%# text-gray-600 → text-base-content/70 for subtle themed text %>
+              <div class="flex justify-between text-base-content/70 text-sm font-medium">
                 <span>Chapters</span>
                 <span>
                   <%= @media_item.chapters_read %> / <%= @media_item.total_chapters.presence || '?' %>
                 </span>
               </div>
               <% progress = @media_item.total_chapters.to_i > 0 ? (@media_item.chapters_read.to_f / @media_item.total_chapters.to_f) * 100 : 0 %>
-              <div class="w-full bg-base-300 rounded-full h-2.5 mt-1">
-                <%# bg-gray-200 → bg-base-300 for neutral theme background %>
-                <div class="bg-primary h-2.5 rounded-full" style="width: <%= progress %>%"></div>
-                <%# bg-blue-600 → bg-primary for theme-colored progress bar %>
+              <div class="rounded-full bg-base-300 w-full h-2.5 mt-1">
+                <div class="rounded-full bg-primary h-2.5" style="width: <%= progress %>%"></div>
               </div>
             </div>
           <% end %>
 
-          <p class="text-base-content/80 text-base leading-relaxed mt-6">
-            <%# text-gray-700 → text-base-content/80 for slightly muted themed text %>
+          <p class="text-base text-base-content/80 leading-relaxed mt-6">
             <%= @media_item.description %>
           </p>
         </div>
 
         <div class="mt-8 pt-6 border-t border-base-300 flex items-center gap-4 flex-wrap">
-          <%# border-gray-200 → border-base-300 for themed divider %>
-
           <%= link_to "Edit Item", edit_media_item_path(@media_item),
-              class: "inline-block bg-primary text-primary-content px-4 py-2 rounded-md font-semibold hover:bg-primary-focus" %>
-          <%# bg-indigo-600 → bg-primary, text-white → text-primary-content, hover:bg-indigo-700 → hover:bg-primary-focus %>
-
-          <%= button_to "Destroy", @media_item, method: :delete, data: { turbo_confirm: 'Are you sure?' },
-              class: "inline-block bg-error text-error-content px-4 py-2 rounded-md font-semibold hover:bg-error-focus" %>
-          <%# bg-red-600 → bg-error, text-white → text-error-content, hover:bg-red-700 → hover:bg-error-focus %>
-
+              class: "inline-block rounded-md px-4 py-2 bg-primary text-primary-content font-semibold hover:bg-primary-focus" %>
+          <%= button_to "Delete", @media_item, method: :delete, data: { turbo_confirm: 'Are you sure?' },
+              class: "inline-block rounded-md px-4 py-2 bg-error text-error-content font-semibold hover:bg-error-focus" %>
           <%= link_to "← Back to Collection", media_items_path,
               class: "text-primary font-medium hover:text-primary-focus ml-auto" %>
-          <%# text-indigo-600 → text-primary, hover:text-indigo-800 → hover:text-primary-focus %>
         </div>
       </div>
     </div>

@@ -1,31 +1,26 @@
 <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-  <%# The user header section %>
-  <div class="mb-8 flex items-center gap-6">
-    <%# The avatar placeholder and ring now use theme-aware base colors %>
+  <div class="flex items-center gap-6 mb-8">
     <% if @user.avatar.attached? %>
       <%= image_tag @user.avatar.variant(resize_to_fill: [128, 128]), class: "h-32 w-32 rounded-full ring-4 ring-base-100" %>
     <% else %>
-      <div class="h-32 w-32 rounded-full bg-base-200 flex items-center justify-center text-base-content/50 ring-4 ring-base-100">
+      <div class="h-32 w-32 flex justify-center items-center rounded-full bg-base-200 text-base-content/50 ring-4 ring-base-100">
         <%= icon "user", class: "w-16 h-16" %>
       </div>
     <% end %>
  
     <div>
-      <%# The title gradient is removed in favor of a clean, theme-aware text color %>
-      <h1 class="text-4xl font-bold tracking-tight text-base-content">
+      <h1 class="text-4xl font-bold text-base-content tracking-tight">
         <%= @user.username %>'s Collection
       </h1>
-      <%# The bio text now uses a secondary theme color %>
       <% if @user.bio.present? %>
-        <p class="mt-2 text-lg text-base-content/70 max-w-2xl"><%= @user.bio %></p>
+        <p class="text-base-content/70 text-lg max-w-2xl mt-2"><%= @user.bio %></p>
       <% end %>
     </div>
   </div>
 
-  <%# The filter section, now using DaisyUI button styles for a cleaner look %>
   <div class="mb-8 flex items-center flex-wrap gap-2">
-    <span class="text-sm font-medium text-base-content/70 mr-2">Filter by:</span>
+    <span class="text-base-content/70 text-sm font-medium mr-2">Filter by:</span>
 
     <%= link_to "All", profile_path(@user), class: "btn btn-sm #{params[:category_id].blank? ? 'btn-primary' : 'btn-ghost'}" %>
 
@@ -35,15 +30,14 @@
     <% end %>
   </div>
 
-  <%# The results grid. The card partials will handle their own theming. %>
   <% if @media_items.any? %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <%= render @media_items %>
     </div>
   <% else %>
     <%# The empty state message now uses theme-aware colors %>
-    <div class="text-center py-16 px-6 bg-base-100 rounded-lg shadow-md">
-      <h3 class="text-xl font-semibold text-base-content">No results found for this filter.</h3>
+    <div class="rounded-lg px-6 py-16 bg-base-100 text-center shadow-md">
+      <h3 class="text-base-content text-xl font-semibold">No results found for this filter.</h3>
     </div>
   <% end %>
 
