@@ -1,10 +1,8 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <%# The header text now uses the theme's default text color %>
-  <h1 class="text-3xl font-bold tracking-tight text-base-content mb-8">My Dashboard</h1>
+  <h1 class="text-base-content text-3xl font-bold tracking-tight mb-8">My Dashboard</h1>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-    <%# The stat cards now use DaisyUI's "card" and "stat" components for a consistent, themed look %>
     <div class="card bg-base-100 shadow-xl">
       <div class="card-body">
         <div class="stat">
@@ -26,7 +24,6 @@
           <% @items_by_category.each do |name, count| %>
             <li class="flex justify-between items-center">
               <span class="text-base-content"><%= name %></span>
-              <%# The count badges now use the "badge" and "badge-primary" classes %>
               <div class="badge badge-primary"><%= count %></div>
             </li>
           <% end %>
@@ -41,7 +38,6 @@
           <% @items_by_status.each do |name, count| %>
             <li class="flex justify-between items-center">
               <span class="text-base-content"><%= name %></span>
-              <%# The count badges now use the "badge" and "badge-secondary" classes %>
               <div class="badge badge-secondary"><%= count %></div>
             </li>
           <% end %>
@@ -49,13 +45,11 @@
       </div>
     </div>
     
-    <%# The chart card now also uses the "card" component style %>
     <div class="card bg-base-100 shadow-xl md:col-span-3" data-controller="pie-chart">
       <div class="card-body">
         <div class="flex justify-between items-center mb-4">
           <h2 class="card-title">Collection Stats</h2>
           
-          <%# The switch buttons now use DaisyUI's "btn-group" for a cleaner look %>
           <div class="btn-group">
             <button data-action="click->pie-chart#showStatus" data-pie-chart-target="switchButton" class="btn btn-sm btn-active">
               By Status

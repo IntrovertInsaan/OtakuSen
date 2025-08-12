@@ -1,6 +1,5 @@
 <div class="space-y-2">
   <%- if controller_name != 'sessions' %>
-    <%# This now uses DaisyUI's "link" and "link-primary" classes to match the current theme %>
     <%= link_to "Log in", new_session_path(resource_name), class: "link link-primary link-hover text-sm" %>
   <% end %>
 

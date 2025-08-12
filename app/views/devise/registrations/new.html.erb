@@ -1,24 +1,20 @@
 <div class="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <%# The card background now uses bg-base-100, which adapts to the current theme %>
-  <div class="bg-base-100 rounded-lg shadow-xl p-6 md:p-8">
-    <%# The header text now uses text-base-content, the default text color for the theme %>
-    <h2 class="text-3xl font-bold tracking-tight text-base-content text-center mb-6">Sign up</h2>
+  <div class="rounded-lg bg-base-100 shadow-xl p-6 md:p-8">
+    <h2 class="text-base-content text-3xl font-bold text-center tracking-tight mb-6">Sign up</h2>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="space-y-6">
         <div>
-          <%# The form label text uses text-base-content %>
-          <%= f.label :username, class: "block text-sm font-medium leading-6 text-base-content" %>
+          <%= f.label :username, class: "block text-base-content text-sm font-medium leading-6" %>
           <div class="mt-2">
-            <%# The input field now uses DaisyUI's "input" and "input-bordered" classes for consistent styling %>
             <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "input input-bordered w-full" %>
           </div>
         </div>
 
         <div>
-          <%= f.label :email, class: "block text-sm font-medium leading-6 text-base-content" %>
+          <%= f.label :email, class: "block text-base-content text-sm font-medium leading-6" %>
           <div class="mt-2">
             <%= f.email_field :email, autocomplete: "email", class: "input input-bordered w-full" %>
           </div>
@@ -26,10 +22,9 @@
 
         <div>
           <div class="flex items-center justify-between">
-            <%= f.label :password, class: "block text-sm font-medium leading-6 text-base-content" %>
+            <%= f.label :password, class: "block text-base-content text-sm font-medium leading-6" %>
             <% if @minimum_password_length %>
-              <%# The helper text uses a secondary theme color %>
-              <em class="text-xs text-base-content/60">(<%= @minimum_password_length %> characters minimum)</em>
+              <em class="text-base-content/60 text-xs">(<%= @minimum_password_length %> characters minimum)</em>
             <% end %>
           </div>
           <div class="mt-2">
@@ -38,14 +33,13 @@
         </div>
 
         <div>
-          <%= f.label :password_confirmation, class: "block text-sm font-medium leading-6 text-base-content" %>
+          <%= f.label :password_confirmation, class: "block text-base-content text-sm font-medium leading-6" %>
           <div class="mt-2">
             <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-bordered w-full" %>
           </div>
         </div>
 
         <div>
-          <%# The submit button now uses "btn" and "btn-primary" to adopt the theme's primary button style %>
           <%= f.submit "Sign up", class: "btn btn-primary w-full" %>
         </div>
       </div>

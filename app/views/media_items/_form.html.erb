@@ -1,6 +1,6 @@
 <%= form_with(model: media_item, class: "space-y-6") do |form| %>
   <% if media_item.errors.any? %>
-    <div class="text-error"> <%# it was style="color:red" — used theme error color %>
+    <div class="text-error">
       <h2><%= pluralize(media_item.errors.count, "error") %> prohibited this media_item from being saved:</h2>
       <ul>
         <% media_item.errors.each do |error| %>
@@ -11,21 +11,21 @@
   <% end %>
 
   <div>
-    <%= form.label :title, class: "block text-sm font-medium leading-6 text-base-content" %>
+    <%= form.label :title, class: "block text-base-content text-sm font-medium leading-6" %>
     <div class="mt-2">
       <%= form.text_field :title, class: "block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-300 placeholder:text-base-content/60 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" %>
     </div>
   </div>
 
   <div>
-    <%= form.label :cover_image, class: "block text-sm font-medium leading-6 text-base-content" %>
+    <%= form.label :cover_image, class: "block text-base-content text-sm font-medium leading-6" %>
     <div class="mt-2">
-      <%= form.file_field :cover_image, class: "block w-full text-sm text-base-content/70 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" %>
+      <%= form.file_field :cover_image, class: "block w-full text-base-content/70 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" %>
     </div>
   </div>
 
   <div>
-    <%= form.label :description, class: "block text-sm font-medium leading-6 text-base-content" %>
+    <%= form.label :description, class: "block text-base-content text-sm font-medium leading-6" %>
     <div class="mt-2">
       <%= form.text_area :description, rows: 4, class: "block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-300 placeholder:text-base-content/60 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" %>
     </div>
@@ -33,14 +33,14 @@
 
   <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
     <div>
-      <%= form.label :status, class: "block text-sm font-medium leading-6 text-base-content" %>
+      <%= form.label :status, class: "block text-base-content text-sm font-medium leading-6" %>
       <div class="mt-2">
         <%= form.select :status, ["Planning", "In Progress", "Completed", "On Hold", "Dropped"], { prompt: "Select a Status" }, { class: "block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" } %>
       </div>
     </div>
   
     <div>
-      <%= form.label :rating, "Rating (1-10)", class: "block text-sm font-medium leading-6 text-base-content" %>
+      <%= form.label :rating, "Rating (1-10)", class: "block text-base-content text-sm font-medium leading-6" %>
       <div class="mt-2">
         <%= form.number_field :rating, in: 1..10, class: "block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-300 placeholder:text-base-content/60 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" %>
       </div>
@@ -49,13 +49,13 @@
 
   <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
     <div>
-      <%= form.label :chapters_read, class: "block text-sm font-medium leading-6 text-base-content" %>
+      <%= form.label :chapters_read, class: "block text-base-content text-sm font-medium leading-6" %>
       <div class="mt-2">
         <%= form.number_field :chapters_read, class: "block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" %>
       </div>
     </div>
     <div>
-      <%= form.label :total_chapters, class: "block text-sm font-medium leading-6 text-base-content" %>
+      <%= form.label :total_chapters, class: "block text-base-content text-sm font-medium leading-6" %>
       <div class="mt-2">
         <%= form.number_field :total_chapters, class: "block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" %>
       </div>
@@ -63,13 +63,13 @@
   </div>
 
   <div>
-    <%= form.label :category_id, class: "block text-sm font-medium leading-6 text-base-content" %>
+    <%= form.label :category_id, class: "block text-base-content text-sm font-medium leading-6" %>
     <div class="mt-2">
       <%= form.collection_select :category_id, @categories, :id, :name, { prompt: "Select a Category" }, { class: "block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"} %>
     </div>
   </div>
 
   <div class="flex justify-end">
-    <%= form.submit class: "rounded-md bg-primary px-3 py-2 text-sm font-semibold text-primary-content shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-pointer" %>
+    <%= form.submit class: "rounded-md px-3 py-2 bg-primary text-primary-content text-sm font-semibold shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-pointer" %>
   </div>
 <% end %>
