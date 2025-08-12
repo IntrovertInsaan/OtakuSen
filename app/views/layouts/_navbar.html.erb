@@ -11,7 +11,11 @@
 
   <!-- Logo -->
   <div class="flex-none">
-    <%= link_to "OtakuSen", profile_path(current_user), class: "btn btn-ghost normal-case text-2xl font-bold" %>
+    <% if user_signed_in? %>
+      <%= link_to "OtakuSen", profile_path(current_user), class: "btn btn-ghost normal-case text-2xl font-bold" %>
+    <% else %>
+      <%= link_to "OtakuSen", root_path, class: "btn btn-ghost normal-case text-2xl font-bold" %>
+    <% end %>
   </div>
 
   <!-- Desktop menu -->
