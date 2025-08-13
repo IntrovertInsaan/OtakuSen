@@ -6,18 +6,26 @@ class MediaItemsController < ApplicationController
   # GET /media_items or /media_items.json
   def index
     @categories = Category.all.order(:name)
-    @media_items = current_user.media_items
+    @tags = Tag.joins(:media_items).where(media_items: { user_id: current_user.id }).distinct.order(:name)
 
+    # Start with a single base query for the current user's items
+    user_items = current_user.media_items.includes(:tags)
+
+    # Chain all filters onto the same query
     if params[:category_id].present?
-      @media_items = @media_items.where(category_id: params[:category_id])
+      user_items = user_items.where(category_id: params[:category_id])
     end
 
-    # For Filtering in SEARCH
     if params[:search].present?
-      @media_items = @media_items.search_by_title_and_description(params[:search])
+      user_items = user_items.search_by_title_and_description(params[:search])
     end
 
-    @pagy, @media_items = pagy(@media_items.order(created_at: :desc))
+    if params[:tag].present?
+      user_items = user_items.joins(:tags).where(tags: { name: params[:tag] })
+    end
+
+    # Paginate the final, fully filtered result
+    @pagy, @media_items = pagy(user_items.order(created_at: :desc))
   end
 
   # GET /media_items/1 or /media_items/1.json
