@@ -21,11 +21,15 @@ class MediaItem < ApplicationRecord
   end
 
   # This is pg_search configuration
-  pg_search_scope :search_by_title_and_description,
+  pg_search_scope :search_by_all_content,
     against: {
       title: "A",
       description: "B"
     },
+    associated_against: {
+      tags: { name: "A" }
+    },
+
     using: {
       tsearch: { prefix: true },
       trigram: {}
