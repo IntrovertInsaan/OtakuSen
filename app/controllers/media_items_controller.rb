@@ -11,15 +11,17 @@ class MediaItemsController < ApplicationController
     # Start with a single base query for the current user's items
     user_items = current_user.media_items.includes(:tags)
 
-    # Chain all filters onto the same query
+    # Filter by category
     if params[:category_id].present?
       user_items = user_items.where(category_id: params[:category_id])
     end
 
+    # Filter by Search term (searches titles, descriptions, AND tags)
     if params[:search].present?
-      user_items = user_items.search_by_title_and_description(params[:search])
+      user_items = user_items.search_by_all_content(params[:search])
     end
 
+    # RESTORED: This block makes the tag dropdown work again
     if params[:tag].present?
       user_items = user_items.joins(:tags).where(tags: { name: params[:tag] })
     end
