@@ -11,10 +11,6 @@
   </div>
 
   <div class="flex items-center flex-wrap gap-2 mb-8">
-    <span class="text-sm font-medium text-base-content/70 mr-2">
-      Filter by:
-    </span>
-
     <%= link_to "All", media_items_path,
         class: "rounded-full px-3 py-1 text-sm font-semibold #{params[:category_id].blank? ? 'bg-primary text-primary-content' : 'bg-base-300 text-base-content hover:bg-base-200'}"%>
 
@@ -23,6 +19,20 @@
       <%= link_to category.name, media_items_path(category_id: category.id),
           class: "rounded-full px-3 py-1 text-sm font-semibold #{is_active ? 'bg-primary text-primary-content' : 'bg-base-300 text-base-content hover:bg-base-200'}" %>
     <% end %>
+
+    <div class="dropdown dropdown-end">
+      <div tabindex="0" role="button" class="btn btn-sm btn-ghost">
+        <span class="mr-1"><%= params[:tag].presence || "Filter by Tag" %></span>
+        <svg width="12px" height="12px" class="h-2 w-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
+      </div>
+      <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52 max-h-60 overflow-y-auto">
+        <% @tags.each do |tag| %>
+          <li>
+            <%= link_to tag.name, media_items_path(params.permit(:category_id, :search).merge(tag: tag.name)) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 
   <% if notice.present? %>
