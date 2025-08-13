@@ -102,7 +102,8 @@ class MediaItemsController < ApplicationController
         :category_id,
         :cover_image,
         :chapters_read,
-        :total_chapters
+        :total_chapters,
+        :tag_list
       )
     end
 end
