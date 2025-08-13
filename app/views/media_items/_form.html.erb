@@ -35,7 +35,11 @@
     <div>
       <%= form.label :status, class: "block text-base-content text-sm font-medium leading-6" %>
       <div class="mt-2">
-        <%= form.select :status, ["Planning", "In Progress", "Completed", "On Hold", "Dropped"], { prompt: "Select a Status" }, { class: "block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" } %>
+        <%= form.select :status, 
+          ["Planning", "In Progress", "Completed", "On Hold", "Dropped"], 
+          { prompt: "Select a Status" }, 
+          { class: "block w-full rounded-md border border-base-300 bg-base-100 text-base-content shadow-sm 
+                    focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-0 sm:text-sm sm:leading-6" } %>
       </div>
     </div>
   
