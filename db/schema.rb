@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_10_194110) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_12_234821) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -68,6 +68,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_194110) do
     t.index ["user_id"], name: "index_media_items_on_user_id"
   end
 
+  create_table "taggings", force: :cascade do |t|
+    t.bigint "media_item_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["media_item_id"], name: "index_taggings_on_media_item_id"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -87,4 +102,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_194110) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "media_items", "categories"
   add_foreign_key "media_items", "users"
+  add_foreign_key "taggings", "media_items"
+  add_foreign_key "taggings", "tags"
 end

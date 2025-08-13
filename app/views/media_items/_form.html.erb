@@ -63,6 +63,13 @@
   </div>
 
   <div>
+    <%= form.label :tag_list, "Tags (comma separated)", class: "block text-sm font-medium leading-6 text-base-content" %>
+    <div class="mt-2">
+      <%= form.text_field :tag_list, class: "input input-bordered w-full" %>
+    </div>
+  </div>
+
+  <div>
     <%= form.label :category_id, class: "block text-base-content text-sm font-medium leading-6" %>
     <div class="mt-2">
       <%= form.collection_select :category_id, @categories, :id, :name, { prompt: "Select a Category" }, { class: "block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"} %>
