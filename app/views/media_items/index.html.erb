@@ -1,20 +1,27 @@
 <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
   <div class="flex justify-between items-center mb-8">
-    <h1 class="text-3xl font-bold text-base-content tracking-tight">
-      My Collection
-    </h1>
-    <% if user_signed_in? %>
-      <%= link_to "Add New Item", new_media_item_path,
-          class: "rounded-md px-4 py-2 bg-primary text-primary-content text-sm font-semibold hover:bg-primary-focus shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" %>
-    <% end %>
+    <h1 class="text-3xl font-bold text-base-content tracking-tight">My Collection</h1>
+    <div class="flex items-center gap-4">
+      <% if user_signed_in? %>
+        <%= link_to "Add New Item", new_media_item_path, class: "btn btn-primary" %>
+      <% end %>
+      <div class="btn-group">
+        <%= link_to icon("squares", class: "h-5 w-5"), 
+              media_items_path(params.permit(:category_id, :search, :tag).merge(view: 'grid')), 
+              class: "btn btn-sm #{params[:view] != 'list' ? 'btn-primary' : 'btn-ghost'}" %>
+        <%= link_to icon("bars-3", class: "h-5 w-5"), 
+              media_items_path(params.permit(:category_id, :search, :tag).merge(view: 'list')), 
+              class: "btn btn-sm #{params[:view] == 'list' ? 'btn-primary' : 'btn-ghost'}" %>
+      </div>
+    </div>
   </div>
 
   <div class="flex items-center flex-wrap gap-2 mb-8">
     <div class="dropdown dropdown-hover">
       <div tabindex="0" role="button" class="btn btn-sm btn-ghost ml-3.5 mb-2">
         <span class="mr-1"><%= params[:tag].presence || "Filter by Tag" %></span>
-        <svg width="12px" height="12px" class="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
+        <svg width="12px" height="12px" class="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
       </div>
       <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-32">
         <% @tags.each do |tag| %>
@@ -25,26 +32,36 @@
       </ul>
     </div>
 
-    <%= link_to "All", media_items_path,
-        class: "rounded-full px-3 py-1 text-sm font-semibold #{params[:category_id].blank? ? 'bg-primary text-primary-content' : 'bg-base-300 text-base-content hover:bg-base-200'}"%>
+    <%= link_to "All", media_items_path(params.permit(:search, :tag)), 
+        class: "btn btn-sm #{params[:category_id].blank? ? 'btn-primary' : 'btn-ghost'}" %>
 
     <% @categories.each do |category| %>
-      <% is_active = params[:category_id].to_s == category.id.to_s %>
-      <%= link_to category.name, media_items_path(category_id: category.id),
-          class: "rounded-full px-3 py-1 text-sm font-semibold #{is_active ? 'bg-primary text-primary-content' : 'bg-base-300 text-base-content hover:bg-base-200'}" %>
+        <% is_active = params[:category_id].to_s == category.id.to_s %>
+        <%= link_to category.name, media_items_path(params.permit(:search, :tag).merge(category_id: category.id)), 
+            class: "btn btn-sm #{is_active ? 'btn-primary' : 'btn-ghost'}" %>
     <% end %>
+  </div>
 
   <% if notice.present? %>
-    <div class="rounded-md p-4 mb-6 bg-success/20 border-l-4 border-success text-success" role="alert">
-      <p class="font-bold">Success</p>
-      <p><%= notice %></p>
+    <div class="alert alert-success shadow-lg mb-6">
+      <div>
+        <%= icon "check-circle", class: "h-10 w-10" %>
+        <span><%= notice %></span>
+      </div>
     </div>
   <% end %>
 
   <%= turbo_frame_tag "results" do %>
     <% if @media_items.any? %>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <%= render @media_items %>
+      <% is_list_view = params[:view] == 'list' %>
+      <% container_class = is_list_view ? 'flex flex-col gap-3' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8' %>
+
+      <div class="<%= container_class %>">
+        <% if is_list_view %>
+          <%= render partial: 'media_items/list_item', collection: @media_items, as: :media_item %>
+        <% else %>
+          <%= render partial: 'media_items/grid_item', collection: @media_items, as: :media_item %>
+        <% end %>
       </div>
 
       <div class="mt-12">
@@ -53,12 +70,8 @@
 
     <% else %>
       <div class="rounded-lg px-6 py-16 bg-base-100 text-center shadow-md">
-        <h3 class="text-xl font-semibold text-base-content">
-          No results found.
-        </h3>
-        <p class="text-base-content/70 mt-2">
-          Try adjusting your search or filter.
-        </p>
+        <h3 class="text-xl font-semibold text-base-content">No results found.</h3>
+        <p class="text-base-content/70 mt-2">Try adjusting your search or filter.</p>
       </div>
     <% end %>
   <% end %>
