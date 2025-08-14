@@ -12,6 +12,10 @@ Rails.application.routes.draw do
       patch :favorite
       patch :unfavorite
     end
+
+    collection do
+      get :favorites
+    end
   end
 
   resources :profiles, only: [ :show ]
