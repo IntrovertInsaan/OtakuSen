@@ -32,7 +32,7 @@
 
   <% if @media_items.any? %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <%= render @media_items %>
+       <%= render partial: "media_items/grid_item", collection: @media_items, as: :media_item %>
     </div>
   <% else %>
     <%# The empty state message now uses theme-aware colors %>
