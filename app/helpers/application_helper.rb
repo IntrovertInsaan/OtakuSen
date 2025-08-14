@@ -33,4 +33,19 @@ module ApplicationHelper
     html << "</nav>"
     html.html_safe
   end
+
+  def filter_link_params(add_params = {})
+    # 1. Whitelist all the parameters we ever want to use for filtering.
+    #    We just need to add :view to this list.
+    allowed_keys = [ :category_id, :tag, :search, :view ]
+
+    # 2. Start with the current URL's parameters, but only the ones we've whitelisted.
+    current_params = params.to_unsafe_h.slice(*allowed_keys)
+
+    # 3. Merge in the new parameters for the link we're creating.
+    merged_params = current_params.merge(add_params)
+
+    # 4. Clean up any filters that were intentionally cleared.
+    merged_params.compact_blank
+  end
 end
