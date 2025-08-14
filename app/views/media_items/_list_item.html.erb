@@ -1,0 +1,27 @@
+<div id="<%= dom_id(media_item) %>" class="card card-side bg-base-100 shadow-md flex-row items-center p-2 gap-4">
+  <figure class="w-16 h-24 flex-shrink-0">
+    <% if media_item.cover_image.attached? %>
+      <%= image_tag media_item.cover_image.variant(resize_to_fill: [100, 150]), class: "w-full h-full object-cover rounded-md" %>
+    <% else %>
+      <div class="w-full h-full bg-base-200 rounded-md flex items-center justify-center text-base-content/50"><%= icon "photo", class: "w-8 h-8" %></div>
+    <% end %>
+  </figure>
+  <div class="flex-grow overflow-hidden">
+    <h2 class="font-bold text-lg truncate"><%= link_to media_item.title, media_item, data: { turbo_frame: "_top" } %></h2>
+    <p class="text-sm text-base-content/70"><%= media_item.category.name %></p>
+    <% if media_item.tags.any? %>
+      <div class="mt-1 flex flex-wrap gap-1 overflow-hidden">
+        <% media_item.tags.each do |tag| %>
+          <%= link_to media_items_path(params.permit(:category_id, :search).merge(tag: tag.name)) do %>
+            <div class="badge badge-xs badge-accent badge-outline"><%= tag.name %></div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="flex-shrink-0 pr-4">
+    <% if media_item.chapters_read.present? %>
+      <div class="badge badge-outline"><%= media_item.chapters_read %> / <%= media_item.total_chapters.presence || '?' %></div>
+    <% end %>
+  </div>
+</div>
