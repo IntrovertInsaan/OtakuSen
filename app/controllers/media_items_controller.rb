@@ -83,13 +83,25 @@ class MediaItemsController < ApplicationController
   end
 
   def increment_chapter
-    @media_item.increment!(:chapters_read)
-    render turbo_stream: turbo_stream.replace(@media_item)
+    if @media_item.chapters_read < @media_item.total_chapters
+      @media_item.increment!(:chapters_read)
+    end
+    render turbo_stream: turbo_stream.replace(
+      @media_item,
+      partial: "media_items/grid_item",
+      locals: { media_item: @media_item }
+    )
   end
 
   def decrement_chapter
-    @media_item.decrement!(:chapters_read)
-    render turbo_stream: turbo_stream.replace(@media_item)
+    if @media_item.chapters_read > 0
+      @media_item.decrement!(:chapters_read)
+    end
+    render turbo_stream: turbo_stream.replace(
+      @media_item,
+      partial: "media_items/grid_item",
+      locals: { media_item: @media_item }
+    )
   end
 
   private

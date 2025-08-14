@@ -49,8 +49,8 @@
             <span>Chapters</span>
             <div class="flex items-center gap-2">
               <% if user_signed_in? && current_user == media_item.user %>
-                <%= button_to "-", decrement_chapter_media_item_path(media_item), method: :patch,
-                    class: "flex justify-center items-center h-5 w-5 rounded-full bg-base-300 text-base-content/70 hover:bg-base-200 transition" %>
+                <%= button_to "-", decrement_chapter_media_item_path(media_item), method: :patch, disabled: media_item.chapters_read <= 0,
+                    class: "btn btn-xs btn-circle bg-base-300 text-base-content hover:bg-base-200 disabled:opacity-50 disabled:cursor-not-allowed" %>
               <% end %>
 
               <span>
@@ -58,8 +58,8 @@
               </span>
 
               <% if user_signed_in? && current_user == media_item.user %>
-                <%= button_to "+", increment_chapter_media_item_path(media_item), method: :patch,
-                    class: "flex justify-center items-center h-5 w-5 rounded-full bg-base-300 text-base-content/70 hover:bg-base-200 transition" %>
+                <%= button_to "+", increment_chapter_media_item_path(media_item), method: :patch, disabled: media_item.total_chapters.present? && media_item.chapters_read >= media_item.total_chapters,
+                    class: "btn btn-xs btn-circle bg-base-300 text-base-content hover:bg-base-200 disabled:opacity-50 disabled:cursor-not-allowed" %>
               <% end %>
             </div>
           </div>
