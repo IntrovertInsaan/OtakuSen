@@ -11,5 +11,8 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+
+    # MOVED: The include statement must be inside this class block
+    include Devise::Test::IntegrationHelpers
   end
 end

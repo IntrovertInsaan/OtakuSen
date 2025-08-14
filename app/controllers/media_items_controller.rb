@@ -28,7 +28,7 @@ class MediaItemsController < ApplicationController
     # Corrected query to join favorites table for ordering
     @pagy, @media_items = pagy(items.joins(:favorites).order("favorites.created_at DESC"))
 
-    render :index
+    render :favorites
   end
 
   def show

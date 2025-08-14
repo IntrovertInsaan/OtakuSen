@@ -17,30 +17,7 @@
     </div>
   </div>
 
-  <div class="flex items-center flex-wrap gap-2 mb-8">
-    <div class="dropdown dropdown-hover">
-      <div tabindex="0" role="button" class="btn btn-sm btn-ghost ml-3.5 mb-2">
-        <span class="mr-1"><%= params[:tag].presence || "Filter by Tag" %></span>
-        <svg width="12px" height="12px" class="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
-      </div>
-      <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-32">
-        <% @tags.each do |tag| %>
-          <li>
-            <%= link_to tag.name, media_items_path(params.permit(:category_id, :search).merge(tag: tag.name)) %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-
-    <%= link_to "All", media_items_path(params.permit(:search, :tag)), 
-        class: "btn btn-sm #{params[:category_id].blank? ? 'btn-primary' : 'btn-ghost'}" %>
-
-    <% @categories.each do |category| %>
-        <% is_active = params[:category_id].to_s == category.id.to_s %>
-        <%= link_to category.name, media_items_path(params.permit(:search, :tag).merge(category_id: category.id)), 
-            class: "btn btn-sm #{is_active ? 'btn-primary' : 'btn-ghost'}" %>
-    <% end %>
-  </div>
+  <%= render 'media_items/filter_bar', path: ->(p={}) { media_items_path(p) } %>
 
   <% if notice.present? %>
     <div class="alert alert-success shadow-lg mb-6">

@@ -1,0 +1,29 @@
+<div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold text-base-content tracking-tight"><%= @page_title %></h1>
+    <%# You can add view switchers here too if you like %>
+  </div>
+
+  <%= render 'media_items/filter_bar', path: ->(p={}) { favorites_media_items_path(p) } %>
+
+  <% if @media_items.any? %>
+    <% is_list_view = params[:view] == 'list' %>
+    <% container_class = is_list_view ? 'flex flex-col gap-3' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8' %>
+
+    <div class="<%= container_class %>">
+      <% if is_list_view %>
+        <%= render partial: 'media_items/list_item', collection: @media_items, as: :media_item %>
+      <% else %>
+        <%= render partial: 'media_items/grid_item', collection: @media_items, as: :media_item %>
+      <% end %>
+    </div>
+
+    <div class="mt-12">
+      <%== pagy_nav_tailwind(@pagy) %>
+    </div>
+  <% else %>
+    <div class="rounded-lg px-6 py-16 bg-base-100 text-center shadow-md">
+      <h3 class="text-xl font-semibold text-base-content">No favorites found.</h3>
+    </div>
+  <% end %>
+</div>

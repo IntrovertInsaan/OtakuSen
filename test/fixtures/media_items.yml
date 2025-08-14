@@ -1,15 +1,20 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  title: MyString
-  description: MyText
-  status: MyString
-  rating: 1
-  category: one
+  title: Test Manhwa Action
+  description: An action-packed test manhwa.
+  status: In Progress
+  user: one       # Belongs to user 'one'
+  category: manhwa # Belongs to category 'manhwa'
 
 two:
-  title: MyString
-  description: MyText
-  status: MyString
-  rating: 1
-  category: two
+  title: Test Manhwa Comedy
+  description: A funny test manhwa.
+  status: Completed
+  user: one       # Also belongs to user 'one'
+  category: manhwa
+
+three:
+  title: Test Movie Action
+  description: An action movie from another user.
+  status: Completed
+  user: two       # Belongs to user 'two'
+  category: movie

@@ -1,9 +1,11 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  media_item: one
-  tag: one
+  media_item: one # Links media_item 'one' to...
+  tag: action      # ...tag 'action'
 
 two:
   media_item: two
-  tag: two
+  tag: comedy
+  
+three:
+  media_item: three
+  tag: action

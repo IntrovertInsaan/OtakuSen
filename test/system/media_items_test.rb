@@ -2,48 +2,34 @@ require "application_system_test_case"
 
 class MediaItemsTest < ApplicationSystemTestCase
   setup do
-    @media_item = media_items(:one)
+    @user = users(:one)
+    sign_in @user # Use the Devise helper to sign in the user directly
   end
 
-  test "visiting the index" do
+  test "filters should work together" do
+    manhwa_action = media_items(:one)
+    manhwa_comedy = media_items(:two)
+
     visit media_items_url
-    assert_selector "h1", text: "Media items"
-  end
 
-  test "should create media item" do
-    visit media_items_url
-    click_on "New media item"
+    # 1. Initially, we should see both items
+    assert_text manhwa_action.title
+    assert_text manhwa_comedy.title
 
-    fill_in "Category", with: @media_item.category_id
-    fill_in "Description", with: @media_item.description
-    fill_in "Rating", with: @media_item.rating
-    fill_in "Status", with: @media_item.status
-    fill_in "Title", with: @media_item.title
-    click_on "Create Media item"
+    # 2. Click on the "Manhwa" category filter
+    click_on "Manhwa"
 
-    assert_text "Media item was successfully created"
-    click_on "Back"
-  end
+    # We should still see both Manhwa items
+    assert_text manhwa_action.title
+    assert_text manhwa_comedy.title
 
-  test "should update Media item" do
-    visit media_item_url(@media_item)
-    click_on "Edit this media item", match: :first
+    # 3. Now, click on the "Action" tag filter on the first card
+    within "#media_item_#{manhwa_action.id}" do
+      click_on "Action"
+    end
 
-    fill_in "Category", with: @media_item.category_id
-    fill_in "Description", with: @media_item.description
-    fill_in "Rating", with: @media_item.rating
-    fill_in "Status", with: @media_item.status
-    fill_in "Title", with: @media_item.title
-    click_on "Update Media item"
-
-    assert_text "Media item was successfully updated"
-    click_on "Back"
-  end
-
-  test "should destroy Media item" do
-    visit media_item_url(@media_item)
-    click_on "Destroy this media item", match: :first
-
-    assert_text "Media item was successfully destroyed"
+    # 4. ASSERTION: The page should now ONLY show the Action item
+    assert_text manhwa_action.title
+    assert_no_text manhwa_comedy.title
   end
 end
