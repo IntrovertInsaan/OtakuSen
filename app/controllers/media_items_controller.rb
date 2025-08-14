@@ -80,7 +80,14 @@ class MediaItemsController < ApplicationController
 
   def unfavorite
     current_user.favorites.where(media_item: @media_item).destroy_all
-    render turbo_stream: turbo_stream.replace(@media_item, partial: "media_items/grid_item", locals: { media_item: @media_item })
+    # This checks if the user was on the favorites page when they clicked the button.
+    if request.referrer == favorites_media_items_url
+      # If so, send a command to remove the item from the page.
+      render turbo_stream: turbo_stream.remove(@media_item)
+    else
+      # Otherwise (if they were on the index, profile, etc.), just redraw the card.
+      render turbo_stream: turbo_stream.replace(@media_item, partial: "media_items/grid_item", locals: { media_item: @media_item })
+    end
   end
 
   private
