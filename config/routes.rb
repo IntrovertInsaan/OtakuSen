@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     member do
       patch :increment_chapter
       patch :decrement_chapter
+      patch :favorite
+      patch :unfavorite
     end
   end
 

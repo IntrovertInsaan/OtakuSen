@@ -22,6 +22,15 @@
                     data: { turbo_frame: "_top" }, 
                     class: "hover:text-primary" %></h2>
 
+      <% if user_signed_in? %>
+        <% is_favorited = current_user.favorited_items.include?(media_item) %>
+        <%= button_to is_favorited ? unfavorite_media_item_path(media_item) : favorite_media_item_path(media_item), 
+                      method: :patch, 
+                      class: "btn btn-ghost btn-circle" do %>
+          <%= icon "valentine", class: "h-6 w-6 #{is_favorited ? 'text-red-500' : 'text-base-content/30'}" %>
+        <% end %>
+      <% end %>
+
       <div class="flex items-center flex-wrap gap-2 mt-2">
         <div class="badge badge-outline"><%= media_item.status %></div>
         <% if media_item.rating.present? %>

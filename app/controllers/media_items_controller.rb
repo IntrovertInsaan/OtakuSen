@@ -1,6 +1,6 @@
 class MediaItemsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_media_item, only: %i[ show edit update destroy increment_chapter decrement_chapter ]
+  before_action :set_media_item, only: %i[ show edit update destroy increment_chapter decrement_chapter favorite unfavorite ]
   before_action :load_categories, only: %i[ new create edit update ]
 
   # GET /media_items or /media_items.json
@@ -102,6 +102,24 @@ class MediaItemsController < ApplicationController
       partial: "media_items/grid_item",
       locals: { media_item: @media_item }
     )
+  end
+
+  def favorite
+  current_user.favorites.create(media_item: @media_item)
+  # Tell Turbo Stream which partial to use
+  render turbo_stream: turbo_stream.replace(
+    @media_item,
+    partial: "media_items/grid_item",
+    locals: { media_item: @media_item })
+  end
+
+  def unfavorite
+  current_user.favorites.where(media_item: @media_item).destroy_all
+  # Tell Turbo Stream which partial to use here as well
+  render turbo_stream: turbo_stream.replace(
+    @media_item,
+    partial: "media_items/grid_item",
+    locals: { media_item: @media_item })
   end
 
   private

@@ -8,6 +8,8 @@ class MediaItem < ApplicationRecord
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
 
+  has_many :favorites, dependent: :destroy
+
   # This is a "getter" method to display the tags as a string
   def tag_list
     tags.map(&:name).join(", ")
