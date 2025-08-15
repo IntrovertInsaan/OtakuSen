@@ -1,3 +1,13 @@
+/* Add this block so wysiwyg editor gets larger depending on notes length. */
+trix-editor {
+  min-height: 20rem;
+  /* Sets a good default starting height */
+  max-height: 50vh;
+  /* Prevents it from getting taller than 50% of the screen */
+  overflow-y: auto;
+  /* Adds a scrollbar when content overflows */
+}
+
 /*
  * Default Trix editor styles. See Action Text overwrites below.
 */
