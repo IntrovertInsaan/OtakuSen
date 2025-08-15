@@ -18,3 +18,6 @@ application.register("search-form", SearchFormController)
 
 import ThemeController from "./theme_controller"
 application.register("theme", ThemeController)
+
+import ToastController from "./toast_controller"
+application.register("toast", ToastController)

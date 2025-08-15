@@ -19,15 +19,6 @@
 
   <%= render 'media_items/filter_bar', path: ->(p={}) { media_items_path(p) } %>
 
-  <% if notice.present? %>
-    <div class="alert alert-success shadow-lg mb-6">
-      <div>
-        <%= icon "check-circle", class: "h-10 w-10" %>
-        <span><%= notice %></span>
-      </div>
-    </div>
-  <% end %>
-
   <%= turbo_frame_tag "results" do %>
     <% if @media_items.any? %>
       <% is_list_view = params[:view] == 'list' %>
