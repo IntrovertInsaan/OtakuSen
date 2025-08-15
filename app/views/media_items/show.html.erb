@@ -54,9 +54,24 @@
           </p>
         </div>
 
-        <button class="btn btn-ghost btn-circle" onclick="notes_modal.showModal()" title="View Notes">
-          <%= icon "chat-bubble-left-right", class: "w-6 h-6" %>
-        </button>
+        <%= turbo_frame_tag dom_id(@media_item, :notes_section) do %>
+          <div class="mt-8 pt-6 border-t border-base-300">
+            <div class="flex items-center justify-between">
+              <h3 class="text-2xl font-bold text-base-content">Notes</h3>
+              
+              <div class="indicator">
+                <% if @media_item.notes.any? %>
+                  <span class="indicator-item badge badge-secondary">
+                    <%= @media_item.notes.count %>
+                  </span> 
+                <% end %>
+                <button class="btn btn-ghost btn-circle" onclick="notes_modal.showModal()" title="View Notes">
+                  <%= icon "chat-bubble-left-right", class: "w-6 h-6" %>
+                </button>
+              </div>
+            </div>
+          </div>
+        <% end %>
         
         <dialog id="notes_modal" class="modal">
           <div class="modal-box w-11/12 max-w-4xl">
