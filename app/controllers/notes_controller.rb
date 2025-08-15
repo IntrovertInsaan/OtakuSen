@@ -12,7 +12,8 @@ class NotesController < ApplicationController
   def create
     @note = @media_item.notes.new(note_params)
     if @note.save
-      redirect_to @media_item, notice: "Note created."
+      # Redirect to the notes list to refresh the Turbo Frame
+      redirect_to media_item_notes_path(@media_item), notice: "Note created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -25,7 +26,8 @@ class NotesController < ApplicationController
   def update
     @note = @media_item.notes.find(params[:id])
     if @note.update(note_params)
-      redirect_to @media_item, notice: "Note updated."
+      # Redirect to the notes list
+      redirect_to media_item_notes_path(@media_item), notice: "Note updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -34,7 +36,8 @@ class NotesController < ApplicationController
   def destroy
     @note = @media_item.notes.find(params[:id])
     @note.destroy
-    redirect_to @media_item, notice: "Note deleted."
+    # Redirect to the notes list
+    redirect_to media_item_notes_path(@media_item), notice: "Note deleted."
   end
 
   private
