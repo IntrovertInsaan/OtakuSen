@@ -1,0 +1,26 @@
+<%= turbo_frame_tag "notes_content" do %>
+  <div class="flex justify-between items-center mb-4">
+    <h3 class="font-bold text-2xl">Notes</h3>
+    <%= link_to "Add New Note", new_media_item_note_path(@media_item), data: { turbo_frame: "notes_content" }, class: "btn btn-sm btn-primary" %>
+  </div>
+  <div class="space-y-4 max-h-[60vh] overflow-y-auto pr-4">
+    <% if @notes.any? %>
+      <% @notes.each do |note| %>
+        <div class="card bg-base-200 shadow-sm">
+          <div class="card-body p-4">
+            <div class="flex justify-between items-start">
+              <h4 class="card-title"><%= note.title %></h4>
+              <div class="flex gap-2">
+                <%= link_to "Edit", edit_media_item_note_path(@media_item, note), data: { turbo_frame: "notes_content" }, class: "btn btn-xs btn-ghost" %>
+                <%= button_to "Delete", media_item_note_path(@media_item, note), method: :delete, class: "btn btn-xs btn-ghost text-error" %>
+              </div>
+            </div>
+            <div class="prose max-w-none text-base-content/80 mt-2"><%= note.content %></div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-base-content/60 text-center py-8">No notes yet.</p>
+    <% end %>
+  </div>
+<% end %>

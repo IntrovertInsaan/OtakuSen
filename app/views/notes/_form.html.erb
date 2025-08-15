@@ -1,0 +1,15 @@
+<%= form_with(model: [@media_item, @note], class: "space-y-4") do |f| %>
+  <div>
+    <%= f.label :title, class: "label" %>
+    <%= f.text_field :title, class: "input input-bordered w-full" %>
+  </div>
+  <div>
+    <%= f.label :content, "Content", class: "label" %>
+    <%# This helper automatically creates the Trix WYSIWYG editor %>
+    <%= f.rich_text_area :content, class: "textarea textarea-bordered w-full h-64" %>
+  </div>
+  <div class="card-actions justify-end">
+    <%= link_to "Cancel", media_item_notes_path(@media_item), data: { turbo_frame: "notes_content" }, class: "btn btn-ghost" %>
+    <%= f.submit "Save Note", class: "btn btn-primary" %>
+  </div>
+<% end %>

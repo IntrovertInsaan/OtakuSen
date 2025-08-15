@@ -54,6 +54,17 @@
           </p>
         </div>
 
+        <button class="btn btn-ghost btn-circle" onclick="notes_modal.showModal()" title="View Notes">
+          <%= icon "chat-bubble-left-right", class: "w-6 h-6" %>
+        </button>
+        
+        <dialog id="notes_modal" class="modal">
+          <div class="modal-box w-11/12 max-w-4xl">
+            <%= turbo_frame_tag "notes_content", src: media_item_notes_path(@media_item) %>
+          </div>
+          <form method="dialog" class="modal-backdrop"><button>close</button></form>
+        </dialog>
+
         <div class="mt-8 pt-6 border-t border-base-300 flex items-center gap-4 flex-wrap">
           <%= link_to "Edit Item", edit_media_item_path(@media_item),
               class: "inline-block rounded-md px-4 py-2 bg-primary text-primary-content font-semibold hover:bg-primary-focus" %>
