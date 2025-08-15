@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index"
 
   resources :media_items do
+    resources :notes, except: [:show] # We don't need a separate show page for one note
+
     member do
       patch :increment_chapter
       patch :decrement_chapter
