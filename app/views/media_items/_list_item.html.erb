@@ -7,7 +7,7 @@
     <% end %>
   </figure>
   <div class="flex-grow overflow-hidden">
-    <h2 class="font-bold text-lg truncate"><%= link_to media_item.title, media_item, data: { turbo_frame: "_top" } %></h2>
+  <h2 class="media-item-title font-bold text-lg truncate"><%= link_to media_item.title, media_item, data: { turbo_frame: "_top" } %></h2>
     <p class="text-sm text-base-content/70"><%= media_item.category.name %></p>
     <% if media_item.tags.any? %>
       <div class="mt-1 flex flex-wrap gap-1 overflow-hidden">
