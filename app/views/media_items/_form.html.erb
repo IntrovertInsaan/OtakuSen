@@ -1,95 +1,84 @@
 <%= form_with(model: media_item, class: "space-y-6") do |form| %>
   <% if media_item.errors.any? %>
-    <div class="text-error">
-      <h2><%= pluralize(media_item.errors.count, "error") %> prohibited this media_item from being saved:</h2>
-      <ul>
-        <% media_item.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div class="alert alert-error shadow-lg">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <div>
+          <h3 class="font-bold"><%= pluralize(media_item.errors.count, "error") %> prohibited this from being saved:</h3>
+          <ul class="mt-2 list-disc list-inside">
+            <% media_item.errors.full_messages.each do |message| %>
+              <li class="text-sm"><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, class: "block text-base-content text-sm font-medium leading-6" %>
-    <div class="mt-2">
-      <%= form.text_field :title, class: "block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-300 placeholder:text-base-content/60 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" %>
-    </div>
+  <%# Using DaisyUI's form-control and label classes for consistent spacing %>
+  <div class="form-control w-full">
+    <%= form.label :title, class: "label" %>
+    <%= form.text_field :title, class: "input input-bordered w-full" %>
   </div>
 
-  <div>
-    <%= form.label :cover_image, class: "block text-base-content text-sm font-medium leading-6" %>
-    <div class="mt-2">
-      <%= form.file_field :cover_image, class: "block w-full text-base-content/70 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" %>
-    </div>
+  <div class="form-control w-full">
+    <%= form.label :category_id, class: "label" %>
+    <%= form.collection_select :category_id, @categories, :id, :name, { prompt: "Select a Category" }, { class: "select select-bordered w-full" } %>
   </div>
 
-  <div>
-    <%= form.label :description, class: "block text-base-content text-sm font-medium leading-6" %>
-    <div class="mt-2">
-      <%= form.text_area :description, rows: 4, class: "block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-300 placeholder:text-base-content/60 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" %>
-    </div>
+  <div class="form-control w-full">
+    <%= form.label :cover_image, class: "label" %>
+    <%= form.file_field :cover_image, class: "file-input file-input-bordered w-full" %>
+  </div>
+
+  <div class="form-control w-full">
+    <%= form.label :description, class: "label" %>
+    <%= form.text_area :description, rows: 4, class: "textarea textarea-bordered w-full" %>
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-    <div>
+    <div class="form-control w-full">
       <%= form.label :status, class: "label" %>
       <%= form.select :status, ["Planning", "In Progress", "Completed", "On Hold", "Dropped"], { prompt: "Select a Status" }, { class: "select select-bordered w-full" } %>
     </div>
-    <div>
+    <div class="form-control w-full">
       <%= form.label :rating, "Overall Rating (1-10)", class: "label" %>
       <%= form.number_field :rating, in: 1..10, class: "input input-bordered w-full" %>
     </div>
   </div>
   
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-    <div>
+    <div class="form-control w-full">
       <%= form.label :story_rating, "Story (1-10)", class: "label" %>
       <%= form.number_field :story_rating, in: 1..10, class: "input input-bordered w-full" %>
     </div>
-    <div>
+    <div class="form-control w-full">
       <%= form.label :art_rating, "Art (1-10)", class: "label" %>
       <%= form.number_field :art_rating, in: 1..10, class: "input input-bordered w-full" %>
     </div>
-    <div>
+    <div class="form-control w-full">
       <%= form.label :characters_rating, "Characters (1-10)", class: "label" %>
       <%= form.number_field :characters_rating, in: 1..10, class: "input input-bordered w-full" %>
     </div>
   </div>
 
-  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-    <div>
-      <%= form.label :chapters_read, class: "block text-base-content text-sm font-medium leading-6" %>
-      <div class="mt-2">
-        <%= form.number_field :chapters_read, class: "block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" %>
-      </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <div class="form-control w-full">
+      <%= form.label :chapters_read, class: "label" %>
+      <%= form.number_field :chapters_read, class: "input input-bordered w-full" %>
     </div>
-    <div>
-      <%= form.label :total_chapters, class: "block text-base-content text-sm font-medium leading-6" %>
-      <div class="mt-2">
-        <%= form.number_field :total_chapters, class: "block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" %>
-      </div>
+    <div class="form-control w-full">
+      <%= form.label :total_chapters, class: "label" %>
+      <%= form.number_field :total_chapters, class: "input input-bordered w-full" %>
     </div>
   </div>
 
-  <div>
-    <%= form.label :tag_list, "Tags (comma separated)", class: "block text-sm font-medium leading-6 text-base-content" %>
-    <div class="mt-2">
-      <%= form.text_field :tag_list, class: "input input-bordered w-full" %>
-    </div>
+  <div class="form-control w-full">
+    <%= form.label :tag_list, "Tags (comma separated)", class: "label" %>
+    <%= form.text_field :tag_list, class: "input input-bordered w-full" %>
   </div>
 
-  <div>
-    <%= form.label :category_id, class: "block text-base-content text-sm font-medium leading-6" %>
-    <div class="mt-2">
-      <%= form.collection_select :category_id, @categories, :id, :name,
-        { prompt: "Select a Category" }, 
-        { class: "block w-full rounded-md border border-base-300 bg-base-100 text-base-content shadow-sm 
-                  focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-0 sm:text-sm sm:leading-6" } %>
-    </div>
-  </div>
-
-  <div class="flex justify-end">
-    <%= form.submit class: "rounded-md px-3 py-2 bg-primary text-primary-content text-sm font-semibold shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-pointer" %>
+  <div class="card-actions justify-end">
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
