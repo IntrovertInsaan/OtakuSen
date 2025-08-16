@@ -4,35 +4,40 @@ module ApplicationHelper
   include Pagy::Frontend
 
   def pagy_nav_tailwind(pagy)
-    html = %(<nav class="flex items-center justify-center space-x-2 mt-6" role="navigation" aria-label="pagination">)
+    # This new version builds an array of HTML parts instead of modifying a single string.
+    # It also uses DaisyUI's "btn" and "join" component classes for perfect theming.
+    html_parts = []
+
+    html_parts << '<div class="join">'
 
     # Prev button
     if pagy.prev
-      html << link_to("← Prev", url_for(params.to_unsafe_h.merge(page: pagy.prev)), class: "px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300")
+      html_parts << link_to("«", url_for(params.to_unsafe_h.merge(page: pagy.prev)), class: "join-item btn")
     else
-      html << %(<span class="px-3 py-1 bg-gray-100 text-gray-400 rounded cursor-not-allowed">← Prev</span>)
+      html_parts << '<button class="join-item btn" disabled>«</button>'
     end
 
     # Page links
     pagy.series.each do |item|
       case item
       when Integer
-        html << link_to(item, url_for(params.to_unsafe_h.merge(page: item)), class: "px-3 py-1 bg-white border border-gray-300 text-gray-700 rounded hover:bg-gray-100")
+        html_parts << link_to(item, url_for(params.to_unsafe_h.merge(page: item)), class: "join-item btn")
       when String
-        html << %(<span class="px-3 py-1 bg-blue-500 text-white rounded">#{item}</span>)
+        html_parts << "<button class='join-item btn btn-active'>#{item}</button>"
       when :gap
-        html << %(<span class="px-3 py-1 text-gray-400">...</span>)
+        html_parts << '<button class="join-item btn btn-disabled">...</button>'
       end
     end
 
     # Next button
     if pagy.next
-      html << link_to("Next →", url_for(params.to_unsafe_h.merge(page: pagy.next)), class: "px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300")
+      html_parts << link_to("»", url_for(params.to_unsafe_h.merge(page: pagy.next)), class: "join-item btn")
     else
-      html << %(<span class="px-3 py-1 bg-gray-100 text-gray-400 rounded cursor-not-allowed">Next →</span>)
+      html_parts << '<button class="join-item btn" disabled>»</button>'
     end
 
-    html << "</nav>"
-    html.html_safe
+    html_parts << "</div>"
+
+    html_parts.join.html_safe
   end
 end
