@@ -6,7 +6,7 @@ module ApplicationHelper
 
     # Prev button
     if pagy.prev
-      html << link_to("← Prev", url_for(page: pagy.prev), class: "px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300")
+      html << link_to("← Prev", url_for(params.to_unsafe_h.merge(page: pagy.prev)), class: "px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300")
     else
       html << %(<span class="px-3 py-1 bg-gray-100 text-gray-400 rounded cursor-not-allowed">← Prev</span>)
     end
@@ -15,7 +15,7 @@ module ApplicationHelper
     pagy.series.each do |item|
       case item
       when Integer
-        html << link_to(item, url_for(page: item), class: "px-3 py-1 bg-white border border-gray-300 text-gray-700 rounded hover:bg-gray-100")
+        html << link_to(item, url_for(params.to_unsafe_h.merge(page: item)), class: "px-3 py-1 bg-white border border-gray-300 text-gray-700 rounded hover:bg-gray-100")
       when String
         html << %(<span class="px-3 py-1 bg-blue-500 text-white rounded">#{item}</span>)
       when :gap
@@ -25,7 +25,7 @@ module ApplicationHelper
 
     # Next button
     if pagy.next
-      html << link_to("Next →", url_for(page: pagy.next), class: "px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300")
+      html << link_to("Next →", url_for(params.to_unsafe_h.merge(page: pagy.next)), class: "px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300")
     else
       html << %(<span class="px-3 py-1 bg-gray-100 text-gray-400 rounded cursor-not-allowed">Next →</span>)
     end
