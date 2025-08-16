@@ -1,20 +1,31 @@
 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8 border-t border-base-300 pt-4">
 
   <div class="btn-group">
-    <%= link_to "All", path.call(filter_link_params(category_id: nil)), class: "btn btn-sm #{params[:category_id].blank? ? 'btn-primary' : 'btn-ghost'}" %>
+    <%#
+      REASON FOR CHANGE: To make the filters stack correctly.
+      The old link was complex and used a helper that caused issues.
+      This new version uses the standard `url_for` method to build a correct link
+      that preserves other active filters like tags or search.
+    %>
+    <%# OLD CODE: <a class="btn btn-sm ..." href="/media_items?category_id=">All</a> %>
+    <%= link_to "All", url_for(params.to_unsafe_h.except(:category_id)), class: "btn btn-sm #{params[:category_id].blank? ? 'btn-primary' : 'btn-ghost'}" %>
+
     <% @categories.each do |category| %>
       <% is_active = params[:category_id].to_s == category.id.to_s %>
-      <%= link_to category.name, path.call(filter_link_params(category_id: category.id)), class: "btn btn-sm #{is_active ? 'btn-primary' : 'btn-ghost'}" %>
+      <%# REASON FOR CHANGE: Same as above. This ensures that if a tag is active, it remains active when you click a category. %>
+      <%# OLD CODE: <a class="btn btn-sm ..." href="/media_items?category_id=...">Category Name</a> %>
+      <%= link_to category.name, url_for(params.to_unsafe_h.merge(category_id: category.id)), class: "btn btn-sm #{is_active ? 'btn-primary' : 'btn-ghost'}" %>
     <% end %>
   </div>
   
-  <div class="flex gap-2">
+  <div class="flex items-center gap-2">
     <div class="dropdown dropdown-end">
       <div tabindex="0" role="button" class="btn btn-sm btn-ghost">
         <%= icon "arrows-up-down", class: "h-5 w-5" %>
         Sort
       </div>
       <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52">
+        <%# REASON FOR CHANGE: Using `url_for` consistently for all filter-related links. %>
         <li><%= link_to "Default", url_for(params.to_unsafe_h.except(:sort)) %></li>
         <li><%= link_to "Highest Rated", url_for(params.to_unsafe_h.merge(sort: 'highest_rated')) %></li>
         <li><%= link_to "Recently Updated", url_for(params.to_unsafe_h.merge(sort: 'recently_updated')) %></li>
@@ -29,12 +40,11 @@
         <svg width="12px" height="12px" class="h-2 w-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
       </div>
       <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52 max-h-60 overflow-y-auto">
-        <li>
-          <%= link_to "All Tags", media_items_path(tag: nil) %>
-        </li>
+        <%# REASON FOR CHANGE: Using `url_for` consistently for all filter-related links. %>
+        <li><%= link_to "All Tags", url_for(params.to_unsafe_h.except(:tag)) %></li>
         <% @tags.each do |tag| %>
           <li>
-            <%= link_to tag.name, path.call(filter_link_params(tag: tag.name)) %>
+            <%= link_to tag.name, url_for(params.to_unsafe_h.merge(tag: tag.name)) %>
           </li>
         <% end %>
       </ul>

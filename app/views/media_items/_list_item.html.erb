@@ -7,12 +7,23 @@
     <% end %>
   </figure>
   <div class="flex-grow overflow-hidden">
-  <h2 class="media-item-title font-bold text-lg truncate"><%= link_to media_item.title, media_item, data: { turbo_frame: "_top" } %></h2>
+    <div class="flex items-center gap-2">
+      <h2 class="media-item-title font-bold text-lg truncate"><%= link_to media_item.title, media_item, data: { turbo_frame: "_top" } %></h2>
+      <% if user_signed_in? %>
+        <% is_favorited = current_user.favorited_items.include?(media_item) %>
+        <%= button_to is_favorited ? unfavorite_media_item_path(media_item) : favorite_media_item_path(media_item),
+              method: :patch,
+              class: "btn btn-ghost btn-circle btn-xs" do %>
+          <%= icon "valentine", class: "h-5 w-5 #{is_favorited ? 'text-red-500' : 'text-base-content/30'}" %>
+        <% end %>
+      <% end %>
+    </div>
     <p class="text-sm text-base-content/70"><%= media_item.category.name %></p>
     <% if media_item.tags.any? %>
       <div class="mt-1 flex flex-wrap gap-1 overflow-hidden">
         <% media_item.tags.each do |tag| %>
-          <%= link_to media_items_path(params.permit(:category_id, :search).merge(tag: tag.name)) do %>
+          <%# <%= link_to media_items_path(filter_link_params(tag: tag.name)) do %>
+          <%= link_to url_for(params.to_unsafe_h.merge(tag: tag.name)) do %>
             <div class="badge badge-xs badge-accent badge-outline"><%= tag.name %></div>
           <% end %>
         <% end %>
