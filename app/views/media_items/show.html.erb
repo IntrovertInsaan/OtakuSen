@@ -34,6 +34,46 @@
             <% end %>
           </div>
 
+          <div class="flex items-center flex-wrap gap-4 mt-4">
+            <div class="badge badge-outline"><%= @media_item.status %></div>
+            <% if @media_item.rating.present? %>
+              <div class="badge badge-outline">⭐ Overall: <%= @media_item.rating %> / 10</div>
+            <% end %>
+          </div>
+          
+          <div class="mt-6 space-y-3">
+            <% if @media_item.story_rating.present? %>
+              <div class="flex items-center gap-4">
+                <span class="font-semibold w-24">Story</span>
+                <div class="rating rating-sm">
+                  <% 10.times do |i| %>
+                    <input type="radio" name="story_rating_view" class="mask mask-star-2 bg-orange-400" disabled <%= 'checked' if (i + 1) == @media_item.story_rating %> />
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+            <% if @media_item.art_rating.present? %>
+              <div class="flex items-center gap-4">
+                <span class="font-semibold w-24">Art</span>
+                <div class="rating rating-sm">
+                  <% 10.times do |i| %>
+                    <input type="radio" name="art_rating_view" class="mask mask-star-2 bg-orange-400" disabled <%= 'checked' if (i + 1) == @media_item.art_rating %> />
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+            <% if @media_item.characters_rating.present? %>
+              <div class="flex items-center gap-4">
+                <span class="font-semibold w-24">Characters</span>
+                <div class="rating rating-sm">
+                  <% 10.times do |i| %>
+                    <input type="radio" name="characters_rating_view" class="mask mask-star-2 bg-orange-400" disabled <%= 'checked' if (i + 1) == @media_item.characters_rating %> />
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
           <% if @media_item.chapters_read.present? %>
             <div class="mt-6">
               <div class="flex justify-between text-base-content/70 text-sm font-medium">

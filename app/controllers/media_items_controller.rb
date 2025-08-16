@@ -125,7 +125,8 @@ class MediaItemsController < ApplicationController
     def media_item_params
       params.require(:media_item).permit(
         :title, :description, :status, :rating, :category_id,
-        :cover_image, :chapters_read, :total_chapters, :tag_list
+        :cover_image, :chapters_read, :total_chapters, :tag_list,
+        :story_rating, :art_rating, :characters_rating
       )
     end
 end
