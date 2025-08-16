@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDetailedRatingsToMediaItems < ActiveRecord::Migration[8.0]
   def change
     add_column :media_items, :story_rating, :integer

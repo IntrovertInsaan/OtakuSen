@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NotesController < ApplicationController
   # Add this line to make the dom_id helper available
   include ActionView::RecordIdentifier

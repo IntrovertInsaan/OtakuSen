@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 puts "Destroying existing MediaItems and Categories..."
 MediaItem.destroy_all
 Category.destroy_all
