@@ -31,23 +31,29 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
     <div>
-      <%= form.label :status, class: "block text-base-content text-sm font-medium leading-6" %>
-      <div class="mt-2">
-        <%= form.select :status, 
-          ["Planning", "In Progress", "Completed", "On Hold", "Dropped"], 
-          { prompt: "Select a Status" }, 
-          { class: "block w-full rounded-md border border-base-300 bg-base-100 text-base-content shadow-sm 
-                    focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-0 sm:text-sm sm:leading-6" } %>
-      </div>
+      <%= form.label :status, class: "label" %>
+      <%= form.select :status, ["Planning", "In Progress", "Completed", "On Hold", "Dropped"], { prompt: "Select a Status" }, { class: "select select-bordered w-full" } %>
     </div>
-  
     <div>
-      <%= form.label :rating, "Rating (1-10)", class: "block text-base-content text-sm font-medium leading-6" %>
-      <div class="mt-2">
-        <%= form.number_field :rating, in: 1..10, class: "block w-full rounded-md border-0 py-1.5 text-base-content shadow-sm ring-1 ring-inset ring-base-300 placeholder:text-base-content/60 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" %>
-      </div>
+      <%= form.label :rating, "Overall Rating (1-10)", class: "label" %>
+      <%= form.number_field :rating, in: 1..10, class: "input input-bordered w-full" %>
+    </div>
+  </div>
+  
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <div>
+      <%= form.label :story_rating, "Story (1-10)", class: "label" %>
+      <%= form.number_field :story_rating, in: 1..10, class: "input input-bordered w-full" %>
+    </div>
+    <div>
+      <%= form.label :art_rating, "Art (1-10)", class: "label" %>
+      <%= form.number_field :art_rating, in: 1..10, class: "input input-bordered w-full" %>
+    </div>
+    <div>
+      <%= form.label :characters_rating, "Characters (1-10)", class: "label" %>
+      <%= form.number_field :characters_rating, in: 1..10, class: "input input-bordered w-full" %>
     </div>
   </div>
 

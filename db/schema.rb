@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_15_085754) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_16_044330) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -83,6 +83,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_15_085754) do
     t.integer "chapters_read"
     t.integer "total_chapters"
     t.bigint "user_id", null: false
+    t.integer "story_rating"
+    t.integer "art_rating"
+    t.integer "characters_rating"
     t.index ["category_id"], name: "index_media_items_on_category_id"
     t.index ["user_id"], name: "index_media_items_on_user_id"
   end
