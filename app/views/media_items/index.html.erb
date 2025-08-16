@@ -1,17 +1,17 @@
 <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-  <div class="flex justify-between items-center mb-8">
+  <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
     <h1 class="text-3xl font-bold text-base-content tracking-tight"><%= @page_title || "My Collection" %></h1>
     <div class="flex items-center gap-4">
       <% if user_signed_in? %>
         <%= link_to "Add New Item", new_media_item_path, class: "btn btn-primary" %>
       <% end %>
       <div class="btn-group">
-        <%= link_to icon("squares", class: "h-5 w-5"), 
-              media_items_path(params.permit(:category_id, :search, :tag).merge(view: 'grid')), 
+        <%= link_to icon("squares", class: "h-5 w-5"),
+              url_for(params.to_unsafe_h.merge(view: 'grid')), 
               class: "btn btn-sm #{params[:view] != 'list' ? 'btn-primary' : 'btn-ghost'}" %>
         <%= link_to icon("bars-3", class: "h-5 w-5"), 
-              media_items_path(params.permit(:category_id, :search, :tag).merge(view: 'list')), 
+              url_for(params.to_unsafe_h.merge(view: 'list')), 
               class: "btn btn-sm #{params[:view] == 'list' ? 'btn-primary' : 'btn-ghost'}" %>
       </div>
     </div>
@@ -33,7 +33,7 @@
       </div>
 
       <div class="mt-12">
-        <%= pagy_nav_tailwind(@pagy) %>
+        <%== pagy_nav_tailwind(@pagy) %>
       </div>
 
     <% else %>
