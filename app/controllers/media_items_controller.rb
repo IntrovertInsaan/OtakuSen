@@ -8,9 +8,21 @@ class MediaItemsController < ApplicationController
     @categories = Category.all.order(:name)
     @tags = Tag.joins(:media_items).where(media_items: { user_id: current_user.id }).distinct.order(:name)
 
-    # Use the helper to filter and paginate the user's own items
+    sort_order = case params[:sort]
+    when "highest_rated"
+      "media_items.rating DESC NULLS LAST"
+    when "recently_updated"
+      "media_items.updated_at DESC"
+    when "title_asc"
+      "media_items.title ASC"
+    when "title_desc"
+      "media_items.title DESC"
+    else
+      "media_items.created_at DESC"
+    end
+
     base_items = current_user.media_items
-    @pagy, @media_items = filter_and_paginate_items(base_items)
+    @pagy, @media_items = filter_and_paginate_items(base_items, sort_order)
   end
 
   def favorites
@@ -112,7 +124,7 @@ class MediaItemsController < ApplicationController
 
     def media_item_params
       params.require(:media_item).permit(
-        :title, :description, :status, :rating, :category_id, 
+        :title, :description, :status, :rating, :category_id,
         :cover_image, :chapters_read, :total_chapters, :tag_list
       )
     end
