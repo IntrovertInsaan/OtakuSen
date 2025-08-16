@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MediaItemsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_media_item, only: %i[ show edit update destroy increment_chapter decrement_chapter favorite unfavorite ]

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeUserIdToNotNullInMediaItems < ActiveRecord::Migration[8.0]
   def change
     change_column_null :media_items, :user_id, false

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: "users/registrations" } # Updated in order to enter avatar and bio without entering passwords by custom registration controller.
 
@@ -6,7 +8,7 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index"
 
   resources :media_items do
-    resources :notes, except: [:show] # We don't need a separate show page for one note
+    resources :notes, except: [ :show ] # We don't need a separate show page for one note
 
     member do
       patch :increment_chapter
