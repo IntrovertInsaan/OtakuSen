@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AchievementService
   def self.check_achievements(user)
     new(user).check_all
