@@ -1,0 +1,81 @@
+<!-- Right side: Theme, Search, and Auth -->
+<div class="flex items-center gap-3">
+
+  <!-- Theme Switcher -->
+  <div class="dropdown dropdown-end">
+    <div tabindex="0" role="button" class="btn btn-ghost gap-2">
+      <span class="hidden sm:inline">Theme</span>
+      <%= icon "chevron-down", class: "w-5 h-5" %>
+    </div>
+    <ul class="dropdown-content z-[1] p-2 shadow-lg bg-base-300 rounded-box w-32 menu menu-sm" data-controller="theme">
+      <li><a href="#" data-action="click->theme#switch" data-theme="otakusen" class="flex items-center gap-2"><%= icon "otakusen", class: "w-4 h-4" %> Otakusen</a></li>
+      <li><a href="#" data-action="click->theme#switch" data-theme="lofi" class="flex items-center gap-2"><%= icon "sun", class: "w-4 h-4" %> Light</a></li>
+      <li><a href="#" data-action="click->theme#switch" data-theme="black" class="flex items-center gap-2"><%= icon "moon", class: "w-4 h-4" %> Dark</a></li>
+      <li><a href="#" data-action="click->theme#switch" data-theme="valentine" class="flex items-center gap-2"><%= icon "valentine", class: "w-4 h-4" %> Love</a></li>
+      <li><a href="#" data-action="click->theme#switch" data-theme="luxury" class="flex items-center gap-2"><%= icon "gold", class: "w-4 h-4" %> Gold</a></li>
+      <li><a href="#" data-action="click->theme#switch" data-theme="retro" class="flex items-center gap-2"><%= icon "tv", class: "w-4 h-4" %> Arcade</a></li>
+      <li><a href="#" data-action="click->theme#switch" data-theme="halloween" class="flex items-center gap-2"><%= icon "cake", class: "w-4 h-4" %>Halloween</a></li>
+    </ul>
+  </div>
+
+  <label class="swap swap-rotate" data-controller="theme">
+    <input type="checkbox" class="theme-controller" value="black"
+           data-action="change->theme#toggle"
+           data-theme-toggle />
+    
+    <div class="swap-off fill-current w-6 h-6">
+      <%= icon "sun" %>
+    </div>
+  
+    <div class="swap-on fill-current w-6 h-6">
+      <%= icon "moon" %>
+    </div>
+  </label>
+
+  <!-- Search -->
+  <%= form_with(url: media_items_path, method: :get, class: "form-control", data: { controller: "search-form", turbo_frame: "results" }) do |form| %>
+    <label class="input input-bordered flex items-center gap-2 bg-base-200 text-base-content">
+      <%= icon "magnifying-glass", class: "h-5 w-5 opacity-70" %>
+      <%= form.text_field :search, value: params[:search], placeholder: "Search...", class: "grow bg-transparent border-none focus:outline-none", data: { action: "input->search-form#search" } %>
+    </label>
+  <% end %>
+
+  <!-- Avatar / Auth -->
+  <% if user_signed_in? %>
+    <div class="dropdown dropdown-end">
+      <button tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+        <div class="w-10 rounded-full">
+          <% if current_user.avatar.attached? %>
+            <%= image_tag current_user.avatar.variant(resize_to_fill: [40, 40]) %>
+          <% else %>
+            <%= icon "user", class: "w-6 h-6" %>
+          <% end %>
+        </div>
+      </button>
+      <div tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-64">
+        <div class="flex items-center gap-3 p-2 border-b border-base-300">
+          <%# ... user avatar and username ... %>
+          <% if current_user.avatar.attached? %>
+            <%= image_tag current_user.avatar.variant(resize_to_fill: [48, 48]), class: "h-12 w-12 rounded-full" %>
+          <% else %>
+            <div class="h-12 w-12 rounded-full bg-neutral text-neutral-content flex items-center justify-center"><%= icon "user", class: "h-6 w-6" %></div>
+          <% end %>
+          <div>
+            <p class="font-semibold"><%= current_user.username %></p>
+            <p class="text-xs text-base-content/70">Signed in</p>
+          </div>
+        </div>
+        <ul class="p-0">
+          <li><%= link_to "View Profile", profile_path(current_user) %></li>
+          <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
+          <li><%= button_to "Log out", destroy_user_session_path, method: :delete %></li>
+        </ul>
+      </div>
+    </div>
+  <% else %>
+    <div class="flex gap-2">
+      <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary" %>
+      <%= link_to "Log in", new_user_session_path, class: "btn btn-ghost" %>
+    </div>
+  <% end %>
+</div>
