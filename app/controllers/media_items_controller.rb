@@ -39,6 +39,8 @@ class MediaItemsController < ApplicationController
   def create
     @media_item = current_user.media_items.build(media_item_params)
     if @media_item.save
+      # Add this line to check for new achievements
+      AchievementService.check_achievements(current_user)
       redirect_to @media_item, notice: "Media item was successfully created."
     else
       @categories = Category.all.order(:name) # Reload categories for form
@@ -48,6 +50,8 @@ class MediaItemsController < ApplicationController
 
   def update
     if @media_item.update(media_item_params)
+      # Add this line to check for new achievements
+      AchievementService.check_achievements(current_user)
       redirect_to @media_item, notice: "Media item was successfully updated."
     else
       @categories = Category.all.order(:name) # Reload categories for form
