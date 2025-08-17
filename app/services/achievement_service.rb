@@ -13,6 +13,7 @@ class AchievementService
     check_first_step
     check_collector
     check_critic
+    check_manhwa_maniac # 1. Add this line
   end
 
   private
@@ -38,5 +39,15 @@ class AchievementService
 
   def check_critic
     grant_achievement("critic") if @user.media_items.where.not(rating: nil).count >= 5
+  end
+
+  # 2. Add this new private method at the bottom
+  def check_manhwa_maniac
+    manhwa_category = Category.find_by(name: "Manhwa")
+    return unless manhwa_category
+
+    if @user.media_items.where(category: manhwa_category).count >= 5
+      grant_achievement("manhwa_maniac")
+    end
   end
 end
