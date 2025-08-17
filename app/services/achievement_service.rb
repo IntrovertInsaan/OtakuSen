@@ -1,13 +1,15 @@
 class AchievementService
   def self.check_achievements(user)
-    new(user).check_achievements
+    new(user).check_all
   end
 
   def initialize(user)
     @user = user
+    # Eager load the user's achievement IDs for efficiency
+    @user_achievement_ids = @user.achievement_ids
   end
 
-  def check_achievements
+  def check_all
     check_first_step
     check_collector
     check_critic
@@ -16,20 +18,25 @@ class AchievementService
   private
 
   def grant_achievement(name)
+    # Find the achievement by its stable, internal name
     achievement = Achievement.find_by(name: name)
-    # Grant the achievement only if the user doesn't have it already
-    UserAchievement.find_or_create_by(user: @user, achievement: achievement) if achievement
+
+    # Guard against missing achievements or if the user already has it
+    return if achievement.nil? || @user_achievement_ids.include?(achievement.id)
+
+    # Grant the new achievement using the safe ActiveRecord association method
+    @user.achievements << achievement
   end
 
   def check_first_step
-    grant_achievement("First Step") if @user.media_items.count >= 1
+    grant_achievement("first_step") if @user.media_items.count >= 1
   end
 
   def check_collector
-    grant_achievement("Collector") if @user.media_items.count >= 10
+    grant_achievement("collector") if @user.media_items.count >= 10
   end
 
   def check_critic
-    grant_achievement("Critic") if @user.media_items.where.not(rating: nil).count >= 5
+    grant_achievement("critic") if @user.media_items.where.not(rating: nil).count >= 5
   end
 end
