@@ -34,4 +34,10 @@ Achievement.find_or_create_by!(name: "critic") do |ach|
   ach.icon_name = "star"
 end
 
+Achievement.find_or_create_by!(name: "manhwa_maniac") do |ach|
+  ach.display_name = "Manhwa Maniac"
+  ach.description = "Added 5 or more Manhwa to your collection."
+  ach.icon_name = "book-open" # You'll need a book-open.svg icon
+end
+
 puts "Finished seeding achievements."
