@@ -7,16 +7,16 @@ class ProfilesController < ApplicationController
 
   def show
     @categories = Category.all.order(:name)
-    
+
     items = @user.media_items
     items = items.where(category_id: params[:category_id]) if params[:category_id].present?
-    
+
     @pagy, @media_items = pagy(items.order(created_at: :desc))
   end
 
   # This is the new action for the achievements page
   def achievements
-    @achievements = @user.achievements.order('user_achievements.created_at DESC')
+    @achievements = @user.achievements.order("user_achievements.created_at DESC")
   end
 
   private

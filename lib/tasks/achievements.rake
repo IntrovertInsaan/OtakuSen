@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :achievements do
   desc "Check and grant achievements for all existing users"
   task check_all: :environment do
