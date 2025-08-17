@@ -22,5 +22,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :profiles, only: [ :show ]
+  resources :profiles, only: [ :show ] do
+    # This creates a GET route for /profiles/:id/achievements
+    get :achievements, on: :member
+  end
 end

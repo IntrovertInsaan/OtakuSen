@@ -21,9 +21,13 @@
 
   <% if @user.achievements.any? %>
     <div class="mb-8 p-6 bg-base-200 rounded-box">
-      <h3 class="font-bold text-lg text-base-content">Achievements</h3>
+      <div class="flex justify-between items-center">
+        <h3 class="font-bold text-lg text-base-content">Achievements</h3>
+        <%= link_to "View All →", achievements_profile_path(@user), class: "btn btn-sm btn-ghost" %>
+      </div>
       <div class="flex flex-wrap gap-4 mt-4">
-        <% @user.achievements.each do |achievement| %>
+        <%# Show the 3 most recently earned achievements as a preview %>
+        <% @user.achievements.order('user_achievements.created_at DESC').limit(3).each do |achievement| %>
           <div class="tooltip" data-tip="<%= achievement.description %>">
             <div class="card bg-base-100 p-3 flex flex-col items-center text-center w-24 shadow">
               <div class="text-primary"><%= icon achievement.icon_name, class: "w-8 h-8" %></div>
