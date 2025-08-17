@@ -19,11 +19,25 @@
     </div>
   </div>
 
+  <% if @user.achievements.any? %>
+    <div class="mb-8 p-6 bg-base-200 rounded-box">
+      <h3 class="font-bold text-lg text-base-content">Achievements</h3>
+      <div class="flex flex-wrap gap-4 mt-4">
+        <% @user.achievements.each do |achievement| %>
+          <div class="tooltip" data-tip="<%= achievement.description %>">
+            <div class="card bg-base-100 p-3 flex flex-col items-center text-center w-24 shadow">
+              <div class="text-primary"><%= icon achievement.icon_name, class: "w-8 h-8" %></div>
+              <span class="text-xs font-semibold mt-1"><%= achievement.display_name %></span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <div class="mb-8 flex items-center flex-wrap gap-2">
     <span class="text-base-content/70 text-sm font-medium mr-2">Filter by:</span>
-
     <%= link_to "All", profile_path(@user), class: "btn btn-sm #{params[:category_id].blank? ? 'btn-primary' : 'btn-ghost'}" %>
-
     <% @categories.each do |category| %>
       <% is_active = params[:category_id].to_s == category.id.to_s %>
       <%= link_to category.name, profile_path(@user, category_id: category.id), class: "btn btn-sm #{is_active ? 'btn-primary' : 'btn-ghost'}" %>
@@ -35,10 +49,8 @@
        <%= render partial: "media_items/grid_item", collection: @media_items, as: :media_item %>
     </div>
   <% else %>
-    <%# The empty state message now uses theme-aware colors %>
     <div class="rounded-lg px-6 py-16 bg-base-100 text-center shadow-md">
       <h3 class="text-base-content text-xl font-semibold">No results found for this filter.</h3>
     </div>
   <% end %>
-
 </div>
