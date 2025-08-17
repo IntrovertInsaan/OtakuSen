@@ -26,4 +26,9 @@ Rails.application.routes.draw do
     # This creates a GET route for /profiles/:id/achievements
     get :achievements, on: :member
   end
+
+  namespace :admin do
+    get "dashboard/index"
+    root "dashboard#index"
+  end
 end

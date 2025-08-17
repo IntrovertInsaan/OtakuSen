@@ -66,6 +66,11 @@
         </div>
       <% end %>
 
+      <%# this link for admin users %>
+      <% if current_user.admin? %>
+        <%= link_to "Admin", admin_root_path, class: "btn btn-ghost text-error" %>
+      <% end %>
+
       <!-- Menu items -->
       <ul class="menu flex-1 p-4 text-base-content space-y-2">
         <% if user_signed_in? %>
