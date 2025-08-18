@@ -1,8 +1,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <h1 class="text-3xl font-bold tracking-tight text-base-content mb-8">Admin Dashboard</h1>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
     <div class="stats shadow">
       <div class="stat">
         <div class="stat-figure text-primary"><%= icon "users", class: "w-8 h-8" %></div>
@@ -10,7 +9,6 @@
         <div class="stat-value"><%= @total_users %></div>
       </div>
     </div>
-
     <div class="stats shadow">
       <div class="stat">
         <div class="stat-figure text-secondary"><%= icon "rectangle-stack", class: "w-8 h-8" %></div>
@@ -18,7 +16,6 @@
         <div class="stat-value"><%= @total_media_items %></div>
       </div>
     </div>
-
     <div class="stats shadow">
       <div class="stat">
         <div class="stat-figure text-accent"><%= icon "pencil-square", class: "w-8 h-8" %></div>
@@ -26,6 +23,65 @@
         <div class="stat-value"><%= @total_notes %></div>
       </div>
     </div>
+  </div>
 
+  <div role="tablist" class="tabs tabs-lifted">
+    <input type="radio" name="admin_tabs" role="tab" class="tab" aria-label="Users" checked />
+    <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
+      
+      <div class="overflow-x-auto">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Items Added</th>
+              <th>Joined On</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.username %></td>
+                <td><%= user.email %></td>
+                <td><%= user.media_items.count %></td>
+                <td><%= user.created_at.strftime("%b %d, %Y") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4"><%== pagy_nav(@pagy_users) %></div>
+
+    </div>
+
+    <input type="radio" name="admin_tabs" role="tab" class="tab" aria-label="Media Items" />
+    <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
+      
+      <div class="overflow-x-auto">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Added by</th>
+              <th>Created On</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @media_items.each do |item| %>
+              <tr>
+                <td><%= link_to item.title, item, class: "link link-hover" %></td>
+                <td><%= item.category.name %></td>
+                <td><%= link_to item.user.username, profile_path(item.user), class: "link link-hover" %></td>
+                <td><%= item.created_at.strftime("%b %d, %Y") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4"><%== pagy_nav(@pagy_media_items) %></div>
+
+    </div>
   </div>
 </div>
