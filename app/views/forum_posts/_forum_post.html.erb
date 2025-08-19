@@ -1,50 +1,27 @@
 <% user = forum_post.user %>
-<% is_current = (user == local_assigns[:current_user]) %>
+<% is_current = (user&.id == forum_post.user_id_for_view) %>
 
-<% if is_current %>
-  <div class="chat chat-end">
-    <div class="chat-image avatar">
-      <div class="w-10 rounded-full">
-        <% if user&.avatar&.attached? %>
-          <%= image_tag user.avatar.variant(resize_to_fill: [40, 40]) %>
-        <% else %>
-          <div class="w-10 h-10 bg-gray-600 flex items-center justify-center text-gray-200 font-bold">
-            <%= user&.username&.first&.upcase || "?" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="chat-header">
-      <%= user&.username || "[Deleted User]" %>
-      <time class="text-xs opacity-50">
-        <%= forum_post.created_at ? time_ago_in_words(forum_post.created_at) : "[Unknown Date]" %> ago
-      </time>
-    </div>
-    <div class="chat-bubble chat-bubble-primary prose max-w-none text-primary-content">
-      <%= forum_post.content.to_s %>
+<div class="chat <%= is_current ? 'chat-end' : 'chat-start' %>">
+  <div class="chat-image avatar">
+    <div class="w-10 rounded-full">
+      <% if user&.avatar&.attached? %>
+        <%= image_tag url_for(user.avatar.variant(resize_to_fill: [40, 40])), class: "w-10 h-10 rounded-full" %>
+      <% else %>
+        <div class="w-10 h-10 bg-gray-600 flex items-center justify-center text-gray-200 font-bold">
+          <%= user&.username&.first&.upcase || "?" %>
+        </div>
+      <% end %>
     </div>
   </div>
-<% else %>
-  <div class="chat chat-start">
-    <div class="chat-image avatar">
-      <div class="w-10 rounded-full">
-        <% if user&.avatar&.attached? %>
-          <%= image_tag user.avatar.variant(resize_to_fill: [40, 40]) %>
-        <% else %>
-          <div class="w-10 h-10 bg-gray-600 flex items-center justify-center text-gray-200 font-bold">
-            <%= user&.username&.first&.upcase || "?" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="chat-header">
-      <%= user&.username || "[Deleted User]" %>
-      <time class="text-xs opacity-50">
-        <%= forum_post.created_at ? time_ago_in_words(forum_post.created_at) : "[Unknown Date]" %> ago
-      </time>
-    </div>
-    <div class="chat-bubble prose max-w-none">
-      <%= forum_post.content.to_s %>
-    </div>
+
+  <div class="chat-header">
+    <%= user&.username || "[Deleted User]" %>
+    <time class="text-xs opacity-50">
+      <%= forum_post.created_at ? time_ago_in_words(forum_post.created_at) : "[Unknown Date]" %> ago
+    </time>
   </div>
-<% end %>
+
+  <div class="chat-bubble <%= is_current ? 'chat-bubble-primary text-primary-content' : '' %> prose max-w-none">
+    <%= forum_post.content.to_s %>
+  </div>
+</div>

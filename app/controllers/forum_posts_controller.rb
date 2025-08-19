@@ -2,14 +2,14 @@ class ForumPostsController < ApplicationController
   before_action :set_forum_thread
 
   def create
-    @forum_post = @forum_thread.forum_posts.create(forum_post_params)
+    @forum_post = @forum_thread.forum_posts.build(forum_post_params)
     @forum_post.user = current_user
-    @forum_post.save
 
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to @forum_thread }
-      format.json { head :no_content }
+    if @forum_post.save
+      head :ok   # broadcast happens automatically via after_commit
+    else
+      flash.now[:alert] = "Message could not be posted."
+      redirect_to @forum_thread
     end
   end
 
