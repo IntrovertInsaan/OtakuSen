@@ -6,6 +6,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :forum_threads, dependent: :destroy
+  has_many :forum_posts, dependent: :destroy
+
   has_many :media_items, dependent: :destroy
 
   has_many :favorites, dependent: :destroy

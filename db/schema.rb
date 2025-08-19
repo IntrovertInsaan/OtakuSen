@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_17_234119) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_19_143352) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -75,6 +75,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_234119) do
     t.datetime "updated_at", null: false
     t.index ["media_item_id"], name: "index_favorites_on_media_item_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "forum_posts", force: :cascade do |t|
+    t.bigint "forum_thread_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["forum_thread_id"], name: "index_forum_posts_on_forum_thread_id"
+    t.index ["user_id"], name: "index_forum_posts_on_user_id"
+  end
+
+  create_table "forum_threads", force: :cascade do |t|
+    t.string "title"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_forum_threads_on_user_id"
   end
 
   create_table "media_items", force: :cascade do |t|
@@ -151,6 +168,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_234119) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "favorites", "media_items"
   add_foreign_key "favorites", "users"
+  add_foreign_key "forum_posts", "forum_threads"
+  add_foreign_key "forum_posts", "users"
+  add_foreign_key "forum_threads", "users"
   add_foreign_key "media_items", "categories"
   add_foreign_key "media_items", "users"
   add_foreign_key "notes", "media_items"
