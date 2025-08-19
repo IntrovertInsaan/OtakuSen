@@ -5,7 +5,7 @@ class ForumPost < ApplicationRecord
 
   # After a new post is saved, run this code
   after_create_commit do
-    # This now broadcasts directly to the parent forum_thread's stream
-    broadcast_append_to forum_thread, partial: "forum_posts/forum_post", locals: { forum_post: self, current_user: self.user }
+    # This now broadcasts to the unique string, targeting the correct div
+    broadcast_append_later_to "forum_thread_#{self.forum_thread.id}", target: ActionView::RecordIdentifier.dom_id(self.forum_thread), partial: "forum_posts/forum_post", locals: { forum_post: self, current_user: self.user }
   end
 end
