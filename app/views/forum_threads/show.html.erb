@@ -5,28 +5,43 @@
   <!-- List of posts -->
   <div class="space-y-6">
     <% @posts.each do |post| %>
-      <div class="card bg-base-100 shadow-md">
-        <div class="card-body p-4">
-          <div class="flex items-center gap-4 border-b border-base-300 pb-3 mb-3">
-            <%= image_tag post.user.avatar.variant(resize_to_fill: [40, 40]), class: "w-10 h-10 rounded-full" if post.user.avatar.attached? %>
-            <div>
-              <p class="font-semibold"><%= post.user.username %></p>
-              <p class="text-xs text-base-content/70"><%= post.created_at.strftime("%b %d, %Y") %></p>
+      <%# This logic aligns the current user's posts to the right %>
+      <% if post.user == current_user %>
+        <div class="chat chat-end">
+          <div class="chat-image avatar">
+            <div class="w-10 rounded-full">
+              <%= image_tag post.user.avatar.variant(resize_to_fill: [40, 40]) if post.user.avatar.attached? %>
             </div>
           </div>
-          <div class="prose max-w-none"><%= post.content %></div>
+          <div class="chat-header">
+            <%= post.user.username %>
+            <time class="text-xs opacity-50"><%= time_ago_in_words(post.created_at) %> ago</time>
+          </div>
+          <div class="chat-bubble chat-bubble-primary prose max-w-none text-primary-content"><%= post.content %></div>
         </div>
-      </div>
+      <% else %>
+        <div class="chat chat-start">
+          <div class="chat-image avatar">
+            <div class="w-10 rounded-full">
+              <%= image_tag post.user.avatar.variant(resize_to_fill: [40, 40]) if post.user.avatar.attached? %>
+            </div>
+          </div>
+          <div class="chat-header">
+            <%= post.user.username %>
+            <time class="text-xs opacity-50"><%= time_ago_in_words(post.created_at) %> ago</time>
+          </div>
+          <div class="chat-bubble prose max-w-none"><%= post.content %></div>
+        </div>
+      <% end %>
     <% end %>
   </div>
-  <div class="mt-8"><%== pagy_nav(@pagy) %></div>
 
   <!-- Reply Form -->
   <div class="mt-12">
     <h3 class="text-xl font-bold mb-4">Post a Reply</h3>
     <%= form_with(model: [@thread, @new_post]) do |f| %>
       <div class="form-control">
-        <%= f.rich_text_area :content, class: "textarea textarea-bordered h-48" %>
+        <%= f.rich_text_area :content, class: "textarea textarea-bordered w-full h-48" %>
       </div>
       <div class="card-actions justify-end mt-4">
         <%= f.submit "Post Reply", class: "btn btn-primary" %>
