@@ -1,31 +1,31 @@
-<h3 class="text-4xl font-extrabold my-4 text-gray-100">Task</h3>
-<div class="md:w-2/3 w-full flex">
-  <div class="bg-gray-800 shadow rounded-lg px-5 py-3 my-4">
-    <h1 class="font-bold text-2xl my-4 text-gray-100"><%= @forum_thread.title %></h1>
-    <p class="my-4 text-gray-300"><%= @forum_thread.user.username %></p>
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+  <!-- Thread Info -->
+  <h1 class="text-3xl font-bold text-gray-100 mb-2"><%= @forum_thread.title %></h1>
+  <p class="text-gray-400 mb-8">
+    Started by <%= @forum_thread.user&.username || "[Deleted User]" %>
+  </p>
+
+  <!-- Messages Section -->
+  <h3 class="text-2xl font-bold text-gray-100 mb-4">Messages</h3>
+  <div id="forum_posts" class="space-y-4 max-h-[32rem] overflow-y-auto" data-controller="forum_thread-forum_posts">
+    <%= turbo_stream_from @forum_thread, "forum_posts" %>
+
+    <%= render @forum_thread.forum_posts, current_user: current_user %>
+  </div>
+
+  <!-- Reply Form -->
+  <div class="mt-8">
+    <h3 class="text-xl font-bold text-gray-100 mb-4">Post a Reply</h3>
+    <%= form_with model: [@forum_thread, ForumPost.new], class: "space-y-4", data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" } do |f| %>
+      <div>
+        <%= f.rich_text_area :content,
+            class: "w-full min-h-[120px] rounded-lg border border-gray-600 bg-gray-700 text-gray-100 p-3 shadow-sm focus:border-indigo-400 focus:ring-indigo-400",
+            placeholder: "Type your message..." %>
+      </div>
+      <div class="flex justify-end">
+        <%= f.submit "Send", class: "btn btn-primary px-6 py-2" %>
+      </div>
+    <% end %>
   </div>
 </div>
-
-<h3 class="text-4xl font-extrabold my-4 text-gray-100">Messages</h3>
-<div class="bg-gray-800 shadow rounded-lg px-5 py-3 my-4 mt-8">
-  <div class="space-y-4 max-h-96 my-4 overflow-y-auto">
-    <div id="forum_posts">
-      <%= turbo_stream_from @forum_thread, "forum_posts" %>
-      <%= render @forum_thread.forum_posts %>
-    </div>
-  </div>
-</div>
-
-
-<%= form_with model: [@forum_thread, ForumPost.new], class: "mt-4", data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" } do |f| %>
-  <div class="flex gap-4">
-    <%= f.rich_text_area :content,
-        class: "flex-1 min-h-[80px] rounded-lg border-gray-600 bg-gray-700 text-gray-100 shadow-sm focus:border-indigo-400 focus:ring-indigo-400",
-        placeholder: "Type your message..."
-      %>
-
-    <%= f.submit "Send",
-      class: "rounded-lg py-3 px-5 bg-blue-700 text-white inline-block font-medium cursor-pointer hover:bg-blue-600"
-    %>
-  </div>
-<% end %>
