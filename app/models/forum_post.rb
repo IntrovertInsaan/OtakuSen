@@ -7,6 +7,6 @@ class ForumPost < ApplicationRecord
   after_create_commit do
     # Broadcast a Turbo Stream "append" action to the correct forum thread's channel.
     # It will use a new partial to render the post.
-    broadcast_append_to forum_thread, partial: "forum_posts/forum_post", locals: { forum_post: self }
+    broadcast_append_to [ forum_thread, :posts ], partial: "forum_posts/forum_post", locals: { forum_post: self }
   end
 end
