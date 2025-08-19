@@ -31,4 +31,8 @@ Rails.application.routes.draw do
     get "dashboard/index"
     root "dashboard#index"
   end
+
+  resources :forum_threads, only: [ :index, :show, :new, :create ] do
+    resources :forum_posts, only: [ :create ]
+  end
 end
