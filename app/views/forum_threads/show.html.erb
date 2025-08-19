@@ -2,38 +2,12 @@
   <h1 class="text-3xl font-bold text-base-content mb-2"><%= @thread.title %></h1>
   <p class="text-base-content/70 mb-8">A discussion started by <%= @thread.user.username %></p>
 
+  <%= turbo_stream_from @thread %>
+
   <!-- List of posts -->
-  <div class="space-y-6">
-    <% @posts.each do |post| %>
-      <%# This logic aligns the current user's posts to the right %>
-      <% if post.user == current_user %>
-        <div class="chat chat-end">
-          <div class="chat-image avatar">
-            <div class="w-10 rounded-full">
-              <%= image_tag post.user.avatar.variant(resize_to_fill: [40, 40]) if post.user.avatar.attached? %>
-            </div>
-          </div>
-          <div class="chat-header">
-            <%= post.user.username %>
-            <time class="text-xs opacity-50"><%= time_ago_in_words(post.created_at) %> ago</time>
-          </div>
-          <div class="chat-bubble chat-bubble-primary prose max-w-none text-primary-content"><%= post.content %></div>
-        </div>
-      <% else %>
-        <div class="chat chat-start">
-          <div class="chat-image avatar">
-            <div class="w-10 rounded-full">
-              <%= image_tag post.user.avatar.variant(resize_to_fill: [40, 40]) if post.user.avatar.attached? %>
-            </div>
-          </div>
-          <div class="chat-header">
-            <%= post.user.username %>
-            <time class="text-xs opacity-50"><%= time_ago_in_words(post.created_at) %> ago</time>
-          </div>
-          <div class="chat-bubble prose max-w-none"><%= post.content %></div>
-        </div>
-      <% end %>
-    <% end %>
+  <div id="<%= dom_id(@thread, :forum_posts) %>" class="space-y-6">
+    <%# This now renders your new partial for each post %>
+    <%= render partial: "forum_posts/forum_post", collection: @posts, as: :forum_post %>
   </div>
 
   <!-- Reply Form -->
