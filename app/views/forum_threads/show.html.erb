@@ -11,17 +11,27 @@
   </div>
 
   <!-- Reply Form -->
-  <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box mt-12">
-    <div class="collapse-title text-xl font-medium">Post a Reply</div>
-    <div class="collapse-content">
+  <div class="mt-12 text-right">
+    <button class="btn btn-primary" onclick="reply_modal.showModal()">Post a Reply</button>
+  </div>
+  
+  <dialog id="reply_modal" class="modal">
+    <div class="modal-box w-11/12 max-w-4xl">
+      <h3 class="font-bold text-lg mb-4">Your Reply</h3>
+      
       <%= form_with(model: [@thread, @new_post]) do |f| %>
         <div class="form-control">
           <%= f.rich_text_area :content, class: "textarea textarea-bordered w-full h-48" %>
         </div>
-        <div class="card-actions justify-end mt-4">
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn btn-ghost">Cancel</button>
+          </form>
           <%= f.submit "Post Reply", class: "btn btn-primary" %>
         </div>
       <% end %>
+      
     </div>
-  </div>
+    <form method="dialog" class="modal-backdrop"><button>close</button></form>
+  </dialog>
 </div>
