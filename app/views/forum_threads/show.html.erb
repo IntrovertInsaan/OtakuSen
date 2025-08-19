@@ -1,0 +1,36 @@
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <h1 class="text-3xl font-bold text-base-content mb-2"><%= @thread.title %></h1>
+  <p class="text-base-content/70 mb-8">A discussion started by <%= @thread.user.username %></p>
+
+  <!-- List of posts -->
+  <div class="space-y-6">
+    <% @posts.each do |post| %>
+      <div class="card bg-base-100 shadow-md">
+        <div class="card-body p-4">
+          <div class="flex items-center gap-4 border-b border-base-300 pb-3 mb-3">
+            <%= image_tag post.user.avatar.variant(resize_to_fill: [40, 40]), class: "w-10 h-10 rounded-full" if post.user.avatar.attached? %>
+            <div>
+              <p class="font-semibold"><%= post.user.username %></p>
+              <p class="text-xs text-base-content/70"><%= post.created_at.strftime("%b %d, %Y") %></p>
+            </div>
+          </div>
+          <div class="prose max-w-none"><%= post.content %></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="mt-8"><%== pagy_nav(@pagy) %></div>
+
+  <!-- Reply Form -->
+  <div class="mt-12">
+    <h3 class="text-xl font-bold mb-4">Post a Reply</h3>
+    <%= form_with(model: [@thread, @new_post]) do |f| %>
+      <div class="form-control">
+        <%= f.rich_text_area :content, class: "textarea textarea-bordered h-48" %>
+      </div>
+      <div class="card-actions justify-end mt-4">
+        <%= f.submit "Post Reply", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

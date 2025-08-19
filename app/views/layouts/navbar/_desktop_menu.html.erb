@@ -4,6 +4,7 @@
     <%= link_to "My Collection", media_items_path, class: "btn btn-ghost" %>
     <%= link_to "My Favorites", favorites_media_items_path, class: "btn btn-ghost" %>
     <%= link_to "Dashboard", dashboard_path, class: "btn btn-ghost" %>
+    <%= link_to "Forum", forum_threads_path, class: "btn btn-ghost" %>
 
     <%# This checks for a user first, then checks if they are an admin %>
     <% if user_signed_in? && current_user.admin? %>
