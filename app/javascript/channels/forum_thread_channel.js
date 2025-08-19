@@ -3,7 +3,6 @@ import consumer from "./consumer"
 consumer.subscriptions.create("ForumThreadChannel", {
   connected() {
     // Called when the subscription is ready for use on the server
-    console.log("Successfully connected to the ForumThreadChannel!");
   },
 
   disconnected() {
@@ -11,7 +10,6 @@ consumer.subscriptions.create("ForumThreadChannel", {
   },
 
   received(data) {
-    // Called when there's incoming data on the WebSocket for this channel.
-    // Turbo Streams handles this automatically, so this can be empty.
+    // Called when there's incoming data on the websocket for this channel
   }
 });
