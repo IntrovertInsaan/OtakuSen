@@ -76,3 +76,5 @@ gem "pagy", "~> 9.3"
 # gem "heroicon", "~> 1.0"
 
 gem "inline_svg", "~> 1.10"
+
+gem "redis", "~> 5.4"
