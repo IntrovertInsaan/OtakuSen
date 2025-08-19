@@ -5,7 +5,7 @@
   <%= turbo_stream_from @thread %>
 
   <!-- List of posts -->
-  <div id="<%= dom_id(@thread, :forum_posts) %>" class="space-y-6">
+  <div id="<%= dom_id(@thread) %>" class="space-y-6">
     <%# This now renders your new partial for each post %>
     <%= render partial: "forum_posts/forum_post", collection: @posts, as: :forum_post %>
   </div>
