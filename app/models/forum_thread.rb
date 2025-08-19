@@ -5,4 +5,5 @@ class ForumThread < ApplicationRecord
   has_one :original_post, -> { order(created_at: :asc) }, class_name: "ForumPost"
 
   validates :title, presence: true
+  accepts_nested_attributes_for :forum_posts
 end
