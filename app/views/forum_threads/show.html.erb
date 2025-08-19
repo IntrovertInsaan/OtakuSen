@@ -37,15 +37,17 @@
   </div>
 
   <!-- Reply Form -->
-  <div class="mt-12">
-    <h3 class="text-xl font-bold mb-4">Post a Reply</h3>
-    <%= form_with(model: [@thread, @new_post]) do |f| %>
-      <div class="form-control">
-        <%= f.rich_text_area :content, class: "textarea textarea-bordered w-full h-48" %>
-      </div>
-      <div class="card-actions justify-end mt-4">
-        <%= f.submit "Post Reply", class: "btn btn-primary" %>
-      </div>
-    <% end %>
+  <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box mt-12">
+    <div class="collapse-title text-xl font-medium">Post a Reply</div>
+    <div class="collapse-content">
+      <%= form_with(model: [@thread, @new_post]) do |f| %>
+        <div class="form-control">
+          <%= f.rich_text_area :content, class: "textarea textarea-bordered w-full h-48" %>
+        </div>
+        <div class="card-actions justify-end mt-4">
+          <%= f.submit "Post Reply", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
