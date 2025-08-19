@@ -6,6 +6,7 @@
       "dependencies": {
         "@hotwired/stimulus": "^3.2.2",
         "@hotwired/turbo-rails": "^8.0.16",
+        "@rails/actioncable": "^8.0.201",
         "@rails/actiontext": "^8.0.201",
         "@tailwindcss/cli": "^4.1.11",
         "chart.js": "^4.5.0",
@@ -65,7 +66,7 @@
 
     "@parcel/watcher-win32-x64": ["@parcel/watcher-win32-x64@2.5.1", "", { "os": "win32", "cpu": "x64" }, "sha512-9lHBdJITeNR++EvSQVUcaZoWupyHfXe1jZvGZ06O/5MflPcuPLtEphScIBL+AiCWBO46tDSHzWyD0uDmmZqsgA=="],
 
-    "@rails/actioncable": ["@rails/actioncable@8.0.200", "", {}, "sha512-EDqWyxck22BHmv1e+mD8Kl6GmtNkhEPdRfGFT7kvsv1yoXd9iYrqHDVAaR8bKmU/syC5eEZ2I5aWWxtB73ukMw=="],
+    "@rails/actioncable": ["@rails/actioncable@8.0.201", "", {}, "sha512-WiXZodvnK7u+wlu72DZydfV75x14HhzXI84sto9xcdsW1DMOHK+jYwQuuE/Wh/hKH5yajFIw/3DUP6MHDeGrbA=="],
 
     "@rails/actiontext": ["@rails/actiontext@8.0.201", "", { "dependencies": { "@rails/activestorage": ">= 8.0.0-alpha" }, "peerDependencies": { "trix": "^2.0.0" } }, "sha512-SFo+kFo9SGMP+y4i8yJFyCBpPwrsMwOiGxNiyXqKEqFhqKuEnYyf26vT/u4wygm5lTCW8gexbGuGAahGhhq3pw=="],
 
@@ -186,6 +187,8 @@
     "trix": ["trix@2.1.15", "", { "dependencies": { "dompurify": "^3.2.5" } }, "sha512-LoaXWczdTUV8+3Box92B9b1iaDVbxD14dYemZRxi3PwY+AuDm97BUJV2aHLBUFPuDABhxp0wzcbf0CxHCVmXiw=="],
 
     "yallist": ["yallist@5.0.0", "", {}, "sha512-YgvUTfwqyc7UXVMrB+SImsVYSmTS8X/tSrtdNZMImM+n7+QTriRXyXim0mBrTXNeqzVF0KWGgHPeiyViFFrNDw=="],
+
+    "@hotwired/turbo-rails/@rails/actioncable": ["@rails/actioncable@8.0.200", "", {}, "sha512-EDqWyxck22BHmv1e+mD8Kl6GmtNkhEPdRfGFT7kvsv1yoXd9iYrqHDVAaR8bKmU/syC5eEZ2I5aWWxtB73ukMw=="],
 
     "@tailwindcss/oxide/detect-libc": ["detect-libc@2.0.4", "", {}, "sha512-3UDv+G9CsCKO1WKMGw9fwq/SWJYbI0c5Y7LU1AXYoDdbhE2AHQ6N6Nb34sG8Fj7T5APy8qXDCKuuIHd1BR0tVA=="],
 

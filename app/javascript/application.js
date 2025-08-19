@@ -5,3 +5,4 @@ import "./lib/turbo_confirm" // <-- our override
 
 import "trix"
 import "@rails/actiontext"
+import "./channels"
