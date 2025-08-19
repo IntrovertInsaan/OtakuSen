@@ -28,9 +28,14 @@ class NotesController < ApplicationController
             turbo_stream.replace(dom_id(@media_item, :notes_section), partial: "media_items/notes_section", locals: { media_item: @media_item })
           ]
         end
+
+        format.html { redirect_to media_item_notes_path(@media_item), notice: "Note created successfully." }
       end
     else
-      render :new, status: :unprocessable_entity
+      respond_to do |format|
+        format.turbo_stream { render :new, status: :unprocessable_content }
+        format.html { render :new, status: :unprocessable_content }
+      end
     end
   end
 
@@ -41,10 +46,9 @@ class NotesController < ApplicationController
   def update
     @note = @media_item.notes.find(params[:id])
     if @note.update(note_params)
-      # After update, just redirect back to the notes list inside the modal
       redirect_to media_item_notes_path(@media_item)
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
@@ -59,13 +63,16 @@ class NotesController < ApplicationController
           turbo_stream.replace(dom_id(@media_item, :notes_section), partial: "media_items/notes_section", locals: { media_item: @media_item })
         ]
       end
+
+      format.html { redirect_to media_item_notes_path(@media_item), notice: "Note deleted successfully." }
     end
   end
 
   private
 
   def set_media_item
-    @media_item = current_user.media_items.find(params[:media_item_id])
+    @media_item = current_user.media_items.find_by(id: params[:media_item_id])
+    redirect_to root_url, alert: "Not authorized" unless @media_item
   end
 
   def note_params
