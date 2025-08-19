@@ -3,8 +3,12 @@
 class NotesController < ApplicationController
   # Add this line to make the dom_id helper available
   include ActionView::RecordIdentifier
-
   before_action :set_media_item
+
+  # This will gracefully handle any authorization errors
+  rescue_from ActiveRecord::RecordNotFound do
+    redirect_to media_item_path(@media_item), alert: "You are not authorized to access this."
+  end
 
   def index
     @notes = @media_item.notes.order(created_at: :desc)
