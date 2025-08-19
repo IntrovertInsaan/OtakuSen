@@ -1,9 +1,8 @@
 class ForumThreadChannel < ApplicationCable::Channel
   def subscribed
-    # When a user connects, find the specific forum thread they want to listen to.
     @thread = ForumThread.find(params[:id])
-    # Create a unique stream name for this thread, e.g., "forum_thread_42"
-    stream_for @thread
+    # Instead of streaming from the object, stream from a unique string name
+    stream_from "forum_thread_#{@thread.id}"
   end
 
   def unsubscribed
