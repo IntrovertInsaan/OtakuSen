@@ -2,9 +2,14 @@ class ForumPost < ApplicationRecord
   belongs_to :forum_thread
   belongs_to :user
   has_rich_text :content
+  after_commit :notify_forum_thread
 
-  # This tells the model to automatically broadcast new posts
-  # to its parent forum_thread's stream, targeting the
-  # container with the ID "forum_thread_1_posts".
-  broadcasts_to :forum_thread, target: ->(post) { dom_id(post.forum_thread, :posts) }
+  def notify_forum_thread
+    broadcast_append_to(
+      [ forum_thread, "forum_posts" ],
+      target: "forum_posts",
+      partial: "forum_posts/forum_post",
+      locals: { forum_post: self }
+    )
+  end
 end

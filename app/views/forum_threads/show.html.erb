@@ -1,27 +1,32 @@
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <h1 class="text-3xl font-bold text-base-content mb-2"><%= @thread.title %></h1>
-  <p class="text-base-content/70 mb-8">A discussion started by <%= @thread.user.username %></p>
-
-  <%= turbo_stream_from @thread %>
-
-  <div id="<%= dom_id(@thread, :posts) %>" class="space-y-6">
-    <%# This renders the initial posts that are already in the database %>
-    <%= render @posts %>
-  </div>
-
-  <div class="mt-8"><%== pagy_nav(@pagy) %></div>
-
-  <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box mt-12">
-    <div class="collapse-title text-xl font-medium">Post a Reply</div>
-    <div class="collapse-content">
-      <%= form_with(model: [@thread, @new_post]) do |f| %>
-        <div class="form-control">
-          <%= f.rich_text_area :content, class: "textarea textarea-bordered h-48" %>
-        </div>
-        <div class="card-actions justify-end mt-4">
-          <%= f.submit "Post Reply", class: "btn btn-primary" %>
-        </div>
-      <% end %>
-    </div>
+<h3 class="text-4xl font-extrabold my-4 text-gray-100">Task</h3>
+<div class="md:w-2/3 w-full flex">
+  <div class="bg-gray-800 shadow rounded-lg px-5 py-3 my-4">
+    <h1 class="font-bold text-2xl my-4 text-gray-100"><%= @forum_thread.title %></h1>
+    <p class="my-4 text-gray-300"><%= @forum_thread.user.username %></p>
   </div>
 </div>
+
+<h3 class="text-4xl font-extrabold my-4 text-gray-100">Messages</h3>
+<% unless @forum_thread.forum_posts.empty? %>
+  <div class="bg-gray-800 shadow rounded-lg px-5 py-3 my-4 mt-8">
+    <div class="space-y-4 max-h-96 my-4 overflow-y-auto">
+      <div id="forum_posts">
+        <%= turbo_stream_from @forum_thread, "forum_posts" %>
+        <%= render @forum_thread.forum_posts %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= form_with model: [@forum_thread, ForumPost.new], class: "mt-4", data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" } do |f| %>
+  <div class="flex gap-4">
+    <%= f.rich_text_area :content,
+        class: "flex-1 min-h-[80px] rounded-lg border-gray-600 bg-gray-700 text-gray-100 shadow-sm focus:border-indigo-400 focus:ring-indigo-400",
+        placeholder: "Type your message..."
+      %>
+
+    <%= f.submit "Send",
+      class: "rounded-lg py-3 px-5 bg-blue-700 text-white inline-block font-medium cursor-pointer hover:bg-blue-600"
+    %>
+  </div>
+<% end %>
