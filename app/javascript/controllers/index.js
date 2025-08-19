@@ -18,3 +18,6 @@ application.register("theme", ThemeController)
 
 import ToastController from "./toast_controller"
 application.register("toast", ToastController)
+
+import ResetFormController from "./reset_form_controller"
+application.register("reset-form", ResetFormController)
