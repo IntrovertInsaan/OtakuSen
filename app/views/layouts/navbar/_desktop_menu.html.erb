@@ -5,8 +5,8 @@
     <%= link_to "My Favorites", favorites_media_items_path, class: "btn btn-ghost" %>
     <%= link_to "Dashboard", dashboard_path, class: "btn btn-ghost" %>
 
-    <%# this link for admin users %>
-    <% if current_user.admin? %>
+    <%# This checks for a user first, then checks if they are an admin %>
+    <% if user_signed_in? && current_user.admin? %>
       <%= link_to "Admin", admin_root_path, class: "btn btn-ghost text-error" %>
     <% end %>
   <% end %>
