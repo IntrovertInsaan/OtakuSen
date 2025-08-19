@@ -7,10 +7,14 @@ class ForumPostsController < ApplicationController
     @post.user = current_user
 
     if @post.save
+      # Just redirect back to the thread. The new post will be broadcast to everyone else.
       redirect_to @thread, notice: "Reply posted."
     else
-      # Handle error case if needed
-      redirect_to @thread, alert: "Could not post reply."
+      # If the save fails, we need to reload the page to show the error.
+      # We also need to reload the posts to avoid inconsistencies.
+      @pagy, @posts = pagy(@thread.forum_posts.includes(:user).order(created_at: :asc), items: 10)
+      @new_post = @post # Pass the failed post back to the form
+      render "forum_threads/show", status: :unprocessable_content
     end
   end
 
