@@ -7,16 +7,15 @@
 </div>
 
 <h3 class="text-4xl font-extrabold my-4 text-gray-100">Messages</h3>
-<% unless @forum_thread.forum_posts.empty? %>
-  <div class="bg-gray-800 shadow rounded-lg px-5 py-3 my-4 mt-8">
-    <div class="space-y-4 max-h-96 my-4 overflow-y-auto">
-      <div id="forum_posts">
-        <%= turbo_stream_from @forum_thread, "forum_posts" %>
-        <%= render @forum_thread.forum_posts %>
-      </div>
+<div class="bg-gray-800 shadow rounded-lg px-5 py-3 my-4 mt-8">
+  <div class="space-y-4 max-h-96 my-4 overflow-y-auto">
+    <div id="forum_posts">
+      <%= turbo_stream_from @forum_thread, "forum_posts" %>
+      <%= render @forum_thread.forum_posts %>
     </div>
   </div>
-<% end %>
+</div>
+
 
 <%= form_with model: [@forum_thread, ForumPost.new], class: "mt-4", data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" } do |f| %>
   <div class="flex gap-4">

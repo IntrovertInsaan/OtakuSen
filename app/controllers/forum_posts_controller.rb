@@ -6,7 +6,11 @@ class ForumPostsController < ApplicationController
     @forum_post.user = current_user
     @forum_post.save
 
-    render json: {}, status: :no_content
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to @forum_thread }
+      format.json { head :no_content }
+    end
   end
 
   private
