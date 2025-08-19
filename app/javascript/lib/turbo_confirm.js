@@ -5,7 +5,7 @@ Turbo.setConfirmMethod((message, element) => {
     return new Promise((resolve) => {
         Swal.fire({
             title: 'Are you sure?',
-            text: message || "This action cannot be undone!",
+            text: "This action cannot be undone!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
