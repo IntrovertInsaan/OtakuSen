@@ -2,7 +2,7 @@
   <h1 class="text-3xl font-bold text-base-content mb-2"><%= @thread.title %></h1>
   <p class="text-base-content/70 mb-8">A discussion started by <%= @thread.user.username %></p>
 
-  <%= turbo_stream_from @thread %>
+  <%= turbo_stream_from "forum_thread_#{@thread.id}" %>
 
   <!-- List of posts -->
   <div id="<%= dom_id(@thread) %>" class="space-y-6">
