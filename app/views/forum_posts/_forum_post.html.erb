@@ -1,0 +1,22 @@
+<%# This partial uses a variable named `forum_post` to match the broadcast %>
+<% if forum_post.user == current_user %>
+  <div class="chat chat-end">
+    <div class="chat-image avatar">
+      <div class="w-10 rounded-full">
+        <%= image_tag forum_post.user.avatar.variant(resize_to_fill: [40, 40]) if forum_post.user.avatar.attached? %>
+      </div>
+    </div>
+    <div class="chat-header"><%= forum_post.user.username %> <time class="text-xs opacity-50"><%= time_ago_in_words(forum_post.created_at) %> ago</time></div>
+    <div class="chat-bubble chat-bubble-primary prose max-w-none text-primary-content"><%= forum_post.content %></div>
+  </div>
+<% else %>
+  <div class="chat chat-start">
+    <div class="chat-image avatar">
+      <div class="w-10 rounded-full">
+        <%= image_tag forum_post.user.avatar.variant(resize_to_fill: [40, 40]) if forum_post.user.avatar.attached? %>
+      </div>
+    </div>
+    <div class="chat-header"><%= forum_post.user.username %> <time class="text-xs opacity-50"><%= time_ago_in_words(forum_post.created_at) %> ago</time></div>
+    <div class="chat-bubble prose max-w-none"><%= forum_post.content %></div>
+  </div>
+<% end %>
