@@ -2,33 +2,35 @@ class ForumThreadsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @pagy, @threads = pagy(
+    @pagy, @forum_threads = pagy(
       ForumThread.includes(:user, :original_post).order(created_at: :desc)
     )
   end
 
   def show
     @forum_thread = ForumThread.find(params[:id])
-    @pagy, @posts = pagy(
+    @pagy, @forum_posts = pagy(
       @forum_thread.forum_posts.includes(:user).order(created_at: :asc),
       items: 10
     )
-    @new_post = @forum_thread.forum_posts.new
+    @new_forum_post = @forum_thread.forum_posts.new
   end
 
   def new
-    @thread = ForumThread.new
-    @thread.forum_posts.build
+    @forum_thread = ForumThread.new
+    @forum_thread.forum_posts.build
   end
 
   def create
-    @thread = current_user.forum_threads.new(forum_thread_params)
-    @thread.forum_posts.first.user = current_user
+    @forum_thread = current_user.forum_threads.new(forum_thread_params)
 
-    if @thread.save
-      redirect_to @thread, notice: "Discussion started!"
+    # Assign current_user to all nested forum_posts
+    @forum_thread.forum_posts.each { |forum_post| forum_post.user = current_user }
+
+    if @forum_thread.save
+      redirect_to @forum_thread, notice: "Discussion started!"
     else
-      render :new, status: :unprocessable_content
+      render :new, status: :unprocessable_entity
     end
   end
 
