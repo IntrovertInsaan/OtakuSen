@@ -5,7 +5,7 @@ class ForumPost < ApplicationRecord
 
   attr_accessor :user_id_for_view   # temporarily store current_user.id for view
 
-  after_commit :notify_forum_thread
+  after_create_commit :notify_forum_thread
 
   def notify_forum_thread
     # Preload avatar variant so image shows immediately in broadcasts
