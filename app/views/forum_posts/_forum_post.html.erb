@@ -4,8 +4,8 @@
   is_current = (viewer_id.present? && user&.id == viewer_id)
 %>
 
-<div class="chat <%= is_current ? 'chat-end' : 'chat-start' %>" id="forum_post_<%= forum_post.id %>">
-  <div class="chat-image avatar">
+<div class="flex items-start gap-3 mb-4" id="forum_post_<%= forum_post.id %>">
+  <div class="avatar">
     <div class="w-8 rounded-full <%= is_current ? 'bg-primary/10' : 'bg-base-300' %>">
       <% if user&.avatar&.attached? %>
         <%= image_tag url_for(user.avatar.variant(resize_to_fill: [32, 32])), class: "rounded-full" %>
@@ -17,18 +17,16 @@
     </div>
   </div>
 
-  <div class="chat-header text-xs opacity-75">
-    <%= user&.username || "[Deleted User]" %>
-    <time class="ml-1">• <%= forum_post.created_at ? time_ago_in_words(forum_post.created_at) : "[Unknown Date]" %> ago</time>
-  </div>
-
-  <div class="chat-bubble <%= is_current ? 'chat-bubble-primary' : '' %> prose max-w-none">
-    <%= forum_post.content.to_s %>
-  </div>
-
-  <% if is_current %>
-    <div class="chat-footer opacity-50 text-[10px]">
-      Delivered
+  <div class="flex-1">
+    <div class="text-xs mb-1">
+      <span class="font-medium <%= is_current ? 'text-primary' : '' %>">
+        <%= user&.username || "[Deleted User]" %>
+      </span>
+      <time class="opacity-70">• <%= forum_post.created_at ? time_ago_in_words(forum_post.created_at) : "[Unknown Date]" %> ago</time>
     </div>
-  <% end %>
+
+    <div class="inline-block rounded-lg px-4 py-3 <%= is_current ? 'bg-primary/15' : 'bg-base-200' %> prose max-w-[85%] shadow-sm">
+      <%= forum_post.content.to_s %>
+    </div>
+  </div>
 </div>
