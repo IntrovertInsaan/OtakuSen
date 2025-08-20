@@ -9,14 +9,17 @@ class ForumPost < ApplicationRecord
   validates :user, :content, presence: true
 
   def notify_forum_thread
-    # Preload avatar variant so image shows immediately in broadcasts
-    user.avatar.variant(resize_to_fill: [40, 40]).processed if user&.avatar&.attached?
+    # Force reload the post with user to ensure association is loaded
+    post = ForumPost.includes(:user).find(self.id)
+
+    # Preload avatar if exists
+    post.user&.avatar&.variant(resize_to_fill: [ 40, 40 ])&.processed if post.user&.avatar&.attached?
 
     broadcast_append_to(
       [ forum_thread, "forum_posts" ],
       target: "forum_posts",
       partial: "forum_posts/forum_post",
-      locals: { forum_post: self, current_user_for_view: user } # fallback
+      locals: { forum_post: post, current_user: nil }
     )
   end
 end
