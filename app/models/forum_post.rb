@@ -6,7 +6,7 @@ class ForumPost < ApplicationRecord
   # Only broadcast on creation to avoid duplicates from Trix uploads
   after_create_commit :notify_forum_thread
 
-  validates :user, presence: true
+  validates :user, :content, presence: true
 
   def notify_forum_thread
     # Preload avatar variant so image shows immediately in broadcasts
