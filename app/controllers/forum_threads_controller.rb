@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class ForumThreadsController < ApplicationController
   include Pagy::Backend
 
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [ :index, :show ]
 
   # GET /forum_threads
   def index
@@ -42,6 +44,6 @@ class ForumThreadsController < ApplicationController
   private
 
   def forum_thread_params
-    params.require(:forum_thread).permit(:title, forum_posts_attributes: [:content])
+    params.require(:forum_thread).permit(:title, forum_posts_attributes: [ :content ])
   end
 end

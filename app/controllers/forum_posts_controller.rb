@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ForumPostsController < ApplicationController
   before_action :set_forum_thread
   before_action :authenticate_user!

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateForumPosts < ActiveRecord::Migration[8.0]
   def change
     create_table :forum_posts do |t|
