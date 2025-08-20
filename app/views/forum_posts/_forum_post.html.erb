@@ -1,5 +1,5 @@
 <% user = forum_post.user %>
-<% is_current = (user&.id == current_user&.id) %>
+<% is_current = (user&.id == (local_assigns[:current_user_for_view] || current_user)&.id) %>
 
 <div class="chat <%= is_current ? 'chat-end' : 'chat-start' %>" id="forum_post_<%= forum_post.id %>">
   <div class="chat-image avatar">

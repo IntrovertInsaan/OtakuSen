@@ -16,7 +16,7 @@ class ForumPost < ApplicationRecord
       [ forum_thread, "forum_posts" ],
       target: "forum_posts",
       partial: "forum_posts/forum_post",
-      locals: { forum_post: self }
+      locals: { forum_post: self, current_user_for_view: user } # fallback
     )
   end
 end
