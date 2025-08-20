@@ -1,26 +1,31 @@
 class ForumThreadsController < ApplicationController
+  include Pagy::Backend
+
   before_action :authenticate_user!, except: [:index, :show]
 
+  # GET /forum_threads
   def index
-    @pagy, @forum_threads = pagy(
-      ForumThread.includes(:user, :original_post).order(created_at: :desc)
-    )
+    threads = ForumThread.includes(:user, :original_post).order(created_at: :desc)
+    @pagy, @forum_threads = pagy(threads || ForumThread.none)
   end
 
+  # GET /forum_threads/:id
   def show
     @forum_thread = ForumThread.find(params[:id])
-    @pagy, @forum_posts = pagy(
-      @forum_thread.forum_posts.includes(:user).order(created_at: :asc),
-      items: 10
-    )
+
+    posts = @forum_thread.forum_posts.includes(:user).order(created_at: :asc)
+    @pagy, @forum_posts = pagy(posts || ForumPost.none, items: 10)
+
     @new_forum_post = @forum_thread.forum_posts.new
   end
 
+  # GET /forum_threads/new
   def new
     @forum_thread = ForumThread.new
     @forum_thread.forum_posts.build
   end
 
+  # POST /forum_threads
   def create
     @forum_thread = current_user.forum_threads.new(forum_thread_params)
 
