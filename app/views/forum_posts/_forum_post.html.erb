@@ -1,7 +1,7 @@
 <% user = forum_post.user %>
-<% is_current = (user&.id == forum_post.user_id_for_view) %>
+<% is_current = (user&.id == current_user&.id) %>
 
-<div class="chat <%= is_current ? 'chat-end' : 'chat-start' %>">
+<div class="chat <%= is_current ? 'chat-end' : 'chat-start' %>" id="forum_post_<%= forum_post.id %>">
   <div class="chat-image avatar">
     <div class="w-10 rounded-full">
       <% if user&.avatar&.attached? %>
