@@ -8,7 +8,9 @@
 
   <!-- Messages Section -->
   <h3 class="text-2xl font-bold text-gray-100 mb-4">Messages</h3>
-  <div id="forum_posts" class="space-y-4 max-h-[32rem] overflow-y-auto" data-controller="forum_thread-forum_posts">
+  <div id="forum_posts" class="space-y-4 max-h-[32rem] overflow-y-auto" 
+       data-controller="chat-scroll"
+       data-chat-scroll-behavior-value="smooth">
     <%= turbo_stream_from @forum_thread, "forum_posts" %>
 
     <%= render @forum_thread.forum_posts.where.not(id: nil), current_user: current_user %>
