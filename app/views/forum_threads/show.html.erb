@@ -1,54 +1,43 @@
-<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-  <!-- Thread Info Card -->
-  <div class="card bg-base-300 shadow-xl mb-8">
-    <div class="card-body">
-      <div class="flex items-center justify-between">
-        <div>
-          <h1 class="card-title text-3xl mb-2"><%= @forum_thread.title %></h1>
-          <p class="text-base-content/70">
-            Started by <%= @forum_thread.user&.username || "[Deleted User]" %>
-            <span class="mx-2">•</span>
-            <%= time_ago_in_words(@forum_thread.created_at) %> ago
-          </p>
-        </div>
-        <%= link_to forum_threads_path, class: "btn btn-ghost btn-sm" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+<div class="max-w-3xl mx-auto px-4 py-6">
+  <!-- Thread Header -->
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <div class="flex items-center gap-2 mb-1">
+        <%= link_to forum_threads_path, class: "btn btn-ghost btn-sm btn-circle" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
           </svg>
-          Back to Threads
         <% end %>
+        <h1 class="text-2xl font-bold"><%= @forum_thread.title %></h1>
       </div>
+      <p class="text-sm opacity-70">
+        Started by <%= @forum_thread.user&.username || "[Deleted User]" %> • <%= time_ago_in_words(@forum_thread.created_at) %> ago
+      </p>
     </div>
   </div>
 
-  <!-- Messages Section -->
-  <div class="card bg-base-200 shadow-xl">
-    <div class="card-body p-6">
-      <div id="forum_posts" class="space-y-6 max-h-[calc(100vh-24rem)] overflow-y-auto pr-4 -mr-4" 
-           data-controller="chat-scroll"
-           data-chat-scroll-behavior-value="smooth">
-        <%= turbo_stream_from @forum_thread, "forum_posts" %>
-        <%= render @forum_thread.forum_posts.where.not(id: nil), current_user: current_user %>
-      </div>
+  <!-- Messages Area -->
+  <div class="bg-base-200 rounded-box">
+    <div id="forum_posts" class="p-4 space-y-4 max-h-[calc(100vh-20rem)] min-h-[300px] overflow-y-auto" 
+         data-controller="chat-scroll"
+         data-chat-scroll-behavior-value="smooth">
+      <%= turbo_stream_from @forum_thread, "forum_posts" %>
+      <%= render @forum_thread.forum_posts.where.not(id: nil), current_user: current_user %>
+    </div>
 
-      <!-- Reply Form -->
-      <div class="divider"></div>
+    <!-- Reply Form -->
+    <div class="border-t border-base-300 p-4">
       <%= form_with model: [@forum_thread, ForumPost.new], 
-                    class: "space-y-4", 
+                    class: "space-y-3", 
                     data: { 
                       controller: "reset-form", 
                       action: "turbo:submit-end->reset-form#reset"
                     } do |f| %>
-        <div class="form-control">
-          <%= f.rich_text_area :content,
-              class: "textarea textarea-bordered min-h-[120px] bg-base-100 w-full",
-              placeholder: "Type your message..." %>
-        </div>
-        <div class="flex items-center justify-between">
-          <div class="text-sm text-base-content/70">
-            Use @ to mention users • Markdown supported
-          </div>
-          <%= f.submit "Send Message", class: "btn btn-primary" %>
+        <%= f.rich_text_area :content,
+            class: "textarea textarea-bordered bg-base-100 w-full min-h-[100px]",
+            placeholder: "Type your message..." %>
+        <div class="flex justify-end">
+          <%= f.submit "Send", class: "btn btn-primary" %>
         </div>
       <% end %>
     </div>
