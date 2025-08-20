@@ -11,7 +11,7 @@
   <div id="forum_posts" class="space-y-4 max-h-[32rem] overflow-y-auto" data-controller="forum_thread-forum_posts">
     <%= turbo_stream_from @forum_thread, "forum_posts" %>
 
-    <%= render @forum_thread.forum_posts, current_user: current_user %>
+    <%= render @forum_thread.forum_posts.where.not(id: nil), current_user: current_user %>
   </div>
 
   <!-- Reply Form -->
