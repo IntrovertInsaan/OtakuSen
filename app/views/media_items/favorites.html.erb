@@ -1,7 +1,6 @@
 <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <div class="flex justify-between items-center mb-8">
     <h1 class="text-3xl font-bold text-base-content tracking-tight"><%= @page_title %></h1>
-    <%# You can add view switchers here too if you like %>
   </div>
 
   <%= render 'media_items/filter_bar', path: ->(p={}) { favorites_media_items_path(p) } %>

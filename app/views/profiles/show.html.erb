@@ -26,7 +26,6 @@
         <%= link_to "View All →", achievements_profile_path(@user), class: "btn btn-sm btn-ghost" %>
       </div>
       <div class="flex flex-wrap gap-4 mt-4">
-        <%# Show the 3 most recently earned achievements as a preview %>
         <% @user.achievements.order('user_achievements.created_at DESC').limit(3).each do |achievement| %>
           <div class="tooltip" data-tip="<%= achievement.description %>">
             <div class="card bg-base-100 p-3 flex flex-col items-center text-center w-24 shadow">

@@ -22,7 +22,6 @@
     <% if media_item.tags.any? %>
       <div class="mt-1 flex flex-wrap gap-1 overflow-hidden">
         <% media_item.tags.each do |tag| %>
-          <%# <%= link_to media_items_path(filter_link_params(tag: tag.name)) do %>
           <%= link_to url_for(params.to_unsafe_h.merge(tag: tag.name)) do %>
             <div class="badge badge-xs badge-accent badge-outline"><%= tag.name %></div>
           <% end %>
