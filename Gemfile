@@ -65,6 +65,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "simplecov", require: false
+  gem "factory_bot_rails"
 end
 
 gem "pg_search", "~> 2.3"
