@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class ProfilesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_user
   # This before_action will run for both :show and :achievements,
   # finding the user and handling the "Not Found" error in one place.
-  before_action :set_user
 
   def show
     @categories = Category.all.order(:name)
