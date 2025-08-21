@@ -11,7 +11,7 @@ class ForumPostsController < ApplicationController
     @forum_post.user = current_user
 
     if @forum_post.save
-      head :ok   # broadcast handled automatically by after_create_commit
+      head :ok
     else
       render json: { error: "Message could not be posted." }, status: :unprocessable_content
     end
@@ -39,12 +39,10 @@ class ForumPostsController < ApplicationController
     @forum_thread ||= ForumThread.find(params[:forum_thread_id])
   end
 
-  # Finds the specific post
   def set_forum_post
     @forum_post = @forum_thread.forum_posts.find(params[:id])
   end
 
-  # Verifies the user is the owner of the post
   def authorize_user!
     redirect_to @forum_thread, alert: "Not authorized." unless @forum_post.user == current_user
   end

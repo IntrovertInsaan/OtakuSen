@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 class NotesController < ApplicationController
-  # Add this line to make the dom_id helper available
   include ActionView::RecordIdentifier
   before_action :set_media_item
 
-  # This will gracefully handle any authorization errors
   rescue_from ActiveRecord::RecordNotFound do
     redirect_to media_item_path(@media_item), alert: "You are not authorized to access this."
   end
@@ -23,12 +21,9 @@ class NotesController < ApplicationController
     if @note.save
       respond_to do |format|
         format.turbo_stream do
-          # Re-fetch notes to include the new one
           @notes = @media_item.notes.order(created_at: :desc)
           render turbo_stream: [
-            # Stream 1: Replace the notes list inside the modal
             turbo_stream.replace("notes_content", partial: "notes/notes_list", locals: { media_item: @media_item, notes: @notes }),
-            # Stream 2: Replace the notes section on the show page to update the badge
             turbo_stream.replace(dom_id(@media_item, :notes_section), partial: "media_items/notes_section", locals: { media_item: @media_item })
           ]
         end

@@ -3,8 +3,6 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user
-  # This before_action will run for both :show and :achievements,
-  # finding the user and handling the "Not Found" error in one place.
 
   def show
     @categories = Category.all.order(:name)
@@ -15,7 +13,6 @@ class ProfilesController < ApplicationController
     @pagy, @media_items = pagy(items.order(created_at: :desc))
   end
 
-  # This is the new action for the achievements page
   def achievements
     @achievements = @user.achievements.order("user_achievements.created_at DESC")
   end

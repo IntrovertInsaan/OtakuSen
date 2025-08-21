@@ -31,7 +31,6 @@ class ForumThreadsController < ApplicationController
   def create
     @forum_thread = current_user.forum_threads.new(forum_thread_params)
 
-    # Assign current_user to all nested forum_posts
     @forum_thread.forum_posts.each { |forum_post| forum_post.user = current_user }
 
     if @forum_thread.save
