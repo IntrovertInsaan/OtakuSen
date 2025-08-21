@@ -30,8 +30,8 @@ class FilterAndSortingTest < ActionDispatch::IntegrationTest
     # ARRANGE: Create unique tags and items.
     tag_to_see = create(:tag)
     tag_to_hide = create(:tag)
-    item_to_see = create(:media_item, user: @user, tags: [tag_to_see])
-    item_to_hide = create(:media_item, user: @user, tags: [tag_to_hide])
+    item_to_see = create(:media_item, user: @user, tags: [ tag_to_see ])
+    item_to_hide = create(:media_item, user: @user, tags: [ tag_to_hide ])
 
     # ACT: Visit the index page filtered by the first tag.
     get media_items_url(tag: tag_to_see.name)
