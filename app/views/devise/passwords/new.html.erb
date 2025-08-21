@@ -6,16 +6,13 @@
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <div>
-        <%# The form label text uses text-base-content %>
         <%= f.label :email, class: "block text-base-content text-sm font-medium leading-6" %>
         <div class="mt-2">
-          <%# The input field now uses DaisyUI's "input" and "input-bordered" classes for consistent, theme-aware styling %>
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input input-bordered w-full" %>
         </div>
       </div>
 
       <div class="mt-6">
-        <%# The submit button now uses "btn" and "btn-primary" to adopt the theme's primary button style %>
         <%= f.submit "Send me reset instructions", class: "btn btn-primary w-full" %>
       </div>
     <% end %>

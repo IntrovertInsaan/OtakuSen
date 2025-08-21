@@ -1,4 +1,3 @@
-<%# Content for both new.html.erb and edit.html.erb %>
 <%= turbo_frame_tag "notes_content" do %>
   <h2 class="font-bold text-xl mb-4"><%= @note.new_record? ? "New Note" : "Editing Note" %></h2>
   <%= render 'form' %>

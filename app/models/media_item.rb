@@ -9,9 +9,7 @@ class MediaItem < ApplicationRecord
 
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
-
   has_many :favorites, dependent: :destroy
-
   has_many :notes, dependent: :destroy
 
   # This is a "getter" method to display the tags as a string
@@ -26,7 +24,6 @@ class MediaItem < ApplicationRecord
     end
   end
 
-  # This is pg_search configuration
   pg_search_scope :search_by_all_content,
     against: {
       title: "A",

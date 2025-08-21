@@ -37,7 +37,6 @@
       <% if media_item.tags.any? %>
         <div class="mt-3 flex flex-wrap gap-1">
           <% media_item.tags.each do |tag| %>
-            <%# <%= link_to media_items_path(params.permit(:category_id, :search).merge(tag: tag.name)) do %>
             <%= link_to url_for(params.to_unsafe_h.merge(tag: tag.name)) do %>
               <div class="badge badge-accent badge-outline hover:badge-primary transition-colors"><%= tag.name %></div>
             <% end %>
