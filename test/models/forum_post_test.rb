@@ -3,26 +3,35 @@
 require "test_helper"
 
 class ForumPostTest < ActiveSupport::TestCase
-  def setup
-    @user = User.create!(email: "user@example.com", password: "password", username: "testuser")
-    @forum_thread = ForumThread.create!(title: "Thread", user: @user)
-    @forum_post = ForumPost.new(content: "Hello world", forum_thread: @forum_thread, user: @user)
+  test "should be valid with content, user, and thread" do
+    # ARRANGE & ACT: Build a valid post using the factory.
+    post = build(:forum_post)
+
+    # ASSERT: Check that it is valid.
+    assert post.valid?
   end
 
-  test "should be valid with content, user, and forum_thread" do
-    assert @forum_post.valid?
+  test "should be invalid without content" do
+    # ARRANGE & ACT: Build a post with empty content.
+    post = build(:forum_post, content: "")
+
+    # ASSERT: Check that it is not valid.
+    assert_not post.valid?
   end
 
-  test "should require content" do
-    @forum_post.content = ""
-    assert_not @forum_post.valid?
+  test "should belong to a user" do
+    # ARRANGE & ACT: Build a post without a user.
+    post = build(:forum_post, user: nil)
+
+    # ASSERT: Check that it is not valid.
+    assert_not post.valid?
   end
 
-  test "should belong to forum_thread" do
-    assert_equal @forum_thread, @forum_post.forum_thread
-  end
+  test "should belong to a forum_thread" do
+    # ARRANGE & ACT: Build a post without a thread.
+    post = build(:forum_post, forum_thread: nil)
 
-  test "should belong to user" do
-    assert_equal @user, @forum_post.user
+    # ASSERT: Check that it is not valid.
+    assert_not post.valid?
   end
 end
