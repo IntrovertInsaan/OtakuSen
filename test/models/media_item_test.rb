@@ -3,23 +3,42 @@
 require "test_helper"
 
 class MediaItemTest < ActiveSupport::TestCase
-  test "tag_list creates and assigns tags" do
-    # Setup: Create a user and a category from our fixtures
-    user = users(:one)
-    category = categories(:manhwa)
+  test "should be valid with all required attributes" do
+    # `build(:media_item)` automatically creates a valid user and category for us
+    item = build(:media_item)
+    assert item.valid?
+  end
 
-    # Action: Create a new media item and assign a string to its tag_list
-    item = MediaItem.create!(
-      title: "Test Item for Tagging",
-      user: user,
-      category: category,
-      status: "Planning",
-      tag_list: "Action, Isekai, Awesome"
-    )
+  test "should be invalid without a title" do
+    item = build(:media_item, title: "")
+    assert_not item.valid?, "Saved the item without a title"
+  end
 
-    # Assertion: Check if the action had the correct outcome
+  test "should be invalid without a status" do
+    item = build(:media_item, status: "")
+    assert_not item.valid?, "Saved the item without a status"
+  end
+
+  test "tag_list= creates and assigns tags from a string" do
+    item = create(:media_item)
+
+    # Action: Assign a string of tags
+    item.tag_list = "Action, Isekai, Adventure"
+
+    # Assertion: Check that the correct tags were created and associated
     assert_equal 3, item.tags.count
-    assert_equal "Action", item.tags.first.name
-    assert_equal "Action, Isekai, Awesome", item.tag_list # It alphabetizes them by default
+    # `pluck` is an efficient way to get just the names
+    assert_equal [ "Action", "Isekai", "Adventure" ], item.tags.pluck(:name)
+  end
+
+  test "tag_list returns a comma-separated string in the correct order" do
+    item = create(:media_item)
+
+    # Setup: Manually create and assign tags in a specific order
+    item.tags << Tag.create!(name: "Second Tag")
+    item.tags << Tag.create!(name: "First Tag")
+
+    # Assertion: Check that the getter method returns the string in the order of creation
+    assert_equal "Second Tag, First Tag", item.tag_list
   end
 end
