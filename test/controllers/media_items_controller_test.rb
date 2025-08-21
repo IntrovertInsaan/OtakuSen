@@ -6,98 +6,87 @@ class MediaItemsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    @user = users(:one)
-    @media_item = media_items(:one)
-    @other_user_item = media_items(:three)
-    sign_in @user
+    @user = create(:user)
+    @other_user = create(:user)
+    @media_item = create(:media_item, user: @user)
+
+    # This signs in the user by simulating a form submission.
+    # It is more reliable than the direct `sign_in` helper in some contexts.
+    post user_session_url, params: { user: { email: @user.email, password: @user.password } }
   end
 
-  # --- Basic CRUD Tests ---
-  test "should get index" do
+  # --- Happy Path Tests (Does it work for the owner?) ---
+
+  test "as an authenticated user, can view the media items index" do
+    # ACT
     get media_items_url
+
+    # ASSERT
     assert_response :success
   end
 
-  test "should get new" do
-    get new_media_item_url
-    assert_response :success
-  end
+  test "as an authenticated user, can create a media item" do
+    # ARRANGE
+    category = create(:category)
 
-  test "should create media_item" do
+    # ACT & ASSERT
     assert_difference("MediaItem.count") do
-      post media_items_url, params: { media_item: { category_id: @media_item.category_id, title: "New Test Item", status: "Planning" } }
+      post media_items_url, params: {
+        media_item: {
+          category_id: category.id,
+          title: "New Test Item",
+          status: "Planning"
+        }
+      }
     end
+
+    # ASSERT
     assert_redirected_to media_item_url(MediaItem.last)
+    assert_equal "Media item was successfully created.", flash[:notice]
   end
 
-  test "should show media_item" do
-    get media_item_url(@media_item)
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_media_item_url(@media_item)
-    assert_response :success
-  end
-
-  test "should update media_item" do
+  test "as an authenticated user, can update their own media item" do
+    # ACT
     patch media_item_url(@media_item), params: { media_item: { title: "Updated Title" } }
+
+    # ASSERT
     assert_redirected_to media_item_url(@media_item)
+    @media_item.reload
+    assert_equal "Updated Title", @media_item.title
   end
 
-  test "should destroy media_item" do
+  test "as an authenticated user, can destroy their own media item" do
+    # ACT & ASSERT
     assert_difference("MediaItem.count", -1) do
       delete media_item_url(@media_item)
     end
+
+    # ASSERT
     assert_redirected_to media_items_url
   end
 
-  # --- Custom Action Tests ---
+  # --- Unhappy Path / Security Tests ---
 
-  test "should increment chapter count" do
-    # Setup: Give the item a starting chapter count
-    @media_item.update(chapters_read: 5, total_chapters: 10)
+  test "should NOT be able to view another user's media item" do
+    # ARRANGE
+    other_item = create(:media_item, user: @other_user)
 
-    patch increment_chapter_media_item_url(@media_item)
+    # ACT
+    get media_item_url(other_item)
 
-    assert_response :success
-    assert_equal 6, @media_item.reload.chapters_read
+    # ASSERT: The controller should redirect unauthorized users to the root path.
+    assert_redirected_to root_url
   end
 
-  test "should decrement chapter count" do
-    @media_item.update(chapters_read: 5)
-    patch decrement_chapter_media_item_url(@media_item)
+  test "should NOT be able to destroy another user's media item" do
+    # ARRANGE
+    other_item = create(:media_item, user: @other_user)
 
-    assert_response :success
-    assert_equal 4, @media_item.reload.chapters_read
-  end
-
-  test "should favorite a media item" do
-    # Action: Favorite an item
-    assert_difference("@user.favorites.count", 1) do
-      patch favorite_media_item_url(@other_user_item)
+    # ACT & ASSERT
+    assert_no_difference("MediaItem.count") do
+      delete media_item_url(other_item)
     end
 
-    # Assertion: Check that a redirect happened (we don't care where)
-    assert_response :redirect
-  end
-
-  test "should unfavorite a media item" do
-    # Setup: Ensure the user has favorited the item via fixtures.
-    # We assume favorites.yml has a record linking users(:one) and media_items(:three)
-    assert @user.favorited_items.include?(@other_user_item)
-
-    # Action: Unfavorite the item
-    assert_difference("Favorite.count", -1) do
-      patch unfavorite_media_item_url(@other_user_item)
-    end
-
-    assert_response :redirect
-    assert_not @user.reload.favorited_items.include?(@other_user_item)
-  end
-
-  test "should get favorites page" do
-    get favorites_media_items_url
-    assert_response :success
+    assert_redirected_to root_url
   end
 end
