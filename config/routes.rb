@@ -33,6 +33,6 @@ Rails.application.routes.draw do
   end
 
   resources :forum_threads, only: [ :index, :show, :new, :create ] do
-    resources :forum_posts, only: [ :create ]
+    resources :forum_posts, only: [ :create, :edit, :update, :destroy ]
   end
 end
