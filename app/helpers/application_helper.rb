@@ -4,8 +4,6 @@ module ApplicationHelper
   include Pagy::Frontend
 
   def pagy_nav_tailwind(pagy)
-    # This version restores your original, better-looking pagination style.
-    # It is rewritten to be compatible with frozen strings and fixes the Turbo scroll bug.
     html_parts = []
     html_parts << %(<nav class="flex items-center justify-center space-x-2 mt-6" role="navigation" aria-label="pagination">)
 
@@ -36,7 +34,6 @@ module ApplicationHelper
     end
 
     html_parts << "</nav>"
-
     html_parts.join(" ").html_safe
   end
 end
