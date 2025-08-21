@@ -19,5 +19,6 @@ module ActiveSupport
 
     # MOVED: The include statement must be inside this class block
     include Devise::Test::IntegrationHelpers
+    include FactoryBot::Syntax::Methods
   end
 end
