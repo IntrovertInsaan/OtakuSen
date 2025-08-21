@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# This is for adding categories.
 puts "Creating Categories..."
 categories = [
   "Manga", "Manhwa", "Manhua", "Light Novel", "Anime",
@@ -13,7 +12,6 @@ puts "Finished seeding categories!"
 puts "Created #{Category.count} categories."
 
 
-# This new code for adding achievements.
 puts "Seeding Achievements..."
 
 Achievement.find_or_create_by!(name: "first_step") do |ach|
@@ -37,7 +35,7 @@ end
 Achievement.find_or_create_by!(name: "manhwa_maniac") do |ach|
   ach.display_name = "Manhwa Maniac"
   ach.description = "Added 5 or more Manhwa to your collection."
-  ach.icon_name = "book-open" # You'll need a book-open.svg icon
+  ach.icon_name = "book-open"
 end
 
 puts "Finished seeding achievements."
