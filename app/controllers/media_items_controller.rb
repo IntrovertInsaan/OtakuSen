@@ -13,6 +13,10 @@ class MediaItemsController < ApplicationController
     items = current_user.media_items.includes(:tags, :category)
     items = apply_filters_and_sorting(items)
 
+    # This line tells Rails to cache the page based on the collection of items.
+    # If the items haven't changed, it will send a 304 Not Modified response.
+    fresh_when(items)
+
     @pagy, @media_items = pagy(items)
   end
 
