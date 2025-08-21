@@ -1,7 +1,7 @@
 <div id="<%= dom_id(media_item) %>" class="card card-side bg-base-100 shadow-md flex-row items-center p-2 gap-4">
   <figure class="w-16 h-24 flex-shrink-0">
     <% if media_item.cover_image.attached? %>
-      <%= image_tag media_item.cover_image.variant(resize_to_fill: [100, 150]), class: "w-full h-full object-cover rounded-md" %>
+      <%= image_tag media_item.cover_image.variant(resize_to_fill: [100, 150]), class: "w-full h-full object-cover rounded-md", loading: "lazy" %>
     <% else %>
       <div class="w-full h-full bg-base-200 rounded-md flex items-center justify-center text-base-content/50"><%= icon "photo", class: "w-8 h-8" %></div>
     <% end %>
