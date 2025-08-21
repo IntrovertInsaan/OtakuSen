@@ -8,7 +8,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     # ARRANGE: Create a user with our factory
     @user = create(:user)
-    
+
     # ARRANGE: Sign in the user by simulating a login request
     post user_session_url, params: { user: { email: @user.email, password: @user.password } }
   end
@@ -16,7 +16,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
   test "should get the edit profile page" do
     # ACT
     get edit_user_registration_url
-    
+
     # ASSERT
     assert_response :success
   end
@@ -30,7 +30,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
         current_password: ""
       }
     }
-    
+
     # ASSERT: Check for a successful redirect and that the data was updated
     assert_redirected_to root_url
     @user.reload
@@ -47,7 +47,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
         current_password: ""
       }
     }
-    
+
     # ASSERT: Check that the page re-renders with an error
     assert_response :unprocessable_content
   end
@@ -61,7 +61,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
         current_password: @user.password # Use the password from the factory
       }
     }
-    
+
     # ASSERT: Check for a successful redirect
     assert_redirected_to root_url
   end
