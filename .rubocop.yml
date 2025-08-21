@@ -1,14 +1,9 @@
 # Omakase Ruby styling for Rails
 inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
-# Overwrite or add rules to create your own house style
-# This new block enables the rule.
+# Overwrite: This new block enables the rule.
 Style/FrozenStringLiteralComment:
   Enabled: true
   EnforcedStyle: always
   Exclude:
     - "**/*.arb"
-
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
