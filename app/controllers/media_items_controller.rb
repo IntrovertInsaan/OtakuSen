@@ -5,6 +5,11 @@ class MediaItemsController < ApplicationController
   before_action :set_media_item, only: %i[ show edit update destroy increment_chapter decrement_chapter favorite unfavorite ]
   before_action :load_categories, only: [ :new, :edit, :create, :update ]
 
+  # NEW Fix: This will catch any authorization errors and redirect gracefully
+  rescue_from ActiveRecord::RecordNotFound do
+    redirect_to root_path, alert: "You are not authorized to access this."
+  end
+
   def index
     @page_title = "My Collection"
     @categories = Category.all.order(:name)
@@ -127,8 +132,10 @@ class MediaItemsController < ApplicationController
       scope.order(sort_order)
     end
 
+    # UPDATED: This is the critical security fix.
     def set_media_item
-      @media_item = MediaItem.find(params[:id])
+      # It now only looks for items within the current_user's collection.
+      @media_item = current_user.media_items.find(params[:id])
     end
 
     def load_categories
