@@ -1,4 +1,5 @@
 GEM
+  remote: https://rubygems.org/
   specs:
     actioncable (8.0.2)
       actionpack (= 8.0.2)
@@ -124,6 +125,7 @@ GEM
       railties (>= 6.1.0)
     faker (3.5.2)
       i18n (>= 1.8.11, < 2)
+    ffi (1.17.2)
     ffi (1.17.2-aarch64-linux-gnu)
     ffi (1.17.2-aarch64-linux-musl)
     ffi (1.17.2-arm-linux-gnu)
@@ -181,6 +183,7 @@ GEM
     mini_magick (5.3.0)
       logger
     mini_mime (1.1.5)
+    mini_portile2 (2.8.9)
     minitest (5.25.5)
     msgpack (1.8.0)
     net-imap (0.5.9)
@@ -198,6 +201,9 @@ GEM
       net-protocol
     net-ssh (7.3.0)
     nio4r (2.7.4)
+    nokogiri (1.18.9)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     nokogiri (1.18.9-aarch64-linux-gnu)
       racc (~> 1.4)
     nokogiri (1.18.9-aarch64-linux-musl)
@@ -217,6 +223,7 @@ GEM
     parser (3.3.9.0)
       ast (~> 2.4.1)
       racc
+    pg (1.6.1)
     pg (1.6.1-aarch64-linux)
     pg (1.6.1-aarch64-linux-musl)
     pg (1.6.1-x86_64-linux)
@@ -362,6 +369,7 @@ GEM
       railties (>= 6.0.0)
     stringio (3.1.7)
     thor (1.4.0)
+    thruster (0.1.15)
     thruster (0.1.15-aarch64-linux)
     thruster (0.1.15-x86_64-linux)
     timeout (0.4.3)
@@ -397,6 +405,7 @@ PLATFORMS
   aarch64-linux-musl
   arm-linux-gnu
   arm-linux-musl
+  ruby
   x86_64-linux
   x86_64-linux-gnu
   x86_64-linux-musl
