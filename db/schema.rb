@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_22_001341) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_22_094623) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -82,6 +82,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_22_001341) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "edited", default: false
+    t.datetime "edited_at"
+    t.integer "position"
+    t.index ["created_at"], name: "index_forum_posts_on_created_at"
+    t.index ["forum_thread_id", "position"], name: "index_forum_posts_on_forum_thread_id_and_position"
     t.index ["forum_thread_id"], name: "index_forum_posts_on_forum_thread_id"
     t.index ["user_id"], name: "index_forum_posts_on_user_id"
   end
@@ -95,7 +100,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_22_001341) do
     t.datetime "last_post_at"
     t.boolean "locked", default: false
     t.boolean "pinned", default: false
-    t.integer "view_count", default: 0
+    t.integer "views_count", default: 0
+    t.boolean "solved", default: false
+    t.integer "last_post_user_id"
+    t.index ["last_post_at"], name: "index_forum_threads_on_last_post_at"
+    t.index ["locked"], name: "index_forum_threads_on_locked"
+    t.index ["pinned"], name: "index_forum_threads_on_pinned"
+    t.index ["posts_count"], name: "index_forum_threads_on_posts_count"
     t.index ["user_id"], name: "index_forum_threads_on_user_id"
   end
 
@@ -107,10 +118,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_22_001341) do
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "crop_x"
-    t.integer "crop_y"
-    t.integer "crop_w"
-    t.integer "crop_h"
     t.integer "chapters_read"
     t.integer "total_chapters"
     t.bigint "user_id", null: false
@@ -176,6 +183,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_22_001341) do
   add_foreign_key "forum_posts", "forum_threads"
   add_foreign_key "forum_posts", "users"
   add_foreign_key "forum_threads", "users"
+  add_foreign_key "forum_threads", "users", column: "last_post_user_id"
   add_foreign_key "media_items", "categories"
   add_foreign_key "media_items", "users"
   add_foreign_key "notes", "media_items"

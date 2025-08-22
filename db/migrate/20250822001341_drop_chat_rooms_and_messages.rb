@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DropChatRoomsAndMessages < ActiveRecord::Migration[8.0]
   def change
     drop_table :messages do |t|
