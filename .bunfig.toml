@@ -1,0 +1,8 @@
+[install]
+# Use bun instead of yarn
+registry = "https://registry.npmjs.org/"
+cache = false
+
+[run]
+# Set bun as the default runner
+shell = "bun"
