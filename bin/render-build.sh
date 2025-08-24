@@ -12,8 +12,13 @@ bundle install
 # Install JS packages with Bun
 bun install
 
-# Build assets
+# Build CSS with your exact command
+bun run build:css
+
+# Build JS (your bun.config.js)
 bun run build
+
+# Precompile assets
 rails assets:precompile
 
 # Migrate database
