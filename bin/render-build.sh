@@ -14,8 +14,26 @@ bun install
 # Build JS manually with bun
 bun build ./app/javascript/application.js --outdir ./app/assets/builds --target browser --minify
 
-# Skip Rails asset precompilation JavaScript build (we already built it)
-SKIP_JAVASCRIPT_BUILD=true RAILS_ENV=production bundle exec rails assets:precompile
+# Precompile ONLY CSS assets (skip JavaScript entirely)
+RAILS_ENV=production bundle exec rails assets:precompile:primary
+
+# If that doesn't work, try this alternative
+if [ $? -ne 0 ]; then
+  # Create a fake build script to fool Rails
+  mkdir -p tmp
+  echo '#!/bin/bash' > tmp/fake-build
+  echo 'exit 0' >> tmp/fake-build
+  chmod +x tmp/fake-build
+  
+  # Override the build command temporarily
+  sed -i 's/"build": "bun bun.config.js"/"build": ".\/tmp\/fake-build"/' package.json
+  
+  # Now run asset precompilation
+  RAILS_ENV=production bundle exec rails assets:precompile
+  
+  # Restore original package.json
+  git checkout package.json
+fi
 
 # Migrate database (only on Render where DATABASE_URL exists)
 if [ -n "$DATABASE_URL" ]; then
