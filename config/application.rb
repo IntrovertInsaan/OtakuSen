@@ -10,5 +10,6 @@ module OtakuSen
     config.load_defaults 8.0
     config.autoload_lib(ignore: %w[assets tasks])
     config.javascript_build_runner = "bun"
+    config.css_build_runner = "bun"
   end
 end
