@@ -43,3 +43,5 @@ group :test do
   gem "selenium-webdriver"
   gem "simplecov", require: false
 end
+
+gem "cloudinary", "~> 2.3"
