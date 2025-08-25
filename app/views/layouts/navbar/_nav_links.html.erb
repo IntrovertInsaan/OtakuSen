@@ -1,12 +1,11 @@
-<!-- Desktop navigation links -->
-<div class="flex items-center gap-1 ml-4">
+<div class="flex items-center gap-4 ml-4"> <%# Increased gap for more breathing room %>
   <% if user_signed_in? %>
-    <%= link_to "My Collection", media_items_path, class: "btn btn-ghost" %>
-    <%= link_to "My Favorites", favorites_media_items_path, class: "btn btn-ghost" %>
-    <%= link_to "Dashboard", dashboard_path, class: "btn btn-ghost" %>
+    <%= link_to "My Collection", media_items_path, class: "btn btn-ghost uppercase tracking-wide font-medium" %>
+    <%= link_to "My Favorites", favorites_media_items_path, class: "btn btn-ghost uppercase tracking-wide font-medium" %>
+    <%= link_to "Dashboard", dashboard_path, class: "btn btn-ghost uppercase tracking-wide font-medium" %>
+     <%= link_to "Forum", forum_threads_path, class: "btn btn-ghost uppercase tracking-wide font-medium" %>
   <% end %>
-  <%= link_to "Forum", forum_threads_path, class: "btn btn-ghost" %>
   <% if user_signed_in? && current_user.admin? %>
-    <%= link_to "Admin", admin_root_path, class: "btn btn-ghost text-error" %>
+    <%= link_to "Admin", admin_root_path, class: "btn btn-ghost uppercase tracking-wide font-medium" %>
   <% end %>
 </div>
