@@ -1,5 +1,5 @@
-<!-- Desktop menu -->
-<div class="flex-none hidden lg:flex ml-4">
+<!-- Desktop navigation links -->
+<div class="flex items-center gap-1 ml-4">
   <% if user_signed_in? %>
     <%= link_to "My Collection", media_items_path, class: "btn btn-ghost" %>
     <%= link_to "My Favorites", favorites_media_items_path, class: "btn btn-ghost" %>

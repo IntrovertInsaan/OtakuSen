@@ -1,32 +1,53 @@
-<nav class="navbar bg-base-300 text-base-content shadow-lg px-4">
-  <!-- Left: Hamburger for mobile -->
+<nav class="navbar bg-base-300 text-base-content shadow-lg px-6">
+  <!-- Mobile menu button (drawer toggle) -->
   <div class="flex-none lg:hidden">
-    <label for="menu-drawer" class="btn btn-square btn-ghost">
-      <%= icon "bars-3", class: "h-10 w-10" %>
+    <label for="mobile-drawer" class="btn btn-square btn-ghost">
+      <%= icon "bars-3", class: "h-6 w-6" %>
     </label>
   </div>
 
-  <!-- Drawer toggle -->
-  <input id="menu-drawer" type="checkbox" class="drawer-toggle hidden" />
+  <!-- Desktop layout -->
+  <div class="hidden lg:flex w-full items-center justify-between">
 
-  <!-- Logo -->
-  <div class="flex-none">
-    <% if user_signed_in? %>
-      <%= link_to "OtakuSen", profile_path(current_user), class: "btn btn-ghost normal-case text-2xl font-bold" %>
-    <% else %>
-      <%= link_to "OtakuSen", root_path, class: "btn btn-ghost normal-case text-2xl font-bold" %>
-    <% end %>
+    <!-- Left: Logo -->
+    <div class="flex items-center">
+      <% logo_path = user_signed_in? ? profile_path(current_user) : root_path %>
+      <%= link_to logo_path, class: "btn btn-ghost normal-case text-xl flex items-center gap-2" do %>
+        <%= icon "header-logo", class: "h-8 w-8" %>
+        <%= icon "header", class: "h-8" %>
+      <% end %>
+    </div>
+
+    <!-- Center: Navigation links -->
+    <div class="flex justify-center">
+      <%= render "layouts/navbar/nav_links" %>
+    </div>
+
+    <!-- Right: Theme, search, user -->
+    <div class="flex items-center gap-3">
+      <%= render "layouts/navbar/theme_switcher" %>
+      <%= render "layouts/navbar/search_bar" %>
+      <%= render "layouts/navbar/user_menu" %>
+    </div>
   </div>
 
-  <!-- RENDER: The desktop menu partial -->
-  <%= render 'layouts/navbar/desktop_menu' %>
+  <!-- Mobile layout (shown when lg:hidden) -->
+  <div class="flex lg:hidden flex-1 items-center justify-between">
+    <!-- Center: Logo -->
+    <div>
+      <% logo_path = user_signed_in? ? profile_path(current_user) : root_path %>
+      <%= link_to logo_path, class: "btn btn-ghost normal-case text-lg flex items-center gap-2" do %>
+        <%= icon "header-logo", class: "h-6 w-6" %>
+        <span class="font-bold">OtakuSen</span>
+      <% end %>
+    </div>
 
-  <!-- Spacer -->
-  <div class="flex-1"></div>
+    <!-- Right: Theme toggle only -->
+    <div>
+      <%= render "layouts/navbar/theme_switcher" %>
+    </div>
+  </div>
 
-  <!-- RENDER: The right side partial -->
-  <%= render 'layouts/navbar/right_nav' %>
-
-  <!-- RENDER: The mobile drawer partial -->
-  <%= render 'layouts/navbar/mobile_drawer' %>
+  <!-- Mobile drawer -->
+  <%= render "layouts/navbar/mobile_drawer" %>
 </nav>

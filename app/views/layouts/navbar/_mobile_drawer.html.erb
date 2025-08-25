@@ -1,11 +1,14 @@
-<!-- Drawer (mobile menu) -->
+<!-- Mobile drawer -->
+<input id="mobile-drawer" type="checkbox" class="drawer-toggle hidden" />
 <div class="drawer-side z-50">
-  <label for="menu-drawer" class="drawer-overlay"></label>
+  <label for="mobile-drawer" class="drawer-overlay"></label>
   <div class="w-72 bg-base-200 text-base-content h-full flex flex-col">
+    
     <!-- Header -->
     <div class="p-4 bg-base-300 border-b border-base-300">
-      <%= link_to "OtakuSen", profile_path(1), class: "text-lg font-bold" %>
+      <%= link_to "OtakuSen", root_path, class: "text-lg font-bold" %>
     </div>
+    
     <!-- User info -->
     <% if user_signed_in? %>
       <div class="p-4 flex items-center gap-3 border-b border-base-300 bg-base-100">
@@ -20,95 +23,64 @@
         </div>
       </div>
     <% end %>
+    
     <!-- Menu items -->
     <ul class="menu flex-1 p-4 text-base-content space-y-2">
       <% if user_signed_in? %>
-        <li><%= link_to "My Collection", media_items_path %></li>
-        <li><%= link_to "My Favorites", favorites_media_items_path %></li>
-        <li><%= link_to "Dashboard", dashboard_path %></li>
-        <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
-        <li><%= button_to "Log out", destroy_user_session_path, method: :delete %></li>
+        <% if current_user.admin? %>
+          <li>
+            <%= link_to admin_root_path, class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-error hover:text-error-content" do %>
+              <%= icon "shield-check", class: "h-8 w-8" %>
+              <span>Admin</span>
+            <% end %>
+          </li>
+        <% end %>
+        <li>
+          <%= link_to media_items_path, class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-300" do %>
+            <%= icon "rectangle-stack", class: "h-8 w-8" %>
+            <span>My Collection</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to favorites_media_items_path, class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-300" do %>
+            <%= icon "valentine", class: "h-8 w-8" %>
+            <span>My Favorites</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to dashboard_path, class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-300" do %>
+            <%= icon "chart-bar", class: "h-8 w-8" %>
+            <span>Dashboard</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to forum_threads_path, class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-300" do %>
+            <%= icon "chat-bubble-left-right", class: "h-8 w-8" %>
+            <span>Forum</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to edit_user_registration_path, class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-300" do %>
+            <%= icon "cog-8-tooth", class: "h-8 w-8" %>
+            <span>Edit Profile</span>
+          <% end %>
+        </li>
+        <li>
+          <%= button_to destroy_user_session_path, method: :delete, 
+                class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-error hover:text-error-content w-full text-left font-semibold" do %>
+            <%= icon "arrow-right-on-rectangle", class: "h-8 w-8" %>
+            <span>Log out</span>
+          <% end %>
+        </li>
       <% else %>
-        <li><%= link_to "Sign up", new_user_registration_path %></li>
-        <li><%= link_to "Log in", new_user_session_path %></li>
+        <li><%= link_to "Sign up", new_user_registration_path, class: "hover:bg-base-300 rounded-lg px-3 py-2" %></li>
+        <li><%= link_to "Log in", new_user_session_path, class: "hover:bg-base-300 rounded-lg px-3 py-2" %></li>
       <% end %>
-      <%= link_to "Forum", forum_threads_path, class: "btn btn-ghost" %>
     </ul>
+    
     <!-- Footer -->
-    <div class="p-4 mt-auto border-t border-base-300 text-xs text-base-content/70 text-center">
+    <div class="p-4 border-t border-base-300 text-xs text-base-content/70 text-center">
       &copy; <%= Time.current.year %> OtakuSen
     </div>
   </div>
 </div>
-
-
-  <!-- Drawer (mobile menu) -->
-  <div class="drawer-side z-50">
-    <label for="menu-drawer" class="drawer-overlay"></label>
-    <div class="w-72 bg-base-200 text-base-content h-full flex flex-col">
-
-      <!-- Header -->
-      <div class="p-4 bg-base-300 border-b border-base-300">
-        <%= link_to "OtakuSen", profile_path(1), class: "text-lg font-bold" %>
-      </div>
-
-      <!-- User info -->
-      <% if user_signed_in? %>
-        <div class="p-4 flex items-center gap-3 border-b border-base-300 bg-base-100">
-          <% if current_user.avatar.attached? %>
-            <%= image_tag current_user.avatar.variant(resize_to_fill: [48, 48]), class: "h-12 w-12 rounded-full shadow-md" %>
-          <% else %>
-            <div class="h-12 w-12 rounded-full bg-neutral text-neutral-content flex items-center justify-center"></div>
-          <% end %>
-          <div>
-            <p class="font-semibold text-base"><%= current_user.username || "User" %></p>
-            <%= link_to "View Profile", profile_path(current_user), class: "text-xs text-primary hover:underline" %>
-          </div>
-        </div>
-      <% end %>
-
-      <%# This checks for a user first, then checks if they are an admin %>
-      <% if user_signed_in? && current_user.admin? %>
-        <%= link_to "Admin", admin_root_path, class: "btn btn-ghost text-error" %>
-      <% end %>
-
-      <!-- Menu items -->
-      <ul class="menu flex-1 p-4 text-base-content space-y-2">
-        <% if user_signed_in? %>
-          <li>
-            <%= link_to media_items_path, class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-300" do %>
-              <%= icon "rectangle-stack", class: "h-8 w-8" %>
-              <span>My Collection</span>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to dashboard_path, class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-300" do %>
-              <%= icon "chart-bar", class: "h-8 w-8" %>
-              <span>Dashboard</span>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to edit_user_registration_path, class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-300" do %>
-              <%= icon "cog-8-tooth", class: "h-8 w-8" %>
-              <span>Edit Profile</span>
-            <% end %>
-          </li>
-          <li>
-            <%= button_to destroy_user_session_path, method: :delete, 
-                  class: "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-error hover:text-error-content w-full text-left font-semibold" do %>
-              <%= icon "arrow-right-on-rectangle", class: "h-8 w-8" %>
-              <span>Log out</span>
-            <% end %>
-          </li>
-        <% else %>
-          <li><%= link_to "Sign up", new_user_registration_path, class: "hover:bg-base-300 rounded-lg px-3 py-2" %></li>
-          <li><%= link_to "Log in", new_user_session_path, class: "hover:bg-base-300 rounded-lg px-3 py-2" %></li>
-        <% end %>
-      </ul>
-
-      <!-- Footer -->
-      <div class="p-4 border-t border-base-300 text-xs text-base-content/70 text-center">
-        &copy; <%= Time.current.year %> OtakuSen
-      </div>
-    </div>
-  </div>
