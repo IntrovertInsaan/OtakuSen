@@ -3,7 +3,7 @@
 puts "Creating Categories..."
 categories = [
   "Manga", "Manhwa", "Manhua", "Light Novel", "Anime",
-  "Movies", "TV Series", "Web Series", "Documentary", "Song", "Book"
+  "Movies", "WebSeries", "Song", "Game"
 ]
 categories.each do |cat_name|
   Category.find_or_create_by!(name: cat_name)
