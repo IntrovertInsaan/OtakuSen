@@ -1,0 +1,37 @@
+<!-- User authentication section -->
+<% if user_signed_in? %>
+  <div class="dropdown dropdown-end">
+    <button tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+      <div class="w-10 rounded-full">
+        <% if current_user.avatar.attached? %>
+          <%= image_tag current_user.avatar.variant(resize_to_fill: [40, 40]) %>
+        <% else %>
+          <%= icon "user", class: "w-6 h-6" %>
+        <% end %>
+      </div>
+    </button>
+    <div tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-64">
+      <div class="flex items-center gap-3 p-2 border-b border-base-300">
+        <% if current_user.avatar.attached? %>
+          <%= image_tag current_user.avatar.variant(resize_to_fill: [48, 48]), class: "h-12 w-12 rounded-full" %>
+        <% else %>
+          <div class="h-12 w-12 rounded-full bg-neutral text-neutral-content flex items-center justify-center"><%= icon "user", class: "h-6 w-6" %></div>
+        <% end %>
+        <div>
+          <p class="font-semibold"><%= current_user.username %></p>
+          <p class="text-xs text-base-content/70">Signed in</p>
+        </div>
+      </div>
+      <ul class="p-0">
+        <li><%= link_to "View Profile", profile_path(current_user) %></li>
+        <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
+        <li><%= button_to "Log out", destroy_user_session_path, method: :delete %></li>
+      </ul>
+    </div>
+  </div>
+<% else %>
+  <div class="flex gap-2">
+    <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary" %>
+    <%= link_to "Log in", new_user_session_path, class: "btn btn-ghost" %>
+  </div>
+<% end %>

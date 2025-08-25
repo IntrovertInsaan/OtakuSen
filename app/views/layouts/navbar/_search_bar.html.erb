@@ -1,0 +1,7 @@
+<!-- Search form -->
+<%= form_with(url: media_items_path, method: :get, class: "form-control", data: { controller: "search-form", turbo_frame: "results" }) do |form| %>
+  <label class="input input-bordered flex items-center gap-2 bg-base-200 text-base-content">
+    <%= icon "magnifying-glass", class: "h-5 w-5 opacity-70" %>
+    <%= form.text_field :search, value: params[:search], placeholder: "Search...", class: "grow bg-transparent border-none focus:outline-none", data: { action: "input->search-form#search" } %>
+  </label>
+<% end %>
