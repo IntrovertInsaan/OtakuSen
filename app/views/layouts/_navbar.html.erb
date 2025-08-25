@@ -10,11 +10,11 @@
   <div class="hidden lg:flex w-full items-center justify-between">
 
     <!-- Left: Logo -->
-    <div class="flex items-center">
+    <div class="flex items-center px-6">
       <% logo_path = user_signed_in? ? profile_path(current_user) : root_path %>
       <%= link_to logo_path, class: "btn btn-ghost normal-case text-xl flex items-center gap-2" do %>
         <%= icon "header-logo", class: "h-8 w-8" %>
-        <%= icon "header", class: "h-8" %>
+        <span class="font-bold">OtakuSen</span>
       <% end %>
     </div>
 
