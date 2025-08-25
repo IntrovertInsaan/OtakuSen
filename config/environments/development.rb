@@ -26,6 +26,7 @@ Rails.application.configure do
   config.active_record.verbose_query_logs = true
   config.active_record.query_log_tags_enabled = true
   config.active_job.verbose_enqueue_logs = true
+  config.active_job.queue_adapter = :async
   config.action_view.annotate_rendered_view_with_filenames = true
   config.action_controller.raise_on_missing_callback_actions = true
 end
