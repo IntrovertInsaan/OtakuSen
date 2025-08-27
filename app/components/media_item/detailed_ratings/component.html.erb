@@ -1,0 +1,12 @@
+<div class="mt-6 p-4 bg-base-200 rounded-box space-y-3">
+  <h3 class="font-bold text-lg">Detailed Ratings</h3>
+  <% if @media_item.story_rating.present? %>
+    <div class="flex items-center gap-4"><span class="font-semibold w-24">Story</span><div class="rating rating-sm"><% 10.times do |i| %><input type="radio" name="r1" class="mask mask-star-2 bg-warning" disabled <%= 'checked' if (i + 1) == @media_item.story_rating %> /><% end %></div></div>
+  <% end %>
+  <% if @media_item.art_rating.present? %>
+    <div class="flex items-center gap-4"><span class="font-semibold w-24">Art</span><div class="rating rating-sm"><% 10.times do |i| %><input type="radio" name="r2" class="mask mask-star-2 bg-warning" disabled <%= 'checked' if (i + 1) == @media_item.art_rating %> /><% end %></div></div>
+  <% end %>
+  <% if @media_item.characters_rating.present? %>
+    <div class="flex items-center gap-4"><span class="font-semibold w-24">Characters</span><div class="rating rating-sm"><% 10.times do |i| %><input type="radio" name="r3" class="mask mask-star-2 bg-warning" disabled <%= 'checked' if (i + 1) == @media_item.characters_rating %> /><% end %></div></div>
+  <% end %>
+</div>

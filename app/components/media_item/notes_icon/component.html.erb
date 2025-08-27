@@ -1,0 +1,10 @@
+<div class="indicator">
+  <% if @media_item.notes.any? %>
+    <span class="indicator-item badge badge-secondary">
+      <%= @media_item.notes.count %>
+    </span> 
+  <% end %>
+  <button class="btn btn-ghost btn-circle" onclick="notes_modal.showModal()" title="View Notes">
+    <%= helpers.icon "chat-bubble-left-right", class: "w-6 h-6" %>
+  </button>
+</div>

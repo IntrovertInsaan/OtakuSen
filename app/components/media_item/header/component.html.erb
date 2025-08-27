@@ -1,0 +1,12 @@
+<div class="flex justify-between items-start">
+  <div>
+    <p class="text-base font-semibold text-primary uppercase tracking-wider"><%= @media_item.category.name %></p>
+    <h1 class="card-title text-4xl font-bold mt-1"><%= @media_item.title %></h1>
+    <div class="flex items-center flex-wrap gap-2 mt-4">
+      <div class="badge badge-lg badge-outline"><%= @media_item.status %></div>
+      <% if @media_item.rating.present? %>
+        <div class="badge badge-lg badge-outline">⭐ Overall: <%= @media_item.rating %> / 10</div>
+      <% end %>
+    </div>
+  </div>
+</div>
