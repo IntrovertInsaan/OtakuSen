@@ -7,15 +7,17 @@ class Api::BaseController < ApplicationController
   private
 
   def authenticate_user_from_token!
-    # Check for the token in the URL parameters for easy testing
-    user_token = params[:api_token].presence
-    user = user_token && User.find_by(api_token: user_token)
+    user = nil
+    # The standard, professional way is to check for an "Authorization: Bearer <token>" header.
+    authenticate_with_http_token do |token, options|
+      user = User.find_by(api_token: token)
+    end
 
     if user
-      # If the user is found, sign them in for this request
+      # If the user is found, sign them in for this one request.
       sign_in user, store: false
     else
-      # If the user isn't found, send an unauthorized error
+      # If no user is found, send an unauthorized error.
       render json: { error: "Invalid API token." }, status: :unauthorized
     end
   end
