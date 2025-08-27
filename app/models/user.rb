@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  before_create :generate_api_token
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -20,4 +21,10 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   validates :username, presence: true, uniqueness: { case_sensitive: false }
+
+  private
+
+  def generate_api_token
+    self.api_token = SecureRandom.hex(16)
+  end
 end
