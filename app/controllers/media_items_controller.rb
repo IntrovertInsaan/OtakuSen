@@ -46,7 +46,7 @@ class MediaItemsController < ApplicationController
       redirect_to @media_item, notice: "Media item was successfully created."
     else
       @categories = Category.all.order(:name)
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -56,7 +56,7 @@ class MediaItemsController < ApplicationController
       redirect_to @media_item, notice: "Media item was successfully updated."
     else
       @categories = Category.all.order(:name)
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
