@@ -1,17 +1,25 @@
 # frozen_string_literal: true
 
-puts "Creating Categories..."
-categories = [
-  "Manga", "Manhwa", "Manhua", "Light Novel", "Anime",
-  "Movies", "Songs", "VideoGames", "Cartoons"
+# This is the definitive list of categories that should exist.
+puts "Synchronizing Categories..."
+expected_categories = [
+  "Anime", "Books", "Cartoons", "Games", "Manga", "Manhwa", "Manhua", "Light Novel",
+  "Movies", "Web Series", "Documentary", "Songs"
 ]
-categories.each do |cat_name|
+
+# Create any categories from the list that are missing.
+expected_categories.each do |cat_name|
   Category.find_or_create_by!(name: cat_name)
 end
-puts "Finished seeding categories!"
-puts "Created #{Category.count} categories."
+
+# IMPORTANT: This line deletes any categories that are NOT in the list above.
+Category.where.not(name: expected_categories).destroy_all
+
+puts "Finished synchronizing categories!"
+puts "There are now #{Category.count} categories."
 
 
+# This section for achievements is already perfect.
 puts "Seeding Achievements..."
 
 Achievement.find_or_create_by!(name: "first_step") do |ach|
