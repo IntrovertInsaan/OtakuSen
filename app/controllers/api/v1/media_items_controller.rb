@@ -1,6 +1,4 @@
-class Api::V1::MediaItemsController < ApplicationController
-  before_action :authenticate_user!
-
+class Api::V1::MediaItemsController < Api::BaseController
   def index
     @media_items = current_user.media_items.order(created_at: :desc)
   end
