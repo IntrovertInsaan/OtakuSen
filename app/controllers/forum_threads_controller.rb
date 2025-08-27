@@ -36,7 +36,7 @@ class ForumThreadsController < ApplicationController
     if @forum_thread.save
       redirect_to @forum_thread, notice: "Discussion started!"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
