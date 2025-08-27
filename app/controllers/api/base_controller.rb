@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::BaseController < ApplicationController
   # We don't need the standard browser CSRF protection for an API
   skip_before_action :verify_authenticity_token

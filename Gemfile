@@ -27,7 +27,7 @@ gem "pagy", "~> 9.3"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
-  gem 'dotenv-rails'
+  gem "dotenv-rails"
   gem "brakeman", require: false
   gem "rails-erd"
   gem "rubocop-rails-omakase", require: false
