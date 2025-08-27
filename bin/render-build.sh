@@ -29,4 +29,5 @@ RAILS_ENV=production bundle exec rails assets:precompile
 # Migrate database (only on Render where DATABASE_URL exists)
 if [ -n "$DATABASE_URL" ]; then
   RAILS_ENV=production bundle exec rails db:migrate
+  RAILS_ENV=production bundle exec rails db:seed
 fi
