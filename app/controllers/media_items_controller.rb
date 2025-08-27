@@ -14,24 +14,18 @@ class MediaItemsController < ApplicationController
     @categories = Category.all.order(:name)
     @tags = Tag.joins(:media_items).where(media_items: { user_id: current_user.id }).distinct.order(:name)
 
-    items = current_user.media_items.includes(:tags, :category)
-    items = apply_filters_and_sorting(items)
-
-    fresh_when(items)
-
-    @pagy, @media_items = pagy(items)
+    filtered_items = MediaItemQuery.new(current_user.media_items, params).call
+    fresh_when(filtered_items)
+    @pagy, @media_items = pagy(filtered_items)
   end
 
   def favorites
     @page_title = "My Favorites"
     @categories = Category.all.order(:name)
-
     @tags = Tag.joins(media_items: :favorites).where(favorites: { user_id: current_user.id }).distinct.order(:name)
 
-    items = current_user.favorited_items
-    items = apply_filters_and_sorting(items, favorites_order: true)
-
-    @pagy, @media_items = pagy(items)
+    filtered_favorites = FavoriteItemQuery.new(current_user, params).call
+    @pagy, @media_items = pagy(filtered_favorites)
     render :favorites
   end
 
@@ -90,24 +84,6 @@ class MediaItemsController < ApplicationController
   end
 
   private
-
-    def apply_filters_and_sorting(scope, favorites_order: false)
-      scope = scope.where(category_id: params[:category_id]) if params[:category_id].present?
-      scope = scope.joins(:tags).where(tags: { name: params[:tag] }) if params[:tag].present?
-      scope = scope.search_by_all_content(params[:search]) if params[:search].present?
-
-      sort_order = case params[:sort]
-      when "highest_rated"    then "media_items.rating DESC NULLS LAST"
-      when "recently_updated" then "media_items.updated_at DESC"
-      when "title_asc"        then "media_items.title ASC"
-      when "title_desc"       then "media_items.title DESC"
-      else
-        favorites_order ? "favorites.created_at DESC" : "media_items.created_at DESC"
-      end
-
-      scope = scope.joins(:favorites) if favorites_order
-      scope.order(sort_order)
-    end
 
     def set_media_item
       @media_item = current_user.media_items.find(params[:id])
