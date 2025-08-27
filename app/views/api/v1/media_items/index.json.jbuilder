@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.array! @media_items do |media_item|
   json.id media_item.id
   json.title media_item.title
