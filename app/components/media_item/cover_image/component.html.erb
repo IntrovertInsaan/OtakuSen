@@ -1,0 +1,9 @@
+<figure class="lg:w-1/3">
+  <% if @media_item.cover_image.attached? %>
+    <%= image_tag @media_item.cover_image.variant(@variant), class: "w-full h-full object-cover" %>
+  <% else %>
+    <div class="w-full h-full bg-base-200 flex items-center justify-center text-base-content/50">
+      <%= helpers.icon "photo", class: "w-24 h-24" %>
+    </div>
+  <% end %>
+</figure>

@@ -1,0 +1,7 @@
+<div class="mt-6">
+  <div class="flex justify-between text-base-content/70 text-sm font-medium">
+    <span>Chapters</span>
+    <span><%= @media_item.chapters_read %> / <%= @media_item.total_chapters.presence || '?' %></span>
+  </div>
+  <progress class="progress progress-primary w-full mt-1" value="<%= progress_percentage %>" max="100"></progress>
+</div>
