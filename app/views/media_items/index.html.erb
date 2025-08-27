@@ -19,7 +19,12 @@
     </div>
   </div>
 
-  <%= render 'media_items/filter_bar', path: ->(p={}) { media_items_path(p) } %>
+  <%= render(FilterBarComponent.new(
+      path: ->(p={}) { url_for(p) },
+      categories: @categories,
+      tags: @tags,
+      current_params: params.to_unsafe_h.slice(:search, :tag, :view, :category_id, :sort)
+  )) %>
 
   <%= turbo_frame_tag "results" do %>
     <% if @media_items.any? %>
