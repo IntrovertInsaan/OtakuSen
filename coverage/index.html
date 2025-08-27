@@ -13,7 +13,7 @@
       <img src="./assets/0.13.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2025-08-27T11:03:22+00:00">2025-08-27T11:03:22+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2025-08-27T12:08:38+00:00">2025-08-27T12:08:38+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -116,7 +116,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#48513b0720ba997b59787993126a21bc17714108" class="src_link" title="app/controllers/api/base_controller.rb">app/controllers/api/base_controller.rb</a></td>
             <td class="red strong cell--number t-file__coverage">0.00 %</td>
-            <td class="cell--number">24</td>
+            <td class="cell--number">26</td>
             <td class="cell--number">16</td>
             <td class="cell--number">0</td>
             <td class="cell--number">16</td>
@@ -127,7 +127,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#bf1a73d9611093c83fc6467bdaadb4dce00fdba2" class="src_link" title="app/controllers/api/v1/media_items_controller.rb">app/controllers/api/v1/media_items_controller.rb</a></td>
             <td class="red strong cell--number t-file__coverage">0.00 %</td>
-            <td class="cell--number">9</td>
+            <td class="cell--number">11</td>
             <td class="cell--number">8</td>
             <td class="cell--number">0</td>
             <td class="cell--number">8</td>
@@ -560,7 +560,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#48513b0720ba997b59787993126a21bc17714108" class="src_link" title="app/controllers/api/base_controller.rb">app/controllers/api/base_controller.rb</a></td>
             <td class="red strong cell--number t-file__coverage">0.00 %</td>
-            <td class="cell--number">24</td>
+            <td class="cell--number">26</td>
             <td class="cell--number">16</td>
             <td class="cell--number">0</td>
             <td class="cell--number">16</td>
@@ -571,7 +571,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#bf1a73d9611093c83fc6467bdaadb4dce00fdba2" class="src_link" title="app/controllers/api/v1/media_items_controller.rb">app/controllers/api/v1/media_items_controller.rb</a></td>
             <td class="red strong cell--number t-file__coverage">0.00 %</td>
-            <td class="cell--number">9</td>
+            <td class="cell--number">11</td>
             <td class="cell--number">8</td>
             <td class="cell--number">0</td>
             <td class="cell--number">8</td>
@@ -1895,12 +1895,12 @@
     <ol>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="1">
+          <li class="never" data-hits="" data-linenumber="1">
             
 
             
 
-            <code class="ruby">class Api::BaseController &lt; ApplicationController</code>
+            <code class="ruby"># frozen_string_literal: true</code>
           </li>
         </div>
       
@@ -1910,7 +1910,7 @@
 
             
 
-            <code class="ruby">  # We don&#39;t need the standard browser CSRF protection for an API</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -1920,7 +1920,7 @@
 
             
 
-            <code class="ruby">  skip_before_action :verify_authenticity_token</code>
+            <code class="ruby">class Api::BaseController &lt; ApplicationController</code>
           </li>
         </div>
       
@@ -1930,7 +1930,7 @@
 
             
 
-            <code class="ruby">  # Use our new token authentication method instead of the standard Devise one</code>
+            <code class="ruby">  # We don&#39;t need the standard browser CSRF protection for an API</code>
           </li>
         </div>
       
@@ -1940,7 +1940,7 @@
 
             
 
-            <code class="ruby">  before_action :authenticate_user_from_token!</code>
+            <code class="ruby">  skip_before_action :verify_authenticity_token</code>
           </li>
         </div>
       
@@ -1950,7 +1950,7 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">  # Use our new token authentication method instead of the standard Devise one</code>
           </li>
         </div>
       
@@ -1960,7 +1960,7 @@
 
             
 
-            <code class="ruby">  private</code>
+            <code class="ruby">  before_action :authenticate_user_from_token!</code>
           </li>
         </div>
       
@@ -1980,62 +1980,12 @@
 
             
 
-            <code class="ruby">  def authenticate_user_from_token!</code>
+            <code class="ruby">  private</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="10">
-            
-
-            
-
-            <code class="ruby">    user = nil</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="11">
-            
-
-            
-
-            <code class="ruby">    # The standard, professional way is to check for an &quot;Authorization: Bearer &lt;token&gt;&quot; header.</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="12">
-            
-
-            
-
-            <code class="ruby">    authenticate_with_http_token do |token, options|</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="13">
-            
-
-            
-
-            <code class="ruby">      user = User.find_by(api_token: token)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="14">
-            
-
-            
-
-            <code class="ruby">    end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="15">
+          <li class="never" data-hits="" data-linenumber="10">
             
 
             
@@ -2045,67 +1995,57 @@
         </div>
       
         <div>
+          <li class="missed" data-hits="0" data-linenumber="11">
+            
+
+            
+
+            <code class="ruby">  def authenticate_user_from_token!</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="12">
+            
+
+            
+
+            <code class="ruby">    user = nil</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="13">
+            
+
+            
+
+            <code class="ruby">    # The standard, professional way is to check for an &quot;Authorization: Bearer &lt;token&gt;&quot; header.</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="14">
+            
+
+            
+
+            <code class="ruby">    authenticate_with_http_token do |token, options|</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="15">
+            
+
+            
+
+            <code class="ruby">      user = User.find_by(api_token: token)</code>
+          </li>
+        </div>
+      
+        <div>
           <li class="missed" data-hits="0" data-linenumber="16">
-            
-
-            
-
-            <code class="ruby">    if user</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="17">
-            
-
-            
-
-            <code class="ruby">      # If the user is found, sign them in for this one request.</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="18">
-            
-
-            
-
-            <code class="ruby">      sign_in user, store: false</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="19">
-            
-
-            
-
-            <code class="ruby">    else</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="20">
-            
-
-            
-
-            <code class="ruby">      # If no user is found, send an unauthorized error.</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="21">
-            
-
-            
-
-            <code class="ruby">      render json: { error: &quot;Invalid API token.&quot; }, status: :unauthorized</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="22">
             
 
             
@@ -2115,7 +2055,87 @@
         </div>
       
         <div>
+          <li class="never" data-hits="" data-linenumber="17">
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="18">
+            
+
+            
+
+            <code class="ruby">    if user</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="19">
+            
+
+            
+
+            <code class="ruby">      # If the user is found, sign them in for this one request.</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="20">
+            
+
+            
+
+            <code class="ruby">      sign_in user, store: false</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="21">
+            
+
+            
+
+            <code class="ruby">    else</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="22">
+            
+
+            
+
+            <code class="ruby">      # If no user is found, send an unauthorized error.</code>
+          </li>
+        </div>
+      
+        <div>
           <li class="missed" data-hits="0" data-linenumber="23">
+            
+
+            
+
+            <code class="ruby">      render json: { error: &quot;Invalid API token.&quot; }, status: :unauthorized</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="24">
+            
+
+            
+
+            <code class="ruby">    end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="25">
             
 
             
@@ -2125,7 +2145,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="24">
+          <li class="missed" data-hits="0" data-linenumber="26">
             
 
             
@@ -2166,47 +2186,17 @@
     <ol>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="1">
+          <li class="never" data-hits="" data-linenumber="1">
             
 
             
 
-            <code class="ruby">class Api::V1::MediaItemsController &lt; Api::BaseController</code>
+            <code class="ruby"># frozen_string_literal: true</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="2">
-            
-
-            
-
-            <code class="ruby">  def index</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="3">
-            
-
-            
-
-            <code class="ruby">    @media_items = current_user.media_items.order(created_at: :desc)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="4">
-            
-
-            
-
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="5">
+          <li class="never" data-hits="" data-linenumber="2">
             
 
             
@@ -2216,27 +2206,37 @@
         </div>
       
         <div>
+          <li class="missed" data-hits="0" data-linenumber="3">
+            
+
+            
+
+            <code class="ruby">class Api::V1::MediaItemsController &lt; Api::BaseController</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="4">
+            
+
+            
+
+            <code class="ruby">  def index</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="5">
+            
+
+            
+
+            <code class="ruby">    @media_items = current_user.media_items.order(created_at: :desc)</code>
+          </li>
+        </div>
+      
+        <div>
           <li class="missed" data-hits="0" data-linenumber="6">
-            
-
-            
-
-            <code class="ruby">  def show</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="7">
-            
-
-            
-
-            <code class="ruby">    @media_item = current_user.media_items.find(params[:id])</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="8">
             
 
             
@@ -2246,7 +2246,47 @@
         </div>
       
         <div>
+          <li class="never" data-hits="" data-linenumber="7">
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="8">
+            
+
+            
+
+            <code class="ruby">  def show</code>
+          </li>
+        </div>
+      
+        <div>
           <li class="missed" data-hits="0" data-linenumber="9">
+            
+
+            
+
+            <code class="ruby">    @media_item = current_user.media_items.find(params[:id])</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="10">
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="11">
             
 
             
