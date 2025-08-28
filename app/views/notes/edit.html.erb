@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "notes_content" do %>
-  <h2 class="font-bold text-xl mb-4"><%= @note.new_record? ? "New Note" : "Editing Note" %></h2>
+<%= turbo_frame_tag "notes_content_#{dom_id(@media_item)}" do %>
+  <h2 class="font-bold text-xl mb-4">Editing Note</h2>
   <%= render 'form' %>
 <% end %>
