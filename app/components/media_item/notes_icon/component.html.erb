@@ -4,7 +4,14 @@
       <%= @media_item.notes.count %>
     </span> 
   <% end %>
-  <button class="btn btn-ghost btn-circle" onclick="notes_modal.showModal()" title="View Notes">
+  <button class="btn btn-ghost btn-circle" onclick="notes_modal_<%= helpers.dom_id(@media_item) %>.showModal()" title="View Notes">
     <%= helpers.icon "chat-bubble-left-right", class: "w-6 h-6" %>
   </button>
 </div>
+
+<dialog id="notes_modal_<%= helpers.dom_id(@media_item) %>" class="modal">
+  <div class="modal-box w-11/12 max-w-4xl">
+    <%= helpers.turbo_frame_tag "notes_content_#{helpers.dom_id(@media_item)}", src: media_item_notes_path(@media_item) %>
+  </div>
+  <form method="dialog" class="modal-backdrop"><button>close</button></form>
+</dialog>

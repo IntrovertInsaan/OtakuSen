@@ -23,8 +23,8 @@ class NotesController < ApplicationController
         format.turbo_stream do
           @notes = @media_item.notes.order(created_at: :desc)
           render turbo_stream: [
-            turbo_stream.replace("notes_content", partial: "notes/notes_list", locals: { media_item: @media_item, notes: @notes }),
-            turbo_stream.replace(dom_id(@media_item, :notes_section), partial: "media_items/notes_section", locals: { media_item: @media_item })
+            turbo_stream.replace("notes_content_#{dom_id(@media_item)}", partial: "notes/notes_list", locals: { media_item: @media_item, notes: @notes }),
+            turbo_stream.replace(dom_id(@media_item, :notes_section), MediaItem::NotesIcon::Component.new(media_item: @media_item))
           ]
         end
 
@@ -58,8 +58,8 @@ class NotesController < ApplicationController
       format.turbo_stream do
         @notes = @media_item.notes.order(created_at: :desc)
         render turbo_stream: [
-          turbo_stream.replace("notes_content", partial: "notes/notes_list", locals: { media_item: @media_item, notes: @notes }),
-          turbo_stream.replace(dom_id(@media_item, :notes_section), partial: "media_items/notes_section", locals: { media_item: @media_item })
+          turbo_stream.replace("notes_content_#{dom_id(@media_item)}", partial: "notes/notes_list", locals: { media_item: @media_item, notes: @notes }),
+          turbo_stream.replace(dom_id(@media_item, :notes_section), MediaItem::NotesIcon::Component.new(media_item: @media_item))
         ]
       end
 
