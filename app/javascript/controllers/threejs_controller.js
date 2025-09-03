@@ -5,6 +5,8 @@ import { createCamera } from '../lib/threejs/camera.js';
 import { createRenderer } from '../lib/threejs/renderer.js';
 import { createHelpers } from '../lib/threejs/helpers.js';
 import { createPointerLockControls, updateMovement } from '../lib/threejs/controls/pointerlock.js';
+import { createLights } from '../lib/threejs/lights.js';
+import { createBox, createPlane } from '../lib/threejs/objects.js';
 
 export default class extends Controller {
   connect() {
@@ -12,15 +14,24 @@ export default class extends Controller {
     this.camera = createCamera();
     this.renderer = createRenderer(this.element);
 
-    // Add helpers to the scene
     const { gridHelper } = createHelpers();
     this.scene.add(gridHelper);
+
+    // Add all lights and their meshes in one line
+    const lights = createLights();
+    lights.forEach(light => this.scene.add(light));
     
+    // Create and add a plane and a box to the scene
+    const floor = createPlane();
+    this.scene.add(floor);
+    const box = createBox();
+    box.position.y = 5;
+    this.scene.add(box);
+
     // Add PointerLockControls
     this.controls = createPointerLockControls(this.camera, this.element);
-
     this.clock = new THREE.Clock();
-
+    
     this.animate();
   }
   
