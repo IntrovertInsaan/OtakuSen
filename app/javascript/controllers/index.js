@@ -4,11 +4,17 @@
 
 import { application } from "./application"
 
+import ChatScrollController from "./chat_scroll_controller"
+application.register("chat-scroll", ChatScrollController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
 import PieChartController from "./pie_chart_controller"
 application.register("pie-chart", PieChartController)
+
+import ResetFormController from "./reset_form_controller"
+application.register("reset-form", ResetFormController)
 
 import SearchFormController from "./search_form_controller"
 application.register("search-form", SearchFormController)
@@ -16,11 +22,11 @@ application.register("search-form", SearchFormController)
 import ThemeController from "./theme_controller"
 application.register("theme", ThemeController)
 
+import ThreejsController from "./threejs_controller"
+application.register("threejs", ThreejsController)
+
 import ToastController from "./toast_controller"
 application.register("toast", ToastController)
 
-import ResetFormController from "./reset_form_controller"
-application.register("reset-form", ResetFormController)
-
-import ChatScrollController from "./chat_scroll_controller"
-application.register("chat-scroll", ChatScrollController)
+import TrixController from "./trix_controller"
+application.register("trix", TrixController)
