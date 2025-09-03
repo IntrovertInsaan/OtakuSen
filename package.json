@@ -4,10 +4,10 @@
   "scripts": {
     "dev:js": "bun build ./app/javascript/application.js --outdir=./app/assets/builds --watch",
     "dev:css": "npx @tailwindcss/cli -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --watch",
-    "build:js": "bun build ./app/javascript/application.js --outdir=./app/assets/builds --target browser --minify",
+    "build:js": "npx bun build ./app/javascript/application.js --outdir=./app/assets/builds --target browser --minify",
     "build:css": "npx @tailwindcss/cli -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify",
     "dev": "bun run dev:js & bun run dev:css",
-    "build": "bun run build:js && bun run build:css"
+    "build": "npm run build:js && npm run build:css"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
