@@ -1,10 +1,10 @@
 {
   "name": "app",
   "private": true,
-  "scripts": {
+    "scripts": {
     "build": "echo 'JavaScript already built with bun'",
     "dev:js": "bun build ./app/javascript/application.js --outdir=./app/assets/builds --watch",
-    "dev:css": "npx @tailwindcss/cli -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
+    "dev:css": "npx @tailwindcss/cli -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify --watch"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
