@@ -1,31 +1,32 @@
 import { Controller } from "@hotwired/stimulus";
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js'; 
+import { createScene } from '../lib/threejs/scene.js';
+import { createCamera } from '../lib/threejs/camera.js';
+import { createRenderer } from '../lib/threejs/renderer.js';
+import { createControls } from '../lib/threejs/controls.js';
 
 export default class extends Controller {
   connect() {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    this.scene = createScene();
+    this.camera = createCamera();
+    this.renderer = createRenderer(this.element);
+    this.controls = createControls(this.camera, this.renderer);
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    this.element.appendChild(renderer.domElement); 
+    this.addCube();
+    this.animate();
+  }
 
-    const controls = new OrbitControls(camera, renderer.domElement);
-
+  // A dedicated method to create and add the cube
+  addCube() {
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); 
     const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    this.scene.add(cube);
+  }
 
-    camera.position.z = 5;
-
-    const animate = () => {
-      requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    };
-
-    animate();
+  animate() {
+    requestAnimationFrame(this.animate.bind(this));
+    this.controls.update();
+    this.renderer.render(this.scene, this.camera);
   }
 }
