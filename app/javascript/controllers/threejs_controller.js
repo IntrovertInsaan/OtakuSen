@@ -17,16 +17,20 @@ export default class extends Controller {
     const { gridHelper } = createHelpers();
     this.scene.add(gridHelper);
 
-    // Add all lights and their meshes in one line
     const lights = createLights();
     lights.forEach(light => this.scene.add(light));
     
-    // Create and add a plane and a box to the scene
-    const floor = createPlane();
-    this.scene.add(floor);
-    const box = createBox();
-    box.position.y = 5;
-    this.scene.add(box);
+    // Create and add customized objects to the scene
+    const plane = createPlane({ color: 'lightgrey', width: 200, height: 200 });
+    this.scene.add(plane);
+    
+    const box1 = createBox({ color: 'green', size: 10 });
+    box1.position.y = 5;
+    this.scene.add(box1);
+    
+    const box2 = createBox({ color: 'red', size: 5 });
+    box2.position.set(15, 2.5, 0);
+    this.scene.add(box2);
 
     // Add PointerLockControls
     this.controls = createPointerLockControls(this.camera, this.element);
