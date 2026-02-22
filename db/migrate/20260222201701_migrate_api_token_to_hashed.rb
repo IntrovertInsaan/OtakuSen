@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MigrateApiTokenToHashed < ActiveRecord::Migration[8.0]
   def change
     # 1: Add the new column for the digest
