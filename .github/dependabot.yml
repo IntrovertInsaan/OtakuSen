@@ -6,8 +6,8 @@ updates:
       interval: daily
     open-pull-requests-limit: 10
     labels:
-      - type: dependency
-      - area: backend
+      - "type: dependency"
+      - "area: backend"
 
   - package-ecosystem: github-actions
     directory: "/"
@@ -15,5 +15,5 @@ updates:
       interval: daily
     open-pull-requests-limit: 10
     labels:
-      - type: dependency
-      - area: ci
+      - "type: dependency"
+      - "area: ci"
