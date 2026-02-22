@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_27_101836) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_22_201701) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -60,6 +60,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_101836) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "answers", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.string "text"
+    t.boolean "correct"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -136,6 +145,47 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_101836) do
     t.index ["media_item_id"], name: "index_notes_on_media_item_id"
   end
 
+  create_table "questions", force: :cascade do |t|
+    t.bigint "quiz_id", null: false
+    t.string "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_id"], name: "index_questions_on_quiz_id"
+  end
+
+  create_table "quiz_participations", force: :cascade do |t|
+    t.bigint "quiz_session_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_session_id"], name: "index_quiz_participations_on_quiz_session_id"
+    t.index ["user_id"], name: "index_quiz_participations_on_user_id"
+  end
+
+  create_table "quiz_sessions", force: :cascade do |t|
+    t.bigint "quiz_id", null: false
+    t.bigint "current_question_id"
+    t.string "status"
+    t.bigint "host_id", null: false
+    t.bigint "buzzed_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["buzzed_user_id"], name: "index_quiz_sessions_on_buzzed_user_id"
+    t.index ["current_question_id"], name: "index_quiz_sessions_on_current_question_id"
+    t.index ["host_id"], name: "index_quiz_sessions_on_host_id"
+    t.index ["quiz_id"], name: "index_quiz_sessions_on_quiz_id"
+  end
+
+  create_table "quizzes", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_quizzes_on_user_id"
+  end
+
   create_table "taggings", force: :cascade do |t|
     t.bigint "media_item_id", null: false
     t.bigint "tag_id", null: false
@@ -172,14 +222,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_101836) do
     t.text "bio"
     t.boolean "admin", default: false
     t.string "api_token"
+    t.string "hashed_api_token"
     t.index ["api_token"], name: "index_users_on_api_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["hashed_api_token"], name: "index_users_on_hashed_api_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "answers", "questions"
   add_foreign_key "favorites", "media_items"
   add_foreign_key "favorites", "users"
   add_foreign_key "forum_posts", "forum_threads"
@@ -189,6 +242,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_101836) do
   add_foreign_key "media_items", "categories"
   add_foreign_key "media_items", "users"
   add_foreign_key "notes", "media_items"
+  add_foreign_key "questions", "quizzes"
+  add_foreign_key "quiz_participations", "quiz_sessions"
+  add_foreign_key "quiz_participations", "users"
+  add_foreign_key "quiz_sessions", "questions", column: "current_question_id"
+  add_foreign_key "quiz_sessions", "quizzes"
+  add_foreign_key "quiz_sessions", "users", column: "buzzed_user_id"
+  add_foreign_key "quiz_sessions", "users", column: "host_id"
+  add_foreign_key "quizzes", "users"
   add_foreign_key "taggings", "media_items"
   add_foreign_key "taggings", "tags"
   add_foreign_key "user_achievements", "achievements"
