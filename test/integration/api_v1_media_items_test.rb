@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-# test/integration/api_v1_media_items_test.rb
 require "test_helper"
 
 class ApiV1MediaItemsTest < ActionDispatch::IntegrationTest
   setup do
     @user = create(:user)
+    # The raw_api_token is available ONLY on the instance
+    # that was just created, before it's reloaded from the DB.
+    @token = @user.raw_api_token
     @media_item = create(:media_item, user: @user)
   end
 
@@ -15,17 +17,17 @@ class ApiV1MediaItemsTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index with a valid API token" do
-    # Pass the token in the headers, which is the standard for APIs
+    # Use the @token variable we captured in setup
     get api_v1_media_items_url,
-        headers: { "Authorization" => "Bearer #{@user.api_token}" },
-        as: :json # Tell the test to request JSON
+        headers: { "Authorization" => "Bearer #{@token}" },
+        as: :json
     assert_response :success
   end
 
   test "should show a media item with a valid API token" do
     get api_v1_media_item_url(@media_item),
-        headers: { "Authorization" => "Bearer #{@user.api_token}" },
-        as: :json # Tell the test to request JSON
+        headers: { "Authorization" => "Bearer #{@token}" },
+        as: :json
     assert_response :success
 
     json_response = JSON.parse(response.body)
