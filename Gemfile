@@ -45,6 +45,6 @@ group :test do
   gem "simplecov", require: false
 end
 
-gem "cloudinary", "~> 2.3"
+gem "cloudinary", "~> 2.4"
 
 gem "view_component", "~> 4.0"
