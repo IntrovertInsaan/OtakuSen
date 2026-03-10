@@ -48,4 +48,4 @@ end
 
 gem "cloudinary", "~> 2.3"
 
-gem "view_component", "~> 4.0"
+gem "view_component", "~> 4.5"
