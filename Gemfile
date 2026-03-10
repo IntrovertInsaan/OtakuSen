@@ -23,7 +23,7 @@ gem "devise", "~> 4.9"
 gem "image_processing", "~> 1.2"
 gem "inline_svg", "~> 1.10"
 gem "pg_search", "~> 2.3"
-gem "pagy", "~> 9.3"
+gem "pagy", "~> 43.3"
 gem "minitest", "~> 5.25"
 
 group :development, :test do
