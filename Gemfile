@@ -19,7 +19,7 @@ gem "kamal", require: false
 gem "thruster", require: false
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 # gem "bcrypt", "~> 3.1.7"
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 gem "image_processing", "~> 1.2"
 gem "inline_svg", "~> 1.10"
 gem "pg_search", "~> 2.3"
